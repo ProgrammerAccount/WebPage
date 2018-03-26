@@ -13,3 +13,7 @@ main{
 .player{
     margin-top: 20px;
 }
+a.dropdown-link:visited,a.dropdown-link:hover
+{
+    color:black;
+}

@@ -14,7 +14,7 @@
 class Login {
     public function __construct()
     {
-        require_once '../connect_data.php';
+        require_once 'connect_data.php';
         $dsn = "mysql:host=$SERVER;dbname=$DB_NAME";
         try
         {

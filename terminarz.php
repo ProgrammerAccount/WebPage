@@ -16,6 +16,9 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/navStyle.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/terminarz.css" type="text/css"/>
+
+      
     </head>
     <body>
         <nav class="navbar navbar-expand-md bg-dark navbar-fixed-top">
@@ -56,8 +59,32 @@ and open the template in the editor.
         </nav>
         <main class="container">
             <div class="row">
-                <div style="background: red" class="col-md-12"></div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-8">
+                    <?php
+                    if(isset($_GET['grupa']))
+                    {
+                        
+                        $gruop="";
+                        if($_GET['grupa']==="Seniorzy")
+                            $gruop="SeniorzyTerminarz";
+                        if($_GET['grupa']==="Trampkarze") $gruop="TrampkarzeTerminarz";
+                        
+                        if($gruop!==""){
+                            include 'phpClass/Terminarz.php';
+                            $kadra = new Terminarz($gruop);
+                            $table = $kadra->getSquadAsTable();
+                            echo $table;
+                        }
+                    
+                    }
+                    ?>
+                </div>
+                <div class="col-md-2">
+                </div>
             </div>
         </main>
     </body>
+    
 </html>

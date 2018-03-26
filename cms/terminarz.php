@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -16,6 +16,9 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/navStyle.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/terminarz.css" type="text/css"/>
+
+      
     </head>
     <body>
         <nav class="navbar navbar-expand-md bg-dark navbar-fixed-top">
@@ -54,10 +57,43 @@ and open the template in the editor.
                 </ul>
             </div>
         </nav>
-        <main class="container">
+       <main class="container">
             <div class="row">
-                <div style="background: red" class="col-md-12"></div>
+
+ 
+                <form  class="form-group" style="width:100%" action="add.php" method="GET">
+                    <div class="row">
+                        <input class="form-control col" placeholder="Data" type="date" name="date" /> 
+                        <input class="form-control col" placeholder="Drużyna 1" type="text" name="club" /> 
+                        <input class="form-control col" placeholder="Wynik" type="text" name="resultOfGame" /> 
+                        <input class="form-control col" placeholder="Drużyna 2" type="text" name="opponent" />   
+                        <input class="col" value="Dodaj" type="submit" /> 
+                    </div>
+                </form>
+                
+                <?php
+                    if(isset($_GET['grupa']))
+                    {
+                        
+                        $gruop="";
+                        if($_GET['grupa']==="Seniorzy")
+                            $gruop="SeniorzyTerminarz";
+                        if($_GET['grupa']==="Trampkarze") $gruop="TrampkarzeTerminarz";
+                        
+                        if($gruop!==""){
+                        include '../phpClass/Terminarz.php';
+                        $kadra = new Terminarz($gruop);
+                        $table = $kadra->getSquadCMS();
+                        echo $table;
+                        }
+                    
+                    }
+                    ?>
+
+
             </div>
         </main>
     </body>
+    
 </html>
+

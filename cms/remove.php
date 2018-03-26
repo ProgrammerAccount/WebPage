@@ -3,12 +3,20 @@
     session_start();
     if(isset($_SESSION['login']) && isset($_SESSION['username']))
     {
-        if(isset($_GET['name']) && isset($_GET['year']) && isset($_GET['Tshirt']) && isset($_GET['role']) && $_SESSION['login']===TRUE) 
+        if(isset($_GET['name']) && isset($_GET['role']) && $_SESSION['login']===TRUE) 
         {
-             require_once '../Kadra.php';
+            require_once '../phpClass/Kadra.php';
             $kadra = new Kadra();
-            $kadra->RemovePlayer($_GET['name'], $_GET['role'], $_GET['year'], $_GET['Tshirt']);
+            $kadra->RemovePlayer($_GET['name'], $_GET['role']);
             header("Location: sklad.php");
+        }
+        
+        if(isset($_GET['date']) && isset($_GET['club']) && isset($_GET['resultOfGame']) && isset($_GET['opponent'])  && $_SESSION['login']===TRUE) 
+        {
+            require_once '../phpClass/Terminarz.php';
+            $kadra = new Terminarz();
+            $kadra->RemoveMatch($_GET['club'], $_GET['opponent'],$_GET['resultOfGame'],$_GET['date'] );
+            header("Location: terminarz.php");
         }
     }
 ?>
