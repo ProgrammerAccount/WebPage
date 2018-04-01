@@ -23,7 +23,7 @@ class Kadra {
         $dsn = "mysql:host=$SERVER;dbname=$DB_NAME";
         
         try {
-            $this->pdo= new PDO($dsn, $USER_NAME, null);   
+            $this->pdo= new PDO($dsn, $USER_NAME, $PASSWORD);   
         }
             catch (PDOException $e) {
             print "Error!: " . $e->getMessage() . "<br/>";

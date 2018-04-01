@@ -1,11 +1,3 @@
-<?php
-session_start();
-if(!isset($_SESSION['login']) && !isset($_SESSION['username']))
-{
-    header("Location: ../index.php");
-    exit();
-}
-?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -26,7 +18,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/main.css">
     </head>
     <body>
-       <nav class="navbar navbar-expand-md bg-dark navbar-fixed-top">
+        <nav class="navbar navbar-expand-md bg-dark navbar-fixed-top">
             <a class="navbar-brand" href="index.php" ><img class="logo" src="../img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>

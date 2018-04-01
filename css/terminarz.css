@@ -5,4 +5,53 @@ width:100%;
 input{
      box-sizing: border-box;
 }
+.terminarz{
+    list-style-type: none;
+    
+}
+.article{
+    padding-top: 30px;
+    border-bottom: solid 1px #ccc;
+}
+.club{
+    font-size: 30px;
+    padding-right: 5px;
+}
+.hour{
+    font-size: 25px;
 
+}
+.result{
+    display:inline-block;
+    padding-left: 10px;
+}
+.dateTime{
+    
+    border-right: dotted 2px #ccc;
+    max-width: 100px;
+    display:inline-block;
+    padding-right: 10px; 
+}
+.resultOfGame{
+        font-size: 35px;
+        padding: 10px;
+}
+
+ @media only screen and (max-width: 600px) {
+ .dateTime{
+    
+    border-right: none;
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
+    padding-right: 10px; 
+    }
+    .result{
+        display: block;
+         text-align: center;
+    }
+    .terminarz{
+        margin-left: 0;
+        padding-left: 0;
+    }
+}

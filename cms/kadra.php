@@ -1,4 +1,11 @@
-
+<?php
+session_start();
+if(!isset($_SESSION['login']) && !isset($_SESSION['username']))
+{
+    header("Location: ../index.php");
+    exit();
+}
+?>
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -14,39 +21,73 @@ and open the template in the editor.
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="css/navStyle.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/terminarz.css" type="text/css"/>
+        <link rel="stylesheet" href="../css/navStyle.css">
+        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="../css/terminarz.css" type="text/css"/>
 
       
     </head>
     <body>
-        <nav class="navbar navbar-expand-md bg-dark navbar-fixed-top">
-            <a class="navbar-brand" href="index.php" >LOGO </a>
+      <nav class="navbar navbar-expand-md bg-dark navbar-fixed-top">
+            <a class="navbar-brand" href="index.php" ><img class="logo" src="../img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
             </button>
             
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ul class="navbar-nav" >
-                    <li class="nav-item">
-                        <a class="nav-link" href="terminarz.php" >O Klubie</a>
-                    </li>
+                    
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Seniorzy</a>
-                        <div class="dropdown-menu" >
-                            <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Seniorzy">Kadra</a>
-                            <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Seniorzy">Terminarz</a>
-                            <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Seniorzy">Tabela</a>
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">O Klubie</a>
+                            <div class="dropdown-menu" >
+                            <a class="dropdown-item dropdown-link" href="klub.php?group=Komisja">Komisja Rewizyjna</a>
+                            <a class="dropdown-item dropdown-link" href="klub.php?id=Wladze">Władze klubu</a>
+                            <a class="dropdown-item dropdown-link" href="klub.php?id=Zarzad">Zarząd</a>
                         </div>
                     </li>
                     
+                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Żaki</a>
+                        <div class="dropdown-menu" >
+                            <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Zaki">Kadra</a>
+                            <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Zaki">Terminarz</a>
+                            <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Zaki">Tabela</a>
+                        </div>
+                    </li>
+                    
+                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Orliki</a>
+                        <div class="dropdown-menu" >
+                            <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Orliki">Kadra</a>
+                            <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Orliki">Terminarz</a>
+                            <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Orliki">Tabela</a>
+                        </div>
+                    </li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Młodziki</a>
+                        <div class="dropdown-menu" >
+                            <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Mlodziki">Kadra</a>
+                            <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Mlodziki">Terminarz</a>
+                            <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Mlodziki">Tabela</a>
+                        </div>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Trampkarze</a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Trampkarze">Kadra</a>
                             <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Trampkarze">Terminarz</a>
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Trampkarze">Tabela</a>
+                        </div>
+                    </li>
+                                        
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Seniorzy</a>
+                        <div class="dropdown-menu" >
+                            <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Seniorzy">Kadra</a>
+                            <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Seniorzy">Terminarz</a>
+                            <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Seniorzy">Tabela</a>
                         </div>
                     </li>
                     
@@ -61,13 +102,14 @@ and open the template in the editor.
             <div class="row">
 
  
-                <form  class="form-group" style="width:100%" action="add.php" method="GET">
+                <form  class="form-group" style="width:100%" action="add.php?" method="GET">
                     <div class="row">
-                        <input class="form-control col" placeholder="Data" type="date" name="date" /> 
-                        <input class="form-control col" placeholder="Drużyna 1" type="text" name="club" /> 
-                        <input class="form-control col" placeholder="Wynik" type="text" name="resultOfGame" /> 
-                        <input class="form-control col" placeholder="Drużyna 2" type="text" name="opponent" />   
-                        <input class="col" value="Dodaj" type="submit" /> 
+                        <input class="form-control col" placeholder="Imie i Nazwisko" type="text" name="name" /> 
+                        <input class="form-control col" placeholder="Pozycja" type="text" name="role" />   
+                        <input class="form-control col" type="hidden" name="grupa" value=<?php
+                        if(isset($_GET['grupa']))
+                                echo $_GET['grupa'];?> /> 
+                        <input class="col" value="Dodaj" type="submit" />   
                     </div>
                 </form>
                 
@@ -75,14 +117,44 @@ and open the template in the editor.
                     if(isset($_GET['grupa']))
                     {
                         
-                        $gruop="";
-                        if($_GET['grupa']==="Seniorzy")
-                            $gruop="SeniorzyKadra";
-                        if($_GET['grupa']==="Trampkarze") $gruop="TrampkarzeKadra";
+                        $group="";
+                        switch ($_GET['grupa'])
+                        {
+                            case "Seniorzy":
+                            {
+                                $group="SeniorzyKadra";
+                                break;
+                            }
+                            
+                            case "Trampkarze":
+                            {
+                                $group="TrampkarzeKadra";
+                                break;
+                            }
+                            
+                            case "Mlodziki":
+                            {
+                                $group="MlodzikiKadra";
+                                break;
+                            }
+                            
+                            case "Orliki":
+                            {
+                                $group="OrlikiKadra";
+                                break;
+                            }
+                            
+                            case "Zaki":
+                            {
+                                $group="ZakiKadra";
+                                break;
+                            }
                         
-                        if($gruop!==""){
+                        }
+                        
+                        if($group!==""){
                         include '../phpClass/Kadra.php';
-                        $kadra = new Kadra($gruop);
+                        $kadra = new Kadra($group);
                         $table = $kadra->getSquadCMS();
                         echo $table;
                         }

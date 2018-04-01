@@ -12,8 +12,6 @@ main{
 }
 .player{
     margin-top: 20px;
+    white-space: nowrap;
 }
-a.dropdown-link:visited,a.dropdown-link:hover
-{
-    color:black;
-}
+
