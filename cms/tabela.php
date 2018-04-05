@@ -1,11 +1,4 @@
-<?php
-session_start();
-if(!isset($_SESSION['login']) && !isset($_SESSION['username']))
-{
-    header("Location: ../index.php");
-    exit();
-}
-?>
+<!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -13,27 +6,22 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Liskowiak Terminarz</title>
+        <title>Liskowiak Tabela</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        
-        
-        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/zebra_datepicker/dist/zebra_datepicker.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/zebra_datepicker/dist/css/bootstrap/zebra_datepicker.min.css">
         <link rel="stylesheet" href="../css/navStyle.css">
         <link rel="stylesheet" href="../css/main.css">
-        <link rel="stylesheet" href="../css/terminarz.css" type="text/css"/>
+        <link rel="stylesheet" href="../css/table.css">
 
       
     </head>
     <body>
-     <nav class="navbar navbar-expand-md bg-dark fixed-top">
+        <nav class="navbar navbar-expand-md bg-dark fixed-top">
             <a class="navbar-brand" href="index.php" ><img class="logo" src="../img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
@@ -103,35 +91,24 @@ and open the template in the editor.
                 </ul>
             </div>
         </nav>
-       <main class="container">
-            <div class="row">
-
- 
-                <form  class="form-group " style="width:100%" action="add.php" method="GET">
+        <main class="container">
+        <form  class="form-group " style="width:100%" action="add.php" method="GET">
                     <div class="row">
-                        <input type="text"  name="date" class="datepicker" />
-                            <script>
-                                $(document).ready(function() {
-
-                                    // assuming the controls you want to attach the plugin to
-                                    // have the "datepicker" class set
-                                    $('input.datepicker').Zebra_DatePicker({
-                                        format: 'Y-m-d H:i'
-                                    });
-                           
-                                });
-                            </script>
-                        <input class="form-control col" placeholder="Drużyna 1" type="text" name="club" /> 
-                        <input class="form-control col" placeholder="Wynik" type="text" name="resultOfGame" /> 
-                        <input class="form-control col" placeholder="Drużyna 2" type="text" name="opponent" />  
+                        <input class="form-control col" placeholder="Nazwa" type="text" name="club" /> 
+                        <input class="form-control col" placeholder="Punkty" type="text" name="points" /> 
+                        <input class="form-control col" placeholder="Wygrane" type="text" name="wins" />  
+                        <input class="form-control col" placeholder="Remisy" type="text" name="draws" /> 
+                        <input class="form-control col" placeholder="Przegrane" type="text" name="losses" /> 
                         <input class="form-control col" type="hidden" name="grupa" value=<?php
                         if(isset($_GET['grupa']))
                                 echo $_GET['grupa'];?> /> 
                         <input class="col" value="Dodaj" type="submit" /> 
                     </div>
                 </form>
-                
-                <?php
+        
+            <div class="row">
+                <div class="col-md-12">
+                    <?php
                     if(isset($_GET['grupa']))
                     {
                         
@@ -146,7 +123,6 @@ and open the template in the editor.
                             
                             case "Trampkarze":
                             {
-                                  
                                 $group="Trampkarze";
                                 break;
                             }
@@ -168,23 +144,23 @@ and open the template in the editor.
                                 $group="Zaki";
                                 break;
                             }
+                        
                         }
                         
-                        if($group!==""){
-                        include '../phpClass/Terminarz.php';
-                        $kadra = new Terminarz($group);
-                        $table = $kadra->getSquadCMS();
-                        echo $table;
+                        if($group!=="")
+                        {
+                            include '../phpClass/Tabela.php';
+                            $tabela = new Tabela($group);
+                            $table = $tabela->getTableCMS();
+                            echo $table;
                         }
                     
                     }
                     ?>
-
+                </div>
 
             </div>
         </main>
     </body>
-
+    
 </html>
-
-

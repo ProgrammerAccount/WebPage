@@ -10,7 +10,7 @@ and open the template in the editor.
     <head>
         
         <meta charset="UTF-8">
-        <title></title>
+        <title>Liskowiak</title>
         <link href="../css/cmsLogin.css" rel="stylesheet"/>
     </head>
     <body>

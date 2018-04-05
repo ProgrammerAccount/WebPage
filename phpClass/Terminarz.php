@@ -25,7 +25,7 @@ class Terminarz {
             $this->pdo= new PDO($dsn, $USER_NAME, $PASSWORD);   
         }
             catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
+            print "Chwilowy brak dostępu do bazy danych<br/>";
             die();
         }
         
@@ -82,6 +82,7 @@ class Terminarz {
     }*/
      public function getSquadCMS()
     {
+  
         $result = $this->pdo->query("SELECT * FROM ".$this->group."Terminarz"." ORDER BY date DESC");
         $form="";
         while ($row = $result->fetch())
@@ -108,33 +109,32 @@ class Terminarz {
     {
         try {
             $query = $this->pdo->prepare("DELETE FROM ".$this->group."Terminarz"." WHERE club=:club AND opponent=:opponent AND resultOfGame=:resultOfGame AND date=:date");
-            $query->bindParam(":club", $club);
-            $query->bindParam(":opponent", $opponent);
-            $query->bindParam(":resultOfGame", $resultOfGame);
-            $query->bindParam(":date", $date);
+            $query->bindParam(":club", $club, PDO::PARAM_STR);
+            $query->bindParam(":opponent", $opponent, PDO::PARAM_STR);
+            $query->bindParam(":resultOfGame", $resultOfGame, PDO::PARAM_STR);
+            $query->bindParam(":date", $date ,PDO::PARAM_STR,16);
             $query->execute();
                         
         }
         catch (PDOException $exc) {
-            echo $exc->getMessage();
+           echo "Chwilowy brak dostępu do bazy danych";
         }
     }
         public function addMatch($club,$opponent,$resultOfGame,$date)
     {
         try {
-            $date = $date.":00";
 
             $query = $this->pdo->prepare("INSERT INTO ".$this->group."Terminarz"."  VALUES (NULL, :club, :opponent, :resultOfGame, :date)");
-            $query->bindParam(":club", $club);
-            $query->bindParam(":opponent", $opponent);
-            $query->bindParam(":resultOfGame", $resultOfGame);
-            $query->bindParam(":date", $date);
+            $query->bindParam(":club", $club, PDO::PARAM_STR);
+            $query->bindParam(":opponent", $opponent, PDO::PARAM_STR);
+            $query->bindParam(":resultOfGame", $resultOfGame, PDO::PARAM_STR);
+            $query->bindParam(":date", $date ,PDO::PARAM_STR,16);
 
             $query->execute();
                         
         }
         catch (PDOException $exc) {
-            echo $exc->getMessage();
+            echo "Chwilowy brak dostępu do bazy danych";
         }
     }
 

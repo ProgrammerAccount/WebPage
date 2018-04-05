@@ -35,29 +35,30 @@ class Kadra {
     public function getSquadAsTable()
     {
         
-        $result = $this->pdo->query("SELECT * FROM $this->group ORDER BY role");
-        $list = "<table id='squad'>"
+        $result = $this->pdo->query("SELECT * FROM ". $this->group."Kadra". " ORDER BY role");
+        $table = "<table id='squad'>"
                 ."<tr class='row'>"
-                . "<th class='col-6'>Imie i Nazwisko</th>"
-                . "<th class='col-2'>Pozycja</th>"
+                . "<th class='col-8'>Imie i Nazwisko</th>"
+                . "<th class='col-4'>Rola</th>"
                 ."</tr>";
         if($result!==FALSE)
         while ($row = $result->fetch())
         {
-            $list=
-                    $list."<tr class='row'>"
-                    ."<td class='col-6'>".$row['name']."</td>"
-                    ."<td class='col-2'>".$row['role']."</td>"
+                    $table=
+                    $table."<tr class='row'>"
+                    ."<td class='NamePlayer col-8'>".$row['name']."</td>"
+                    ."<td class='PositionPlayer col-4'>".$row['role']."</td>"
                     ."</tr>";
         }
-        $list=$list."</table>";
-        return $list;
+        $table=$table."</table>";
+        return $table;
     }
      public function getSquadCMS()
     {
-        $result = $this->pdo->query("SELECT * FROM $this->group ORDER BY role");
+ 
+        $result = $this->pdo->query("SELECT * FROM ". $this->group."Kadra". " ORDER BY role");
         $form="";
-        if($result!==FALSE)
+        //if($result!==FALSE)
         while ($row = $result->fetch())
         {
                     $form=
@@ -66,7 +67,8 @@ class Kadra {
                     ."<div class='col player form-control'>".$row['name']."</div>"
                     ."<div class='col player form-control' name='role'>".$row['role']."</div>"
                     ."<input type='hidden' name='name' value='".$row['name']."'/>"
-                    ."<input type='hidden' name='role' value='".$row['role']."'/>"    
+                    ."<input type='hidden' name='role' value='".$row['role']."'/>"
+                    ."<input type='hidden' name='grupa' value='".$this->group."'/>"        
                     ."<input class='col player' type='submit' value='Usuń'/>" 
                     . "</div>"
                     ."</form></br>";
@@ -76,9 +78,9 @@ class Kadra {
     public function RemovePlayer($name,$role)
     {
         try {
-            $query = $this->pdo->prepare("DELETE FROM $this->group WHERE name=:name AND role=:role");
-            $query->bindParam(":name", $name);
-            $query->bindParam(":role", $role);
+            $query = $this->pdo->prepare("DELETE FROM " . $this->group."Kadra ". "WHERE name=:name AND role=:role");
+            $query->bindParam(":name", $name, PDO::PARAM_STR);
+            $query->bindParam(":role", $role, PDO::PARAM_STR);
             $query->execute();
                         
         }
@@ -89,10 +91,9 @@ class Kadra {
         public function addPlayer($name,$role)
     {
         try {
-            
-            $query = $this->pdo->prepare("INSERT INTO $this->group  VALUES (NULL, :role, :name)");
-            $query->bindParam(":name", $name);
-            $query->bindParam(":role", $role);
+            $query = $this->pdo->prepare("INSERT INTO ". $this->group."Kadra "." VALUES (NULL, :role, :name)");
+            $query->bindParam(":name", $name, PDO::PARAM_STR);
+            $query->bindParam(":role", $role, PDO::PARAM_STR);
             $query->execute();
                         
         }

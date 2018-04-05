@@ -5,4 +5,28 @@ width:100%;
 input{
      box-sizing: border-box;
 }
+.NamePlayer{
+    text-align: center;
+    border-right: dotted #777 3px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid #000 4px;
+}
+.PositionPlayer{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: solid #000 4px;
+    text-align: left;
+}
+td{
+    text-align: center;
+    white-space: nowrap;
+}
+th{
+    text-align: center;
+    white-space: nowrap;
+}
+.team{
+    white-space: normal;
+}
 

@@ -8,17 +8,7 @@ a{
 {
     color:black;
 }
-td{
-    text-align: center;
-    white-space: nowrap;
-}
-th{
-    text-align: center;
-    white-space: nowrap;
-}
-.team{
-    white-space: normal;
-}
+
 .logo{
  width: 70px;
  height: 70px;

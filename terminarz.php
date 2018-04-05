@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Liskowiak Terminarz</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,7 +21,7 @@ and open the template in the editor.
       
     </head>
     <body>
-        <nav class="navbar navbar-expand-md bg-dark navbar-fixed-top">
+        <nav class="navbar navbar-expand-md bg-dark fixed-top">
             <a class="navbar-brand" href="index.php" ><img class="logo" src="img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
@@ -33,9 +33,9 @@ and open the template in the editor.
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">O Klubie</a>
                             <div class="dropdown-menu" >
-                            <a class="dropdown-item dropdown-link" href="klub.php?group=Komisja">Komisja Rewizyjna</a>
-                            <a class="dropdown-item dropdown-link" href="klub.php?id=Wladze">Władze klubu</a>
-                            <a class="dropdown-item dropdown-link" href="klub.php?id=Zarzad">Zarząd</a>
+                            <a class="dropdown-item dropdown-link" href="klub.php?grupa=Komisja">Komisja Rewizyjna</a>
+                            <a class="dropdown-item dropdown-link" href="klub.php?grupa=Wladze">Władze klubu</a>
+                            <a class="dropdown-item dropdown-link" href="klub.php?grupa=Zarzad">Zarząd</a>
                         </div>
                     </li>
                     
@@ -93,9 +93,7 @@ and open the template in the editor.
         </nav>
         <main class="container">
             <div class="row">
-                <div class="col-md-2">
-                </div>
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <?php
                     if(isset($_GET['grupa']))
                     {
@@ -142,8 +140,7 @@ and open the template in the editor.
                     
                     }
                     ?>
-                </div>
-                <div class="col-md-2">
+      
                 </div>
             </div>
         </main>
