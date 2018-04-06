@@ -120,8 +120,15 @@ and open the template in the editor.
  
                 <form  class="form-group" style="width:100%" action="add.php?" method="GET">
                     <div class="row">
-                        <input class="form-control col" placeholder="Imie i Nazwisko" type="text" name="name" /> 
-                        <input class="form-control col" placeholder="Pozycja" type="text" name="role" />   
+                        <input class="form-control col" placeholder="Imie i Nazwisko" type="text" name="name" />
+                        <?php 
+                            if($_GET['grupa']!=="Petanque")
+                                echo '<input class="form-control col" placeholder="Pozycja" type="text" name="role" />';  
+                            else 
+                                echo '<input style="display:none" class="form-control col" placeholder="Pozycja" type="text" name="role" />';  
+
+                            
+                        ?> 
                         <input class="form-control col" type="hidden" name="grupa" value=<?php
                         if(isset($_GET['grupa']))
                                 echo $_GET['grupa'];?> /> 
@@ -182,7 +189,10 @@ and open the template in the editor.
                         if($group!==""){
                         include '../phpClass/Kadra.php';
                         $kadra = new Kadra($group);
-                        $table = $kadra->getSquadCMS();
+                        if($group==="Petanque")
+                            $table = $kadra->getSquadOfPetanqueCMS();
+                        else
+                            $table = $kadra->getSquadCMS();
                         echo $table;
                         }
                     

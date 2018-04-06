@@ -138,9 +138,17 @@ and open the template in the editor.
                                 });
                             </script>
                         <input class="form-control col" placeholder="Drużyna 1" type="text" name="club" /> 
-                        <input class="form-control col" placeholder="Wynik" type="text" name="resultOfGame" /> 
-                        <input class="form-control col" placeholder="Drużyna 2" type="text" name="opponent" />  
+                        <?php
+                        if($_GET['grupa']!=="Petanque")
+                          echo  '<input class="form-control col" placeholder="Wynik" type="text" name="resultOfGame" />'. 
+                         '<input class="form-control col" placeholder="Drużyna 2" type="text" name="opponent" />';  
+                        else 
+                            echo  '<input style="display:none" class="form-control col" placeholder="Wynik" type="text" name="resultOfGame" />'. 
+                            '<input style="display:none" class="form-control col" placeholder="Drużyna 2" type="text" name="opponent" />';  
+                        
+                        ?>
                         <input class="form-control col" type="hidden" name="grupa" value=<?php
+                      
                         if(isset($_GET['grupa']))
                                 echo $_GET['grupa'];?> /> 
                         <input class="col" value="Dodaj" type="submit" /> 
@@ -200,7 +208,10 @@ and open the template in the editor.
                         if($group!==""){
                         include '../phpClass/Terminarz.php';
                         $kadra = new Terminarz($group);
-                        $table = $kadra->getSquadCMS();
+                        if($group==="Petanque")
+                            $table = $kadra->getTimetableOfPetanqueCMS();
+                        else 
+                            $table = $kadra->getTimetableCMS();
                         echo $table;
                         }
                     

@@ -21,7 +21,7 @@ and open the template in the editor.
       
     </head>
     <body>
-    <nav class="navbar navbar-expand-md bg-dark fixed-top">
+    <nav class="navbar navbar-expand-md bg-dark">
             <a class="navbar-brand" href="index.php" ><img class="logo" src="img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
@@ -161,7 +161,10 @@ and open the template in the editor.
                         if($group!==""){
                             include 'phpClass/Terminarz.php';
                             $kadra = new Terminarz($group);
-                            $table = $kadra->getSquadAsTable();
+                            if($group==="Petanque")
+                                $table = $kadra->getTimetableOfPetanque();
+                            else
+                                $table = $kadra->getTimetable();
                             echo $table;
                         }
                     

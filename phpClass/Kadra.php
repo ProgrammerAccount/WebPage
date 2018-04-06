@@ -59,7 +59,7 @@ class Kadra {
         $result = $this->pdo->query("SELECT * FROM ". $this->group."Kadra". " ORDER BY role");
         $table = "<table id='squad'>"
                 ."<tr class='row'>"
-                . "<th class='col-8'>Imie i Nazwisko</th>"
+                . "<th class='col-12'>Imie i Nazwisko</th>"
                 ."</tr>";
         if($result!==FALSE)
         while ($row = $result->fetch())

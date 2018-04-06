@@ -30,7 +30,7 @@ class Terminarz {
         }
         
     }
-    public function getSquadAsTable()
+    public function getTimetable()
     {
         
         $result = $this->pdo->query("SELECT * FROM ".$this->group."Terminarz"." ORDER BY date DESC");
@@ -55,32 +55,32 @@ class Terminarz {
         $list=$list."</ul>";
         return $list;
     }
-    /*public function getSquadAsTable()
+   
+    public function getTimetableOfPetanque()
     {
         
-        $result = $this->pdo->query("SELECT * FROM $this->group ORDER BY date DESC");
-        $list = "<table id='mecze'>"
-                ."<tr class='row'>"
-                . "<th class='col-3'>Data</th>"
-                . "<th class='col-3'>Drużyna 1</th>"
-                . "<th class='col-3'>Wynik</th>"
-                . "<th class='col-3'>Drużyna 2</th>"
-                ."</tr>";
+        $result = $this->pdo->query("SELECT * FROM ".$this->group."Terminarz"." ORDER BY date DESC");
+        $list="<ul class='terminarz'>";
         if($result!==false)
         while ($row = $result->fetch())
-        {
-            $list=
-                    $list."<tr class='row'>"
-                    ."<td class='col-3'>".$row['date']."</td>"
-                    ."<td class='col-3 team'>".$row['club']."</td>"
-                    ."<td class='col-3'>".$row['resultOfGame']."</td>"
-                    ."<td class='col-3 team'>".$row['opponent']."</td>"
-                    ."</tr>";
+        {             
+
+            $date = strtotime($row["date"]);
+            $list = $list."<li class='article'>"
+                    ."<div class='dateTime'>"
+                    ."<div class='hour'>".date('H:i', $date)."</div>"
+                    ."<div class='date'>".date('Y-m-d', $date)."</div>"
+                    ."</div>"
+                    ."<div class='result'>"
+                    ."<span class='petanque'>".$row['club']."</span>"
+                    ."</div>"
+                    ."</li>";
         }
-        $list=$list."</table>";
+        $list=$list."</ul>";
         return $list;
-    }*/
-     public function getSquadCMS()
+    }
+
+     public function getTimetableCMS()
     {
   
         $result = $this->pdo->query("SELECT * FROM ".$this->group."Terminarz"." ORDER BY date DESC");
@@ -105,6 +105,32 @@ class Terminarz {
         }
         return $form;
     }
+
+    public function getTimetableOfPetanqueCMS()
+    {
+  
+        $result = $this->pdo->query("SELECT * FROM ".$this->group."Terminarz"." ORDER BY date DESC");
+        $form="";
+        while ($row = $result->fetch())
+        {
+                    $form=
+                    $form.'<form class="form-group" style="width:100vw" action="remove.php" method="GET">'
+                    ."<div class='row'>"        
+                    ."<div class='col player form-control'>".$row['date']."</div>"
+                    ."<div class='col player team form-control'>".$row['club']."</div>"
+                    ."<input type='hidden' name='date' value='".$row['date']."'/>"
+                    ."<input type='hidden' name='club' value='".$row['club']."'/>"    
+                    ."<input type='hidden' name='resultOfGame' value='".$row['resultOfGame']."'/>"
+                    ."<input type='hidden' name='opponent' value='".$row['opponent']."'/>"
+                    ."<input type='hidden' name='grupa' value='".$this->group."'/>"
+                    ."<input class='col player' type='submit' value='Usuń'/>" 
+                    . "</div>"
+                    ."</form></br>";
+        }
+        return $form;
+    }
+
+
     public function RemoveMatch($club,$opponent,$resultOfGame,$date)
     {
         try {
