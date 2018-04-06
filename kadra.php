@@ -167,7 +167,10 @@ and open the template in the editor.
                         {
                             include 'phpClass/Kadra.php';
                             $kadra = new Kadra($group);
-                            $table = $kadra->getSquadAsTable();
+                            if($group==="Petanque")
+                                $table = $kadra->getSquadOfPentaqueAsTable();
+                            else 
+                                $table = $kadra->getSquadAsTable();
                             echo $table;
                         }
                     

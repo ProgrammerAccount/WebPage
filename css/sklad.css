@@ -7,12 +7,13 @@ input{
 }
 .NamePlayer{
     text-align: center;
-    border-right: dotted #777 3px;
+    
     padding-top: 10px;
     padding-bottom: 10px;
     border-bottom: solid #000 4px;
 }
 .PositionPlayer{
+    border-left: dotted #777 3px;
     padding-top: 10px;
     padding-bottom: 10px;
     border-bottom: solid #000 4px;

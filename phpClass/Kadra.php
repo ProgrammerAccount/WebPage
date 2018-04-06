@@ -53,6 +53,25 @@ class Kadra {
         $table=$table."</table>";
         return $table;
     }
+    public function getSquadOfPentaqueAsTable()
+    {
+        
+        $result = $this->pdo->query("SELECT * FROM ". $this->group."Kadra". " ORDER BY role");
+        $table = "<table id='squad'>"
+                ."<tr class='row'>"
+                . "<th class='col-8'>Imie i Nazwisko</th>"
+                ."</tr>";
+        if($result!==FALSE)
+        while ($row = $result->fetch())
+        {
+                    $table=
+                    $table."<tr class='row'>"
+                    ."<td class='NamePlayer col-12'>".$row['name']."</td>"
+                    ."</tr>";
+        }
+        $table=$table."</table>";
+        return $table;
+    }
      public function getSquadCMS()
     {
  
@@ -66,6 +85,29 @@ class Kadra {
                     ."<div class='row'>"        
                     ."<div class='col player form-control'>".$row['name']."</div>"
                     ."<div class='col player form-control' name='role'>".$row['role']."</div>"
+                    ."<input type='hidden' name='name' value='".$row['name']."'/>"
+                    ."<input type='hidden' name='role' value='".$row['role']."'/>"
+                    ."<input type='hidden' name='grupa' value='".$this->group."'/>"        
+                    ."<input class='col player' type='submit' value='Usuń'/>" 
+                    . "</div>"
+                    ."</form></br>";
+        }
+        return $form;
+    }
+
+    public function getSquadOfPetanqueCMS()
+    {
+ 
+        $result = $this->pdo->query("SELECT * FROM ". $this->group."Kadra". " ORDER BY role");
+        $form="";
+        //if($result!==FALSE)
+        while ($row = $result->fetch())
+        {
+                    $form=
+                    $form.'<form class="form-group" style="width:100vw" action="remove.php" method="GET">'
+                    ."<div class='row'>"        
+                    ."<div class='col player form-control'>".$row['name']."</div>"
+                    ."<div class='col player form-control' style='display:none' name='role'>".$row['role']."</div>"
                     ."<input type='hidden' name='name' value='".$row['name']."'/>"
                     ."<input type='hidden' name='role' value='".$row['role']."'/>"
                     ."<input type='hidden' name='grupa' value='".$this->group."'/>"        

@@ -58,6 +58,17 @@ if(isset($_SESSION['login']) && isset($_SESSION['username']) && isset($_GET['gru
                 $group="Zarzad";
                 break;
             }
+            case "Petanque":
+            {
+                $group="Petanque";
+                break;
+            }
+            
+            case "Siatkowka":
+            {
+                $group="Siatkowka";
+                break;
+            }
                         
         }
         $kadra = new Kadra($group);
@@ -100,6 +111,17 @@ if(isset($_SESSION['login']) && isset($_SESSION['username']) && isset($_GET['gru
             {
                 $group="Zaki";
                     break;
+            }
+            case "Petanque":
+            {
+                $group="Petanque";
+                break;
+            }
+            
+            case "Siatkowka":
+            {
+                $group="Siatkowka";
+                break;
             }
             }        
         
@@ -147,6 +169,17 @@ if(isset($_SESSION['login']) && isset($_SESSION['username']) && isset($_GET['gru
                 $group="Zaki";
                     break;
             }
+            case "Petanque":
+            {
+                $group="Petanque";
+                break;
+            }
+            
+            case "Siatkowka":
+            {
+                $group="Siatkowka";
+                break;
+            }
             }        
         
         $tabela = new Tabela($group);
@@ -191,6 +224,17 @@ if(isset($_SESSION['login']) && isset($_SESSION['username']) && isset($_GET['gru
             {
                 $group="Zaki";
                     break;
+            }
+            case "Petanque":
+            {
+                $group="Petanque";
+                break;
+            }
+            
+            case "Siatkowka":
+            {
+                $group="Siatkowka";
+                break;
             }
             }        
         

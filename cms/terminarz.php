@@ -184,6 +184,17 @@ and open the template in the editor.
                                 $group="Zaki";
                                 break;
                             }
+                            case "Petanque":
+                            {
+                                $group="Petanque";
+                                break;
+                            }
+                            
+                            case "Siatkowka":
+                            {
+                                $group="Siatkowka";
+                                break;
+                            }
                         }
                         
                         if($group!==""){
