@@ -95,6 +95,22 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Seniorzy">Tabela</a>
                         </div>
                     </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Pétanque</a>
+                        <div class="dropdown-menu" >
+                            <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Petanque">Kadra</a>
+                            <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Petanque">Terminarz</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Siatkówka</a>
+                        <div class="dropdown-menu" >
+                            <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Siatkowka">Kadra</a>
+                            <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Siatkowka">Terminarz</a>
+                            <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Siatkowka">Tabela</a>
+                        </div>
+                    </li>                    
                     
                     <li class="nav-item">
                         <a class="nav-link" href="kontakt.php" >Kontakt</a>

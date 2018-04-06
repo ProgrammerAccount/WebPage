@@ -20,7 +20,7 @@ and open the template in the editor.
       
     </head>
     <body>
-        <nav class="navbar navbar-expand-md bg-dark fixed-top">
+    <nav class="navbar navbar-expand-md bg-dark fixed-top">
             <a class="navbar-brand" href="index.php" ><img class="logo" src="img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
@@ -82,6 +82,22 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Seniorzy">Tabela</a>
                         </div>
                     </li>
+                                                            
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Pétanque</a>
+                        <div class="dropdown-menu" >
+                            <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Petanque">Kadra</a>
+                            <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Petanque">Terminarz</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Siatkówka</a>
+                        <div class="dropdown-menu" >
+                            <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Siatkowka">Kadra</a>
+                            <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Siatkowka">Terminarz</a>
+                            <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Siatkowka">Tabela</a>
+                        </div>
+                    </li>                    
                     
                     <li class="nav-item">
                         <a class="nav-link" href="kontakt.php" >Kontakt</a>
