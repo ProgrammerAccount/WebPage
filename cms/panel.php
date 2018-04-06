@@ -26,8 +26,8 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/main.css">
     </head>
     <body>
-       <nav class="navbar navbar-expand-md bg-dark fixed-top">
-            <a class="navbar-brand" href="index.php" ><img class="logo" src="../img/POL_gmina_Lisków_COA.svg"/> </a>
+       <nav class="navbar navbar-expand-md bg-dark">
+            <a class="navbar-brand" href="panel.php" ><img class="logo" src="../img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
             </button>

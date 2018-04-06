@@ -1,0 +1,16 @@
+.article
+{
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.body
+{
+    display: inline;
+}
+a.title{
+    color: black;
+}
+a.title:visited{
+    color: black;
+}

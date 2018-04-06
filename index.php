@@ -16,10 +16,10 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/navStyle.css">
         <link rel="stylesheet" href="css/main.css">
-      
+        <link rel="stylesheet" href="css/news.css">
     </head>
     <body>
-        <nav class="navbar navbar-expand-md bg-dark">
+        <nav class="navbar navbar-expand-lg bg-dark">
             <a class="navbar-brand" href="index.php" ><img class="logo" src="img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
@@ -106,9 +106,16 @@ and open the template in the editor.
             </div>
         </nav>
         <main class="container">
-            <div class="row">
-                <div style="background: red" class="col-md-12"></div>
-            </div>
+
+        <div class="row">
+
+        </div>
+            <?php
+                include "phpClass/News.php";
+                $news = new News();
+                echo $news->getListOfNews();
+
+            ?>
         </main>
     </body>
 </html>

@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Liskowiak Klub</title>
+        <title>Liskowiak</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,12 +14,13 @@ and open the template in the editor.
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" href="../css/navStyle.css">
-        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="css/navStyle.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/article.css">
     </head>
     <body>
-        <nav class="navbar navbar-expand-md bg-dark">
-            <a class="navbar-brand" href="panel.php" ><img class="logo" src="../img/POL_gmina_Lisków_COA.svg"/> </a>
+        <nav class="navbar navbar-expand-lg bg-dark">
+            <a class="navbar-brand" href="index.php" ><img class="logo" src="img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
             </button>
@@ -80,7 +81,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Seniorzy">Tabela</a>
                         </div>
                     </li>
-                    
+                                                            
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Pétanque</a>
                         <div class="dropdown-menu" >
@@ -96,7 +97,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Siatkowka">Tabela</a>
                         </div>
                     </li>                    
-
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="kontakt.php" >Kontakt</a>
                     </li>
@@ -105,62 +106,16 @@ and open the template in the editor.
             </div>
         </nav>
         <main class="container">
-            <div class="row">
 
- 
-                <form  class="form-group" style="width:100%" action="add.php?" method="GET">
-                    <div class="row">
-                        <input class="form-control col" placeholder="Imie i Nazwisko" type="text" name="name" /> 
-                        <input class="form-control col" placeholder="Rola" type="text" name="role" />   
-                        <input class="form-control col" type="hidden" name="grupa" value=<?php
-                        if(isset($_GET['grupa']))
-                                echo $_GET['grupa'];?> /> 
-                        <input class="col" value="Dodaj" type="submit" />   
-                    </div>
-                </form>
-                
-                <?php
-                    if(isset($_GET['grupa']))
-                    {
-                        
-                         $group="";
-                        switch ($_GET['grupa'])
-                        {
-                            case "Komisja":
-                            {
-                                $group="Komisja";
-                                break;
-                            }
-                            
-                            case "Wladze":
-                            {
-                                $group="Wladze";
-                                break;
-                            }
-                            
-                            case "Zarzad":
-                            {
-                                $group="Zarzad";
-                                break;
-                            }
-                                                  
-                       
-                        }
-                        
-                        if($group!==""){
-                        include '../phpClass/Kadra.php';
-                        $kadra = new Kadra($group);
-                        $table = $kadra->getSquadCMS();
-                        echo $table;
-                        }
-                    
-                    }
-                    ?>
+        <div class="row">
 
+        </div>
+            <?php
+                include "phpClass/News.php";
+                $news = new News();
+                echo $news->getNews(filter_input(INPUT_GET,"id",FILTER_VALIDATE_INT));
 
-
-
-            </div>
+            ?>
         </main>
     </body>
 </html>
