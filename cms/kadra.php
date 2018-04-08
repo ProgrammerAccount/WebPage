@@ -1,10 +1,5 @@
 <?php
 session_start();
-if(!isset($_SESSION['login']) && !isset($_SESSION['username']))
-{
-    header("Location: ../index.php");
-    exit();
-}
 ?>
 <!--
 To change this license header, choose License Headers in Project Properties.
