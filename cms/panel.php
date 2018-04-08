@@ -113,9 +113,7 @@ and open the template in the editor.
             </div>
         </nav>
         <main class="container">
-            <div class="row">
-                <div style="background: red" class="col-md-12"></div>
-            </div>
+    
         </main>
     </body>
 </html>

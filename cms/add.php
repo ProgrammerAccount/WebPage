@@ -186,6 +186,15 @@ if(isset($_SESSION['login']) && isset($_SESSION['username']) && isset($_GET['gru
         $tabela->addTeam($_GET['club'],$_GET['points'], $_GET['wins'],$_GET['draws'],$_GET['losses']);
         header("Location: tabela.php?grupa=".$_GET['grupa']);
         }
-} else    header("Location:index.php");
+}
+else if(isset($_GET['name']) && isset($_GET['phoneNumber']) && isset($_GET['email']) && $_SESSION['login']===TRUE)
+{
+    require '../phpClass/Kontakt.php';
+    $contact = new Contact();
+    $contact->addContact($_GET['name'],$_GET['phoneNumber'],$_GET['email']);
+    header("Location:kontakt.php");
+}
+
+else    header("Location:index.php");
 
 ?>

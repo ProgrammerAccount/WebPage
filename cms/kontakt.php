@@ -118,91 +118,27 @@ and open the template in the editor.
             <div class="row">
 
  
-                <form  class="form-group" style="width:100%" action="add.php?" method="GET">
+                <form  class="form-group" style="width:100%" action="add.php" method="GET">
                     <div class="row">
-                        <input class="form-control col" placeholder="Imie i Nazwisko" type="text" name="name" />
-                        <?php 
-                            if(isset($_GET['grupa']) && $_GET['grupa']!=="Petanque")
-                                echo '<input class="form-control col" placeholder="Pozycja" type="text" name="role" />';  
-                            else 
-                                echo '<input style="display:none" class="form-control col" placeholder="Pozycja" type="text" name="role" />';  
-
-                            
-                        ?> 
-                        <input class="form-control col" type="hidden" name="grupa" value=<?php
-                        if(isset($_GET['grupa']))
-                                echo $_GET['grupa'];?> /> 
+                        <input class="form-control col" placeholder="Imie i Nazwisko lub Rola" type="text" name="name" />
+                        <input class="form-control col" placeholder="Numer Telefonu" type="text" name="phoneNumber" />
+                        <input class="form-control col" placeholder="Email" type="text" name="email" />
                         <input class="col" value="Dodaj" type="submit" />   
                     </div>
                 </form>
-                
+            </div>   
+      
                 <?php
-                    if(isset($_GET['grupa']))
-                    {
-                        
-                         $group="";
-                        switch ($_GET['grupa'])
-                        {
-                            case "Seniorzy":
-                            {
-                                $group="Seniorzy";
-                                break;
-                            }
-                            
-                            case "Trampkarze":
-                            {
-                                $group="Trampkarze";
-                                break;
-                            }
-                            
-                            case "Mlodziki":
-                            {
-                                $group="Mlodziki";
-                                break;
-                            }
-                            
-                            case "Orliki":
-                            {
-                                $group="Orliki";
-                                break;
-                            }
-                            
-                            case "Zaki":
-                            {
-                                $group="Zaki";
-                                break;
-                            }
-                            case "Petanque":
-                            {
-                                $group="Petanque";
-                                break;
-                            }
-                            
-                            case "Siatkowka":
-                            {
-                                $group="Siatkowka";
-                                break;
-                            }
-                        
-                        }
-                        
-                        if($group!==""){
-                        include '../phpClass/Kadra.php';
-                        $kadra = new Kadra($group);
-                        if($group==="Petanque")
-                            $table = $kadra->getSquadOfPetanqueCMS();
-                        else
-                            $table = $kadra->getSquadCMS();
-                        echo $table;
-                        }
-                    
-                    }
+                              
+                        include '../phpClass/Kontakt.php';
+                        $kadra = new Contact();
+                            echo $kadra->getContactsCMS();                                                           
                     ?>
 
+          
 
 
-
-            </div>
+           
         </main>
     </body>
     

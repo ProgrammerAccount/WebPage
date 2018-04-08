@@ -16,6 +16,7 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/navStyle.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/kontakt.css">
 
       
     </head>
@@ -107,8 +108,14 @@ and open the template in the editor.
             </div>
         </nav>
         <main class="container">
-            <div class="row">
-                <div style="background: red" class="col-md-12"></div>
+        <div class = "container">
+        <div style="margin:auto" class="col-8"> 
+            <?php
+                require 'phpClass/Kontakt.php';
+                $contact= new Contact();
+                echo $contact->getContacts();
+            ?>
+        </div>
             </div>
         </main>
     </body>

@@ -20,12 +20,12 @@ class Tabela{
         $i=1;
         $table="<table class='table'>"
                 . "<tr>"
-                . "<th>Pozycja</th>"
+                . "<th >Pozycja</th>"
                 . "<th>Nazwa</th>"
                 . "<th>Punkty</th>"
-                . "<th>Wygrane</th>"
-                . "<th>Remisy</th>"
-                . "<th>Przegrane</th>"
+                . "<th class='WDL'>Wygrane</th>"
+                . "<th class='WDL'>Remisy</th>"
+                . "<th class='WDL'>Przegrane</th>"
                 . "</tr>";
         //if($result!=FALSE)
         while($row = $result->fetch())
@@ -34,9 +34,9 @@ class Tabela{
                  . "<td>$i</td>"
                  . "<td>".$row['clubName']."</td>"
                  . "<td>".$row['points']."</td>"
-                 . "<td>".$row['wins']."</td>"
-                 . "<td>".$row['draws']."</td>"
-                 . "<td>".$row['losses']."</td>"
+                 . "<td class='WDL'>".$row['wins']."</td>"
+                 . "<td class='WDL'>".$row['draws']."</td>"
+                 . "<td class='WDL'>".$row['losses']."</td>"
 
                  . "</tr>" ;  
                  $i++;
@@ -69,12 +69,13 @@ class Tabela{
                 
                     ."<form class='form-group'  action='remove.php' method='GET'>"
                   
-                    ."<td><input class='form-control col' type='text' name='club' value='".$row['clubName']."'/></td>"
+                    ."<td><input class='form-control col' type='text' name='club' readonly value='".$row['clubName']."'/></td>"
                     ."<td><input class='form-control col' type='text' name='points' value='".$row['points']."'/></td>"    
                     ."<td><input class='form-control col' type='text' name='wins' value='".$row['wins']."'/></td>"
                     ."<td><input class='form-control col' type='text' name='draws' value='".$row['draws']."'/></td>"
                     ."<td><input class='form-control col' type='text' name='losses' value='".$row['losses']."'/></td>"
                     ."<td><input type='hidden' name='grupa' value='".$this->group."'/></td>"
+                    ."<td><input type='hidden' name='id' value='".$row['id']."'/></td>"
                     ."<td><input class='form-control col player' type='submit' name='edit' value='Edytuj'/></td>"
                     ."<td><input class='form-control col player' type='submit' name='remove' value='Usuń'/> </form></td>" 
                  . "</div></tr>" ;  
@@ -102,12 +103,13 @@ class Tabela{
     }
     
     
-        public function removeTeam($club,$points, $wins,$draws,$losses)
+        public function removeTeam($id,$club,$points, $wins,$draws,$losses)
     {
          try {
-            $query = $this->pdo->prepare("DELETE FROM ". $this->group."Tabela "." WHERE clubName=:club AND points=:points AND wins=:wins AND draws=:draws AND losses=:losses");
+            $query = $this->pdo->prepare("DELETE FROM ". $this->group."Tabela "." WHERE clubName=:club AND points=:points AND wins=:wins AND draws=:draws AND losses=:losses AND id = :id ");
             $query->bindParam(":club", $club, PDO::PARAM_STR);
             $query->bindParam(":points", $points, PDO::PARAM_INT);
+            $query->bindParam(":id", $id, PDO::PARAM_INT);
             $query->bindParam(":wins", $wins, PDO::PARAM_INT);
             $query->bindParam(":draws", $draws, PDO::PARAM_INT);       
             $query->bindParam(":losses", $losses, PDO::PARAM_INT);       
@@ -118,12 +120,13 @@ class Tabela{
             echo $exc->getMessage();
         }
     }
-        public function editTeam($club,$points, $wins,$draws,$losses)
+        public function editTeam($id,$club,$points, $wins,$draws,$losses)
     {
          try {
-            $query = $this->pdo->prepare("UPDATE ".$this->group."Tabela SET points = :points, wins = :wins, draws = :draws, losses = :losses WHERE MlodzikiTabela.clubName = :club" );
+            $query = $this->pdo->prepare("UPDATE ".$this->group."Tabela SET points = :points, wins = :wins, draws = :draws, losses = :losses WHERE clubName = :club AND id = :id " );
             $query->bindParam(":club", $club, PDO::PARAM_STR);
             $query->bindParam(":points", $points, PDO::PARAM_INT);
+            $query->bindParam(":id", $id, PDO::PARAM_INT);
             $query->bindParam(":wins", $wins, PDO::PARAM_INT);
             $query->bindParam(":draws", $draws, PDO::PARAM_INT);       
             $query->bindParam(":losses", $losses, PDO::PARAM_INT);          

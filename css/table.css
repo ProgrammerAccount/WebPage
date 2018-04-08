@@ -1,4 +1,6 @@
-.table
+@media (max-width:600px)
 {
-
+    .WDL{
+        display: none;
+    }
 }

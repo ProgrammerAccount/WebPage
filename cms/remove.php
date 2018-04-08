@@ -133,7 +133,7 @@ if(isset($_SESSION['login']) && isset($_SESSION['username']) && isset($_GET['gru
         }
         
         
-        if(isset($_GET['remove']) && isset($_GET['club']) && isset($_GET['points']) && isset($_GET['wins']) && isset($_GET['draws']) && isset($_GET['losses'])  && $_SESSION['login']===TRUE)
+        if(isset($_GET['id']) && isset($_GET['remove']) && isset($_GET['club']) && isset($_GET['points']) && isset($_GET['wins']) && isset($_GET['draws']) && isset($_GET['losses'])  && $_SESSION['login']===TRUE)
         {
         require_once '../phpClass/Tabela.php';
         $group="";
@@ -184,12 +184,12 @@ if(isset($_SESSION['login']) && isset($_SESSION['username']) && isset($_GET['gru
         
         $tabela = new Tabela($group);
 
-        $tabela->removeTeam($_GET['club'],$_GET['points'], $_GET['wins'],$_GET['draws'],$_GET['losses']);
+        $tabela->removeTeam($_GET['id'],$_GET['club'],$_GET['points'], $_GET['wins'],$_GET['draws'],$_GET['losses']);
         header("Location: tabela.php?grupa=".$_GET['grupa']);
         }
         
         
-        if(isset($_GET['edit']) && isset($_GET['club']) && isset($_GET['points']) && isset($_GET['wins']) && isset($_GET['draws']) && isset($_GET['losses'])  && $_SESSION['login']===TRUE)
+        if(isset($_GET['edit']) && isset($_GET['id']) && isset($_GET['points']) && isset($_GET['wins']) && isset($_GET['draws']) && isset($_GET['losses'])  && $_SESSION['login']===TRUE)
         {
         require_once '../phpClass/Tabela.php';
         $group="";
@@ -239,9 +239,23 @@ if(isset($_SESSION['login']) && isset($_SESSION['username']) && isset($_GET['gru
             }        
         
         $tabela = new Tabela($group);
-
-        $tabela->editTeam($_GET['club'],$_GET['points'], $_GET['wins'],$_GET['draws'],$_GET['losses']);
+        $tabela->editTeam($_GET['id'],$_GET['club'],$_GET['points'], $_GET['wins'],$_GET['draws'],$_GET['losses']);
         header("Location: tabela.php?grupa=".$_GET['grupa']);
         }
-} else    header("Location:index.php");
+}
+else if(isset($_GET['id']) && isset($_GET['name']) && isset($_GET['phoneNumber']) && isset($_GET['email']) && isset($_GET['remove']) && $_SESSION['login']===TRUE)
+{
+    require '../phpClass/Kontakt.php';
+    $contact = new Contact();
+    $contact->removeContact($_GET['id'],$_GET['name'],$_GET['phoneNumber'],$_GET['email']);
+    header("Location:kontakt.php");
+}
+else if(isset($_GET['id']) && isset($_GET['name']) && isset($_GET['phoneNumber']) && isset($_GET['email']) && isset($_GET['edit']) && $_SESSION['login']===TRUE)
+{
+    require '../phpClass/Kontakt.php';
+    $contact = new Contact();
+    $contact->editContact($_GET['id'],$_GET['name'],$_GET['phoneNumber'],$_GET['email']);
+    header("Location:kontakt.php");
+}
+else    header("Location:index.php");
 ?>
