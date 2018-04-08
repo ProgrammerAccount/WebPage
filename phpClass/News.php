@@ -20,7 +20,7 @@ class News
     public function getListOfNews()
     {
         $table="";
-        $results = $this->pdo->query("SELECT * FROM News");
+        $results = $this->pdo->query("SELECT * FROM News ORDER BY id DESC");
 
         if($results != false)
         while($row = $results->fetch())
@@ -44,19 +44,36 @@ class News
         $table="";
         $results = $this->pdo->query("SELECT * FROM News");
 
-        if($results != false)
-        while($row = $results->fetch())
-        {
-            $table =$table."<div class='row'>";
-            $table =$table."<div class='col'><img src='../img/".$row['imgPath']."' width='200' height='200'>";
-            $table =$table."<form action='add.php' method='GET'>";
-            $table =$table."<div class='col'><input type='file' name='image'/></div>";
-            $table =$table."</form>";
+        $table="<table class='table'>"
+        . "<tr>"
+        . "<th>Pozycja</th>"
+        . "<th>Nazwa</th>"
+        . "<th>Punkty</th>"
+        . "<th>Wygrane</th>"
+        . "<th>Remisy</th>"
+        . "<th>Przegrane</th>"
+        . "</tr>";
+            if($results!=FALSE)
+            while($row = $results->fetch())
+            {
+            $table = $table."<tr>   <div class='row'>"         
+                        ."<form class='form-group'  action='' method='GET'>"                    
+                        ."<td><input class='form-control col' type='text' name='title' readonly value='".$row['title']."'/></td>"
+                        ."<td><input class='form-control col' type='text' name='description' value='".$row['description']."'/></td>"    
+                        ."<td><input class='form-control col' type='text' name='article' value='".$row['article']."'/></td>"
+                        ."<td><input type='hidden' name='id' value='".$row['id']."'/></td>"
+                        ."<td><input type='hidden' name='imgName' value='".$row['imgPath']."'/></td>"
+                        ."<td><input class='form-control col player' type='submit' name='edit' value='Edytuj'/></td>"
+                        ."<td><input class='form-control col player' type='submit' name='remove' value='Usuń'/> </form></td>" 
+                    . "</div></tr>" ;              
+            }
+            $table = $table."</table>";
+   return $table;
 
         }
-        return $table.'</div>';
 
-    }
+
+    
 
 
     public function getNews($id)
@@ -69,7 +86,7 @@ class News
         if($results != false)
         while($row = $results->fetch())
         {
-            $table=$table."<img class='img' width= '600' height='450'src='".$row['imgPath']."'>";
+            $table=$table."<img class='img' width= '600' height='450'src='img/".$row['imgPath']."'>";
             $table=$table."<h4 class ='title'>".$row['title']."<h4>";
             $table=$table."<b class='description'>".$row['description']."</b>";
             $table=$table."<p class='text'>".$row['article']."</p>";
@@ -97,7 +114,13 @@ class News
     }
     public function removeImg($imgName)
     {
-        unlink("../img/".$imgName);
+       try{
+           if(file_exists("../img/".$imgName))
+            unlink("../img/".$imgName);
+        }
+        catch(Exeption $e)
+        {}
+
     }
     public function addNews($title,$description,$article,$imgPath)
     {
@@ -118,10 +141,11 @@ class News
     public function editNews($id,$title,$description,$article,$imgPath)
     {
         try{
-            $query=$this->pdo->prepare("INSERT INTO News VALUES(NULL,:title,:description,:article,:imgPath)");
+            $query=$this->pdo->prepare("UPDATE News SET title=:title ,description = :description, article=:article,imgPath=:imgPath WHERE id=:id");
             $query->bindParam(":title",$title,PDO::PARAM_STR);
             $query->bindParam(":description",$description,PDO::PARAM_STR);
             $query->bindParam(":article",$article,PDO::PARAM_STR);
+            $query->bindParam(":id",$id,PDO::PARAM_INT);
             $query->bindParam(":imgPath",$imgPath,PDO::PARAM_STR);
             $query->execute();
         }
@@ -130,11 +154,12 @@ class News
 
         }
     }
-    public function removeNews($id)
+    public function removeNews($id,$imgName)
     {
         try{
-            $query=$this->pdo->prepare("DELETE FROM News  WHERE id=:id");
-            $query->bindParam(":id",$title,PDO::PARAM_INT);
+            $this->removeImg($imgName);
+            $query=$this->pdo->prepare("DELETE FROM News WHERE id=:id");
+            $query->bindParam(":id",$id,PDO::PARAM_INT);
             $query->execute();
         }
         catch(Exeption $e)

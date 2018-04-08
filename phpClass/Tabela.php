@@ -67,7 +67,7 @@ class Tabela{
                  
                  . "<td>$i</td>"
                 
-                    ."<form class='form-group'  action='remove.php' method='GET'>"
+                    ."<form class='form-group'  action='' method='GET'>"
                   
                     ."<td><input class='form-control col' type='text' name='club' readonly value='".$row['clubName']."'/></td>"
                     ."<td><input class='form-control col' type='text' name='points' value='".$row['points']."'/></td>"    

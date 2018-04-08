@@ -7,15 +7,17 @@ if(!isset($_SESSION['login']) && !isset($_SESSION['username']))
 }
 require "../phpClass/News.php";
 $news = new News();
-if(isset($_POST['title'])&& isset($_POST['description'])&& isset($_POST['article'])&& isset($_FILES['img']))
+if(isset($_POST['add']) && isset($_POST['title'])&& isset($_POST['description'])&& isset($_POST['article'])&& isset($_FILES['img']))
 {
     $imgName=$news->addImg($_FILES['img']);
-    if($imgPath!==false)
+    if($imgName!==false)
     $news->addNews($_POST['title'],$_POST['description'],$_POST['article'],$imgName);
+}
 
-
+if(isset($_GET['id'])&& isset($_GET['imgName']))
+{
+    $imgName=$news->removeNews($_GET['id'],$_GET['imgName']);
     header("Location: panel.php");
-
 }
 ?>
 <!DOCTYPE html>
@@ -132,14 +134,22 @@ and open the template in the editor.
                 <input class='form-control col' type='text' name='title' placeholder='Tytuł'/>
                 <textarea  class='form-control col' form='addArticle' name='description' placeholder='Opis'></textarea>
                 <textarea  class='form-control col' form='addArticle' name='article' placeholder='Treść artykułu'></textarea>
-                <input class='form-control col' type='submit' value = 'Dodaj' />
+                <input class='form-control col' type='submit' name='add' value = 'Dodaj' />
             </div>
             </form>
+            <div class="row">
+                <div class="col-md-12">
+                    <?php
+                    
+                            $table = $news->getListOfNewsCMS();
+                            echo $table;
+                        
+                    
+                    
+                    ?>
+                </div>
 
-            <?php
-                echo $news->getListOfNewsCMS();
-            ?>
-            
+            </div>
         </main>
     </body>
 </html>
