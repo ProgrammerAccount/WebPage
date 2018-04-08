@@ -81,14 +81,14 @@ class Kadra {
         while ($row = $result->fetch())
         {
                     $form=
-                    $form.'<form class="form-group" style="width:100vw" action="remove.php" method="GET">'
+                    $form.'<form class="form-group" style="width:100vw" action="" method="GET">'
                     ."<div class='row'>"        
                     ."<div class='col player form-control'>".$row['name']."</div>"
                     ."<div class='col player form-control' name='role'>".$row['role']."</div>"
                     ."<input type='hidden' name='name' value='".$row['name']."'/>"
                     ."<input type='hidden' name='role' value='".$row['role']."'/>"
                     ."<input type='hidden' name='grupa' value='".$this->group."'/>"        
-                    ."<input class='col player' type='submit' value='Usuń'/>" 
+                    ."<input class='col player' type='submit' name='remove' value='Usuń'/>" 
                     . "</div>"
                     ."</form></br>";
         }
@@ -104,14 +104,14 @@ class Kadra {
         while ($row = $result->fetch())
         {
                     $form=
-                    $form.'<form class="form-group" style="width:100vw" action="remove.php" method="GET">'
+                    $form.'<form class="form-group" style="width:100vw" action="" method="GET">'
                     ."<div class='row'>"        
                     ."<div class='col player form-control'>".$row['name']."</div>"
                     ."<div class='col player form-control' style='display:none' name='role'>".$row['role']."</div>"
                     ."<input type='hidden' name='name' value='".$row['name']."'/>"
                     ."<input type='hidden' name='role' value='".$row['role']."'/>"
                     ."<input type='hidden' name='grupa' value='".$this->group."'/>"        
-                    ."<input class='col player' type='submit' value='Usuń'/>" 
+                    ."<input class='col player' type='submit' name='remove' value='Usuń'/>" 
                     . "</div>"
                     ."</form></br>";
         }

@@ -26,7 +26,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/main.css">
     </head>
     <body>
-       <nav class="navbar navbar-expand-md bg-dark">
+       <nav class="navbar navbar-expand-lg bg-dark">
             <a class="navbar-brand" href="panel.php" ><img class="logo" src="../img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
@@ -113,7 +113,17 @@ and open the template in the editor.
             </div>
         </nav>
         <main class="container">
-    
+        
+            <form class='form-group' id='addArticle' action="add.php" method="GET">
+            <div class='row'>
+                <input class='form-control col' type='file' accept=".jpg, .jpeg, .png" name='file'/>
+                <input class='form-control col' type='text' name='title' placeholder='Tytuł'/>
+                <textarea form class='form-control col' form='addArticle' name='description' placeholder='Opis'></textarea>
+                <textarea form class='form-control col' form='addArticle' name='article' placeholder='Treść artykułu'></textarea>
+                <input class='form-control col' type='submit' value = 'Dodaj' />
+            </div>
+            </form>
+            
         </main>
     </body>
 </html>

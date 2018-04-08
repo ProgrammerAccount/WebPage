@@ -5,6 +5,24 @@ if(!isset($_SESSION['login']) && !isset($_SESSION['username']))
     header("Location: ../index.php");
     exit();
 }
+
+include '../phpClass/Kontakt.php';
+$contact = new Contact();
+if(isset($_GET['add']) &&isset($_GET['name']) && isset($_GET['phoneNumber']) && isset($_GET['email']) && $_SESSION['login']===TRUE)
+{
+    $contact->addContact($_GET['name'],$_GET['phoneNumber'],$_GET['email']);
+    header("Location:kontakt.php");
+}
+if(isset($_GET['id']) && isset($_GET['name']) && isset($_GET['phoneNumber']) && isset($_GET['email']) && isset($_GET['remove']) && $_SESSION['login']===TRUE)
+{
+    $contact->removeContact($_GET['id'],$_GET['name'],$_GET['phoneNumber'],$_GET['email']);
+    header("Location:kontakt.php");
+}
+if(isset($_GET['id']) && isset($_GET['name']) && isset($_GET['phoneNumber']) && isset($_GET['email']) && isset($_GET['edit']) && $_SESSION['login']===TRUE)
+{
+    $contact->editContact($_GET['id'],$_GET['name'],$_GET['phoneNumber'],$_GET['email']);
+    header("Location:kontakt.php");
+}
 ?>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -28,7 +46,7 @@ and open the template in the editor.
       
     </head>
     <body>
-      <nav class="navbar navbar-expand-md bg-dark">
+      <nav class="navbar navbar-expand-lg bg-dark">
             <a class="navbar-brand" href="panel.php" ><img class="logo" src="../img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
@@ -118,21 +136,20 @@ and open the template in the editor.
             <div class="row">
 
  
-                <form  class="form-group" style="width:100%" action="add.php" method="GET">
+                <form  class="form-group" style="width:100%" action="" method="GET">
                     <div class="row">
                         <input class="form-control col" placeholder="Imie i Nazwisko lub Rola" type="text" name="name" />
                         <input class="form-control col" placeholder="Numer Telefonu" type="text" name="phoneNumber" />
                         <input class="form-control col" placeholder="Email" type="text" name="email" />
-                        <input class="col" value="Dodaj" type="submit" />   
+                        <input class="col" value="Dodaj" name="add" type="submit" />   
                     </div>
                 </form>
             </div>   
       
                 <?php
                               
-                        include '../phpClass/Kontakt.php';
-                        $kadra = new Contact();
-                            echo $kadra->getContactsCMS();                                                           
+
+                            echo $contact->getContactsCMS();                                                           
                     ?>
 
           

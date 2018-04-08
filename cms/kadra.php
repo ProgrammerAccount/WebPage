@@ -1,5 +1,74 @@
 <?php
 session_start();
+if(!isset($_SESSION['login']) && !isset($_SESSION['username']))
+{
+    header("Location: ../index.php");
+    exit();
+}
+    if(isset($_GET['grupa']))
+    {
+        
+         $group="";
+        switch ($_GET['grupa'])
+        {
+            case "Seniorzy":
+            {
+                $group="Seniorzy";
+                break;
+            }
+            
+            case "Trampkarze":
+            {
+                $group="Trampkarze";
+                break;
+            }
+            
+            case "Mlodziki":
+            {
+                $group="Mlodziki";
+                break;
+            }
+            
+            case "Orliki":
+            {
+                $group="Orliki";
+                break;
+            }
+            
+            case "Zaki":
+            {
+                $group="Zaki";
+                break;
+            }
+            case "Petanque":
+            {
+                $group="Petanque";
+                break;
+            }
+            
+            case "Siatkowka":
+            {
+                $group="Siatkowka";
+                break;
+            }
+        
+        }
+        
+        if($group!==""){
+            require_once '../phpClass/Kadra.php';
+            $kadra = new Kadra($group);
+            if(isset($_GET['name']) && isset($_GET['add']) && isset($_GET['role']) && $_SESSION['login']===TRUE) 
+            {              
+                $kadra->addPlayer($_GET['name'], $_GET['role']);
+                header("Location:kadra.php?grupa=$group");
+                //exit;
+            }
+            if(isset($_GET['name']) && isset($_GET['remove']) && isset($_GET['role']) && $_SESSION['login']===TRUE) 
+            {
+                $kadra->RemovePlayer($_GET['name'], $_GET['role']);
+                header("Location:kadra.php?grupa=$group");
+            }
+            
 ?>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -23,7 +92,7 @@ and open the template in the editor.
       
     </head>
     <body>
-      <nav class="navbar navbar-expand-md bg-dark">
+    <nav class="navbar navbar-expand-lg bg-dark">
             <a class="navbar-brand" href="panel.php" ><img class="logo" src="../img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
@@ -113,7 +182,7 @@ and open the template in the editor.
             <div class="row">
 
  
-                <form  class="form-group" style="width:100%" action="add.php?" method="GET">
+                <form  class="form-group" style="width:100%" action="" method="GET">
                     <div class="row">
                         <input class="form-control col" placeholder="Imie i Nazwisko" type="text" name="name" />
                         <?php 
@@ -127,71 +196,20 @@ and open the template in the editor.
                         <input class="form-control col" type="hidden" name="grupa" value=<?php
                         if(isset($_GET['grupa']))
                                 echo $_GET['grupa'];?> /> 
-                        <input class="col" value="Dodaj" type="submit" />   
+                        <input class="col" value="Dodaj" name="add" type="submit" />   
                     </div>
                 </form>
                 
-                <?php
-                    if(isset($_GET['grupa']))
-                    {
-                        
-                         $group="";
-                        switch ($_GET['grupa'])
-                        {
-                            case "Seniorzy":
-                            {
-                                $group="Seniorzy";
-                                break;
-                            }
-                            
-                            case "Trampkarze":
-                            {
-                                $group="Trampkarze";
-                                break;
-                            }
-                            
-                            case "Mlodziki":
-                            {
-                                $group="Mlodziki";
-                                break;
-                            }
-                            
-                            case "Orliki":
-                            {
-                                $group="Orliki";
-                                break;
-                            }
-                            
-                            case "Zaki":
-                            {
-                                $group="Zaki";
-                                break;
-                            }
-                            case "Petanque":
-                            {
-                                $group="Petanque";
-                                break;
-                            }
-                            
-                            case "Siatkowka":
-                            {
-                                $group="Siatkowka";
-                                break;
-                            }
-                        
-                        }
-                        
-                        if($group!==""){
-                        include '../phpClass/Kadra.php';
-                        $kadra = new Kadra($group);
-                        if($group==="Petanque")
-                            $table = $kadra->getSquadOfPetanqueCMS();
-                        else
-                            $table = $kadra->getSquadCMS();
-                        echo $table;
-                        }
+<?php
+               
+ if($group==="Petanque")
+    $table = $kadra->getSquadOfPetanqueCMS();
+ else
+    $table = $kadra->getSquadCMS();
+ echo $table;
+    }
                     
-                    }
+}
                     ?>
 
 

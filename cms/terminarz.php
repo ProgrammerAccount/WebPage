@@ -5,6 +5,70 @@ if(!isset($_SESSION['login']) && !isset($_SESSION['username']))
     header("Location: ../index.php");
     exit();
 }
+if(isset($_GET['grupa']))
+{
+    
+    $group="";
+    switch ($_GET['grupa'])
+    {
+        case "Seniorzy":
+        {
+            $group="Seniorzy";
+            break;
+        }
+        
+        case "Trampkarze":
+        {
+              
+            $group="Trampkarze";
+            break;
+        }
+        
+        case "Mlodziki":
+        {
+            $group="Mlodziki";
+            break;
+        }
+        
+        case "Orliki":
+        {
+            $group="Orliki";
+            break;
+        }
+        
+        case "Zaki":
+        {
+            $group="Zaki";
+            break;
+        }
+        case "Petanque":
+        {
+            $group="Petanque";
+            break;
+        }
+        
+        case "Siatkowka":
+        {
+            $group="Siatkowka";
+            break;
+        }
+    }
+    
+    if($group!==""){
+    include '../phpClass/Terminarz.php';
+
+
+    $kadra = new Terminarz($group);
+    if(isset($_GET['add']) && isset($_GET['date']) && isset($_GET['club']) && isset($_GET['resultOfGame']) && isset($_GET['opponent'])  && $_SESSION['login']===TRUE)    
+    {
+        $kadra->addMatch($_GET['club'], $_GET['opponent'],$_GET['resultOfGame'],$_GET['date'] );
+        header("Location: terminarz.php?grupa=".$_GET['grupa']);
+    }
+    if(isset($_GET['remove']) && isset($_GET['date']) && isset($_GET['club']) && isset($_GET['resultOfGame']) && isset($_GET['opponent'])  && $_SESSION['login']===TRUE)    
+    {
+        $kadra->RemoveMatch($_GET['club'], $_GET['opponent'],$_GET['resultOfGame'],$_GET['date'] );
+        header("Location: terminarz.php?grupa=".$_GET['grupa']);
+    }
 ?>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -33,7 +97,7 @@ and open the template in the editor.
       
     </head>
     <body>
-     <nav class="navbar navbar-expand-md bg-dark">
+     <nav class="navbar navbar-expand-lg bg-dark">
             <a class="navbar-brand" href="panel.php" ><img class="logo" src="../img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
@@ -123,7 +187,7 @@ and open the template in the editor.
             <div class="row">
 
  
-                <form  class="form-group " style="width:100%" action="add.php" method="GET">
+                <form  class="form-group " style="width:100%" action="" method="GET">
                     <div class="row">
                         <input type="text"  name="date" class="datepicker" />
                             <script>
@@ -151,63 +215,12 @@ and open the template in the editor.
                       
                         if(isset($_GET['grupa']))
                                 echo $_GET['grupa'];?> /> 
-                        <input class="col" value="Dodaj" type="submit" /> 
+                        <input class="col" name='add' value="Dodaj" type="submit" /> 
                     </div>
                 </form>
                 
                 <?php
-                    if(isset($_GET['grupa']))
-                    {
-                        
-                        $group="";
-                        switch ($_GET['grupa'])
-                        {
-                            case "Seniorzy":
-                            {
-                                $group="Seniorzy";
-                                break;
-                            }
-                            
-                            case "Trampkarze":
-                            {
-                                  
-                                $group="Trampkarze";
-                                break;
-                            }
-                            
-                            case "Mlodziki":
-                            {
-                                $group="Mlodziki";
-                                break;
-                            }
-                            
-                            case "Orliki":
-                            {
-                                $group="Orliki";
-                                break;
-                            }
-                            
-                            case "Zaki":
-                            {
-                                $group="Zaki";
-                                break;
-                            }
-                            case "Petanque":
-                            {
-                                $group="Petanque";
-                                break;
-                            }
-                            
-                            case "Siatkowka":
-                            {
-                                $group="Siatkowka";
-                                break;
-                            }
-                        }
-                        
-                        if($group!==""){
-                        include '../phpClass/Terminarz.php';
-                        $kadra = new Terminarz($group);
+                   
                         if($group==="Petanque")
                             $table = $kadra->getTimetableOfPetanqueCMS();
                         else 

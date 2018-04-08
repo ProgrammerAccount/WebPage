@@ -74,5 +74,33 @@ class News
         return $table."</div>";
 
     }
+    public function addImg($file)
+    {
+        $positiveValidation=true;
+        $fileType= strtolower(pathinfo(basename($file['name']),PATHINFO_EXTENSION));
+        if(getimagesize($file['tmp_name'])===false) $positiveValidation=true;
+        if($fileType != "jpg" && $fileType != "png" && $fileType != "jpeg") $positiveValidation=false;
+        if($positiveValidation)
+        {
+           if( move_uploaded_file($file['tmp_name'],"img/".basename($file['name'])))
+            return true;
+           return false;
+        }
+        return false;
+    }
+    public function addNews($title,$description,$article)
+    {
+        try{
+            $query=$this->pdo->prepare("INSERT INTO News VALUES(NULL,:title,:description,:article)");
+            $query->bindParam(":title",$title,PDO::PARAM_STR);
+            $query->bindParam(":description",$description,PDO::PARAM_STR);
+            $query->bindParam(":article",$article,PDO::PARAM_STR);
+            $query->execute();
+        }
+        catch(Exeption $e)
+        {
+
+        }
+    }
 }
 ?>

@@ -1,3 +1,80 @@
+<?php
+session_start();
+if(!isset($_SESSION['login']) && !isset($_SESSION['username']))
+{
+    header("Location: ../index.php");
+    exit();
+}
+ if(isset($_GET['grupa']))
+ {
+     
+     $group="";
+     switch ($_GET['grupa'])
+     {
+         case "Seniorzy":
+         {
+             $group="Seniorzy";
+             break;
+         }
+         
+         case "Trampkarze":
+         {
+             $group="Trampkarze";
+             break;
+         }
+         
+         case "Mlodziki":
+         {
+             $group="Mlodziki";
+             break;
+         }
+         
+         case "Orliki":
+         {
+             $group="Orliki";
+             break;
+         }
+         
+         case "Zaki":
+         {
+             $group="Zaki";
+             break;
+         }
+         case "Petanque":
+         {
+             $group="Petanque";
+             break;
+         }
+         
+         case "Siatkowka":
+         {
+             $group="Siatkowka";
+             break;
+         }
+     
+     }
+     
+     if($group!=="")
+     {
+         include '../phpClass/Tabela.php';
+         $tabela = new Tabela($group);
+
+        if(isset($_GET['add']) && isset($_GET['club']) && isset($_GET['points']) && isset($_GET['wins']) && isset($_GET['draws']) && isset($_GET['losses'])  && $_SESSION['login']===TRUE)
+        {
+            $tabela->addTeam($_GET['club'],$_GET['points'], $_GET['wins'],$_GET['draws'],$_GET['losses']);
+            header("Location: tabela.php?grupa=".$_GET['grupa']);
+        }
+        if(isset($_GET['remove']) &&isset($_GET['id']) && isset($_GET['remove']) && isset($_GET['club']) && isset($_GET['points']) && isset($_GET['wins']) && isset($_GET['draws']) && isset($_GET['losses'])  && $_SESSION['login']===TRUE)
+        {
+            $tabela->removeTeam($_GET['id'],$_GET['club'],$_GET['points'], $_GET['wins'],$_GET['draws'],$_GET['losses']);
+            header("Location: tabela.php?grupa=".$_GET['grupa']);
+        }
+        if(isset($_GET['edit']) && isset($_GET['id']) && isset($_GET['points']) && isset($_GET['wins']) && isset($_GET['draws']) && isset($_GET['losses'])  && $_SESSION['login']===TRUE)
+        {
+            $tabela->editTeam($_GET['id'],$_GET['club'],$_GET['points'], $_GET['wins'],$_GET['draws'],$_GET['losses']);
+            header("Location: tabela.php?grupa=".$_GET['grupa']);
+        }
+?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -21,7 +98,7 @@ and open the template in the editor.
       
     </head>
     <body>
-        <nav class="navbar navbar-expand-md bg-dark">
+        <nav class="navbar navbar-expand-lg bg-dark">
             <a class="navbar-brand" href="panel.php" ><img class="logo" src="../img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
@@ -107,7 +184,7 @@ and open the template in the editor.
             </div>
         </nav>
         <main class="container">
-        <form  class="form-group " style="width:100%" action="add.php" method="GET">
+        <form  class="form-group " style="width:100%" action="" method="GET">
                     <div class="row">
                         <input class="form-control col" placeholder="Nazwa" type="text" name="club" /> 
                         <input class="form-control col" placeholder="Punkty" type="text" name="points" /> 
@@ -117,66 +194,14 @@ and open the template in the editor.
                         <input class="form-control col" type="hidden" name="grupa" value=<?php
                         if(isset($_GET['grupa']))
                                 echo $_GET['grupa'];?> /> 
-                        <input class="col" value="Dodaj" type="submit" /> 
+                        <input class="col" value="Dodaj" name='add' type="submit" /> 
                     </div>
                 </form>
         
             <div class="row">
                 <div class="col-md-12">
                     <?php
-                    if(isset($_GET['grupa']))
-                    {
-                        
-                        $group="";
-                        switch ($_GET['grupa'])
-                        {
-                            case "Seniorzy":
-                            {
-                                $group="Seniorzy";
-                                break;
-                            }
-                            
-                            case "Trampkarze":
-                            {
-                                $group="Trampkarze";
-                                break;
-                            }
-                            
-                            case "Mlodziki":
-                            {
-                                $group="Mlodziki";
-                                break;
-                            }
-                            
-                            case "Orliki":
-                            {
-                                $group="Orliki";
-                                break;
-                            }
-                            
-                            case "Zaki":
-                            {
-                                $group="Zaki";
-                                break;
-                            }
-                            case "Petanque":
-                            {
-                                $group="Petanque";
-                                break;
-                            }
-                            
-                            case "Siatkowka":
-                            {
-                                $group="Siatkowka";
-                                break;
-                            }
-                        
-                        }
-                        
-                        if($group!=="")
-                        {
-                            include '../phpClass/Tabela.php';
-                            $tabela = new Tabela($group);
+                    
                             $table = $tabela->getTableCMS();
                             echo $table;
                         }

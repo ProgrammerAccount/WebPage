@@ -37,7 +37,7 @@ class Contact{
         $query = $this->pdo->query("SELECT * FROM Contact");
         while($row= $query->fetch())
         {
-            $table=$table."<form action='remove.php' method='GET'><div class='row'>"
+            $table=$table."<form action='' method='GET'><div class='row'>"
             ."<input type='hidden' value='".$row['id']."' name='id'/>"
             ."<input type='text' value='".$row['name']."' name='name' readonly />"
             ."<input type='text' value='".$row['phoneNumber']."' name='phoneNumber'/>"

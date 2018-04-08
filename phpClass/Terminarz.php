@@ -88,7 +88,7 @@ class Terminarz {
         while ($row = $result->fetch())
         {
                     $form=
-                    $form.'<form class="form-group" style="width:100vw" action="remove.php" method="GET">'
+                    $form.'<form class="form-group" style="width:100vw" action="" method="GET">'
                     ."<div class='row'>"        
                     ."<div class='col player form-control'>".$row['date']."</div>"
                     ."<div class='col player team form-control'>".$row['club']."</div>"
@@ -99,7 +99,7 @@ class Terminarz {
                     ."<input type='hidden' name='resultOfGame' value='".$row['resultOfGame']."'/>"
                     ."<input type='hidden' name='opponent' value='".$row['opponent']."'/>"
                     ."<input type='hidden' name='grupa' value='".$this->group."'/>"
-                    ."<input class='col player' type='submit' value='Usuń'/>" 
+                    ."<input class='col player' type='submit' name='remove' value='Usuń'/>" 
                     . "</div>"
                     ."</form></br>";
         }
@@ -114,7 +114,7 @@ class Terminarz {
         while ($row = $result->fetch())
         {
                     $form=
-                    $form.'<form class="form-group" style="width:100vw" action="remove.php" method="GET">'
+                    $form.'<form class="form-group" style="width:100vw" action="" method="GET">'
                     ."<div class='row'>"        
                     ."<div class='col player form-control'>".$row['date']."</div>"
                     ."<div class='col player team form-control'>".$row['club']."</div>"
@@ -123,7 +123,7 @@ class Terminarz {
                     ."<input type='hidden' name='resultOfGame' value='".$row['resultOfGame']."'/>"
                     ."<input type='hidden' name='opponent' value='".$row['opponent']."'/>"
                     ."<input type='hidden' name='grupa' value='".$this->group."'/>"
-                    ."<input class='col player' type='submit' value='Usuń'/>" 
+                    ."<input class='col player' type='submit' name='remove' value='Usuń'/>" 
                     . "</div>"
                     ."</form></br>";
         }
