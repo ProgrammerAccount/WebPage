@@ -5,6 +5,18 @@ if(!isset($_SESSION['login']) && !isset($_SESSION['username']))
     header("Location: ../index.php");
     exit();
 }
+require "../phpClass/News.php";
+$news = new News();
+if(isset($_POST['title'])&& isset($_POST['description'])&& isset($_POST['article'])&& isset($_FILES['img']))
+{
+    $imgName=$news->addImg($_FILES['img']);
+    if($imgPath!==false)
+    $news->addNews($_POST['title'],$_POST['description'],$_POST['article'],$imgName);
+
+
+    header("Location: panel.php");
+
+}
 ?>
 <!DOCTYPE html>
 <!--
@@ -114,15 +126,19 @@ and open the template in the editor.
         </nav>
         <main class="container">
         
-            <form class='form-group' id='addArticle' action="add.php" method="GET">
+            <form class='form-group' enctype="multipart/form-data" id='addArticle' action="" method="POST">
             <div class='row'>
-                <input class='form-control col' type='file' accept=".jpg, .jpeg, .png" name='file'/>
+                <input class='form-control col' type='file' accept=".jpg, .jpeg, .png" name='img'/>
                 <input class='form-control col' type='text' name='title' placeholder='Tytuł'/>
-                <textarea form class='form-control col' form='addArticle' name='description' placeholder='Opis'></textarea>
-                <textarea form class='form-control col' form='addArticle' name='article' placeholder='Treść artykułu'></textarea>
+                <textarea  class='form-control col' form='addArticle' name='description' placeholder='Opis'></textarea>
+                <textarea  class='form-control col' form='addArticle' name='article' placeholder='Treść artykułu'></textarea>
                 <input class='form-control col' type='submit' value = 'Dodaj' />
             </div>
             </form>
+
+            <?php
+                echo $news->getListOfNewsCMS();
+            ?>
             
         </main>
     </body>
