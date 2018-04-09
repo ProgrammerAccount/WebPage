@@ -1,3 +1,47 @@
+<?php
+session_start();
+if(isset($_GET['grupa']))
+    {   
+       
+        $group="";
+        switch ($_GET['grupa'])
+           {
+                case "Komisja":
+                {
+                    $group="Komisja";
+                    break;
+                }
+                           
+                case "Wladze":
+                {
+                    $group="Wladze";
+                    break;
+                }
+                            
+                case "Zarzad":
+                {
+                    $group="Zarzad";
+                    break;
+                }                                                 
+                     
+            }
+                       
+                if($group!==""){
+                include '../phpClass/Kadra.php';
+                $kadra = new Kadra($group);
+                if(isset($_GET['name']) && isset($_GET['add']) && isset($_GET['role']) && $_SESSION['login']===TRUE) 
+                {              
+                    $kadra->addPlayer($_GET['name'], $_GET['role']);
+                    header("Location:klub.php?grupa=$group");
+                    //exit;
+                }
+                if(isset($_GET['name']) && isset($_GET['remove']) && isset($_GET['role']) && $_SESSION['login']===TRUE) 
+                {
+                    $kadra->RemovePlayer($_GET['name'], $_GET['role']);
+                    header("Location:klub.php?grupa=$group");
+                }
+                
+?>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -108,48 +152,19 @@ and open the template in the editor.
             <div class="row">
 
  
-                <form  class="form-group" style="width:100%" action="add.php?" method="GET">
+                <form  class="form-group" style="width:100%" action="" method="GET">
                     <div class="row">
                         <input class="form-control col" placeholder="Imie i Nazwisko" type="text" name="name" /> 
                         <input class="form-control col" placeholder="Rola" type="text" name="role" />   
                         <input class="form-control col" type="hidden" name="grupa" value=<?php
                         if(isset($_GET['grupa']))
                                 echo $_GET['grupa'];?> /> 
-                        <input class="col" value="Dodaj" type="submit" />   
+                        <input class="col" value="Dodaj" name='add' type="submit" />   
                     </div>
                 </form>
                 
                 <?php
-                    if(isset($_GET['grupa']))
-                    {
-                        
-                         $group="";
-                        switch ($_GET['grupa'])
-                        {
-                            case "Komisja":
-                            {
-                                $group="Komisja";
-                                break;
-                            }
-                            
-                            case "Wladze":
-                            {
-                                $group="Wladze";
-                                break;
-                            }
-                            
-                            case "Zarzad":
-                            {
-                                $group="Zarzad";
-                                break;
-                            }
-                                                  
-                       
-                        }
-                        
-                        if($group!==""){
-                        include '../phpClass/Kadra.php';
-                        $kadra = new Kadra($group);
+
                         $table = $kadra->getSquadCMS();
                         echo $table;
                         }

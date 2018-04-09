@@ -14,9 +14,25 @@ if(isset($_POST['add']) && isset($_POST['title'])&& isset($_POST['description'])
     $news->addNews($_POST['title'],$_POST['description'],$_POST['article'],$imgName);
 }
 
-if(isset($_GET['id'])&& isset($_GET['imgName']))
+if(isset($_POST['id']) && isset($_POST['remove']) && isset($_POST['imgName']))
 {
-    $imgName=$news->removeNews($_GET['id'],$_GET['imgName']);
+    $imgName=$news->removeNews($_POST['id'],$_POST['imgName']);
+    header("Location: panel.php");
+}
+if(isset($_POST['edit']) && isset($_POST['id']) && isset($_POST['title']) && isset($_POST['description']) && isset($_POST['article']) && isset($_POST['imgName']))
+{
+    $imgPath=$_POST['imgName'];
+    if(isset($_FILES['img']))
+    {
+        $news->removeImg($imgPath);
+        $imgName = $news->addImg($_FILES['img']);
+        if($imgName!==false)
+        {
+            $news->removeImg($imgPath);
+            $imgPath= $imgName;
+        }
+    }
+    $imgName=$news->editNews($_POST['id'],$_POST['title'],$_POST['description'],$_POST['article'],$imgPath);
     header("Location: panel.php");
 }
 ?>
@@ -38,6 +54,7 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="../css/navStyle.css">
         <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="../css/news.css">
     </head>
     <body>
        <nav class="navbar navbar-expand-lg bg-dark">

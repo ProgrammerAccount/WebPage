@@ -46,25 +46,25 @@ class News
 
         $table="<table class='table'>"
         . "<tr>"
-        . "<th>Pozycja</th>"
-        . "<th>Nazwa</th>"
-        . "<th>Punkty</th>"
-        . "<th>Wygrane</th>"
-        . "<th>Remisy</th>"
-        . "<th>Przegrane</th>"
+        . "<th>Zdjecie</th>"
+        . "<th>Tytuł</th>"
+        . "<th>Opis</th>"
+        . "<th>Artykuł</th>"
+
         . "</tr>";
             if($results!=FALSE)
             while($row = $results->fetch())
             {
             $table = $table."<tr>   <div class='row'>"         
-                        ."<form class='form-group'  action='' method='GET'>"                    
-                        ."<td><input class='form-control col' type='text' name='title' readonly value='".$row['title']."'/></td>"
-                        ."<td><input class='form-control col' type='text' name='description' value='".$row['description']."'/></td>"    
-                        ."<td><input class='form-control col' type='text' name='article' value='".$row['article']."'/></td>"
+                        ."<form class='form-group' enctype='multipart/form-data'  id='".$row['id']."'  action='' method='POST'>"  
+                        ."<td style='background:url(../img/".$row['imgPath'].")no-repeat center center' class='fileUploader'><input class='form-control col' type='file' name='img' /></td>"                  
+                        ."<td><input class='form-control col' type='text' name='title' value='".$row['title']."'/></td>"
+                        ."<td><textarea class='form-control col' form='".$row['id']."' name='description'>".$row['description']."</textarea></td>"
+                        ."<td><textarea class='form-control col' form='".$row['id']."' name='article'>".$row['article']."</textarea></td>"
                         ."<td><input type='hidden' name='id' value='".$row['id']."'/></td>"
                         ."<td><input type='hidden' name='imgName' value='".$row['imgPath']."'/></td>"
-                        ."<td><input class='form-control col player' type='submit' name='edit' value='Edytuj'/></td>"
-                        ."<td><input class='form-control col player' type='submit' name='remove' value='Usuń'/> </form></td>" 
+                        ."<td><input class='form-control col' type='submit' name='edit' value='Edytuj'/></td>"
+                        ."<td><input class='form-control col' type='submit' name='remove' value='Usun'> </form></td>" 
                     . "</div></tr>" ;              
             }
             $table = $table."</table>";
@@ -103,12 +103,16 @@ class News
         if(filesize($file['tmp_name'])>3000000) $positiveValidation=false;
         if($positiveValidation)
         {
-            $fileName=basename($file['name']);
+            $fileName=str_replace(' ','',basename($file['name']));
             while(file_exists("../img/".$fileName))
             $fileName="a".$fileName;
            if( move_uploaded_file($file['tmp_name'],"../img/".$fileName))
-            return basename($file['name']);
-           return false;
+           {
+               
+
+                return $fileName;
+           }
+            return false;
         }
         return false;
     }
@@ -141,6 +145,7 @@ class News
     public function editNews($id,$title,$description,$article,$imgPath)
     {
         try{
+
             $query=$this->pdo->prepare("UPDATE News SET title=:title ,description = :description, article=:article,imgPath=:imgPath WHERE id=:id");
             $query->bindParam(":title",$title,PDO::PARAM_STR);
             $query->bindParam(":description",$description,PDO::PARAM_STR);

@@ -50,11 +50,10 @@ class Contact{
     }
     public function addContact($name,$phoneNumber,$email)
     {
-        //echo "INSERT INTO Contact VALUES (NULL,'$name','$phoneNumber','$email')"; exit;
         $query=$this->pdo->prepare("INSERT INTO Contact VALUES (NULL,:name,:phoneNumber,:email)");
         $query->bindParam(":name",$name,PDO::PARAM_STR);
-        $query->bindParam(":email",$email,PDO::PARAM_STR);
-        $query->bindParam(":phoneNumber",$phoneNumber,PDO::PARAM_INT);
+        $query->bindParam(":phoneNumber", $phoneNumber, PDO::PARAM_INT);     
+        $query->bindParam(":email",$email,PDO::PARAM_STR);        
         $query->execute();
     }
     public function removeContact($id,$name,$phoneNumber,$email)
