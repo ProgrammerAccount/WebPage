@@ -19,6 +19,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/article.css">
     </head>
     <body>
+        <main>
         <nav class="navbar navbar-expand-lg bg-dark">
             <a class="navbar-brand" href="index.php" ><img class="logo" src="img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
@@ -105,7 +106,7 @@ and open the template in the editor.
                 </ul>
             </div>
         </nav>
-        <main class="container">
+        <div class="content">
 
         <div class="row">
 
@@ -116,6 +117,10 @@ and open the template in the editor.
                 echo $news->getNews(filter_input(INPUT_GET,"id",FILTER_VALIDATE_INT));
 
             ?>
+        </div>
+        <footer>
+        <small>&copy; Copyright 2018 Strone wykonał <a class ="emailLink" href="mailto:td.janiak@gmail.com">Tymoteusz Janiak</a></small>
+        </footer>
         </main>
     </body>
 </html>

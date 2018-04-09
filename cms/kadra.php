@@ -68,6 +68,11 @@ if(!isset($_SESSION['login']) && !isset($_SESSION['username']))
                 $kadra->RemovePlayer($_GET['name'], $_GET['role']);
                 header("Location:kadra.php?grupa=$group");
             }
+            if(isset($_GET['id']) && isset($_GET['name']) && isset($_GET['edit']) && isset($_GET['role']) && $_SESSION['login']===TRUE) 
+            {
+                $kadra->editPlayer($_GET['id'],$_GET['name'], $_GET['role']);
+                header("Location:kadra.php?grupa=$group");
+            }
             
 ?>
 <!--

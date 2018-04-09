@@ -40,6 +40,11 @@ if(isset($_GET['grupa']))
                     $kadra->RemovePlayer($_GET['name'], $_GET['role']);
                     header("Location:klub.php?grupa=$group");
                 }
+                if(isset($_GET['name']) && isset($_GET['id']) && isset($_GET['edit']) && isset($_GET['role']) && $_SESSION['login']===TRUE) 
+                {
+                    $kadra->editPlayer($_GET['id'],$_GET['name'], $_GET['role']);
+                    header("Location:klub.php?grupa=$group");
+                }
                 
 ?>
 <!DOCTYPE html>

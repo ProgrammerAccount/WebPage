@@ -25,9 +25,9 @@ class News
         if($results != false)
         while($row = $results->fetch())
         {
-            $table =$table."<div class='media article'>
-            <img class='align-self-start mr-4 ' width='150' height='150'  src='img/".$row['imgPath']."' alt='Generic placeholder image'>
-            <div class='media-body'>
+            $table =$table."<div class='media article row'>
+            <img class='align-self-start mr-4 col-sm-4'  src='img/".$row['imgPath']."' alt='Generic placeholder image'>
+            <div class='media-body col-8'>
               <a class='title' href='news.php?id=".$row['id']."'><h5 class='mt-0'>".$row['title']."</h5></a>
               ".$row['description']."
             </div>
@@ -86,8 +86,8 @@ class News
         if($results != false)
         while($row = $results->fetch())
         {
-            $table=$table."<img class='img' width= '600' height='450'src='img/".$row['imgPath']."'>";
             $table=$table."<h4 class ='title'>".$row['title']."<h4>";
+            $table=$table."<img class='img' width= '600' height='450'src='img/".$row['imgPath']."'>";
             $table=$table."<b class='description'>".$row['description']."</b>";
             $table=$table."<p class='text'>".$row['article']."</p>";
         }

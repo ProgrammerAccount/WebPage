@@ -21,6 +21,7 @@ and open the template in the editor.
       
     </head>
     <body>
+        <main>
     <nav class="navbar navbar-expand-lg bg-dark">
             <a class="navbar-brand" href="index.php" ><img class="logo" src="img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
@@ -107,9 +108,9 @@ and open the template in the editor.
                 </ul>
             </div>
         </nav>
-        <main class="container">
-        <div class = "container">
-        <div style="margin:auto" class="col-8"> 
+
+        <div class="content">
+        <div style="margin:auto" class="col-lg-8"> 
             <?php
                 require 'phpClass/Kontakt.php';
                 $contact= new Contact();
@@ -117,6 +118,10 @@ and open the template in the editor.
             ?>
         </div>
             </div>
+        <footer>
+        <small>&copy; Copyright 2018 Strone wykonał <a class ="emailLink" href="mailto:td.janiak@gmail.com">Tymoteusz Janiak</a></small>
+        </footer>
         </main>
+
     </body>
 </html>

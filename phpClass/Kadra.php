@@ -83,12 +83,12 @@ class Kadra {
                     $form=
                     $form.'<form class="form-group" style="width:100vw" action="" method="GET">'
                     ."<div class='row'>"        
-                    ."<div class='col player form-control'>".$row['name']."</div>"
-                    ."<div class='col player form-control' name='role'>".$row['role']."</div>"
-                    ."<input type='hidden' name='name' value='".$row['name']."'/>"
-                    ."<input type='hidden' name='role' value='".$row['role']."'/>"
+                    ."<input class='col form-control' type='text' name='name' value='".$row['name']."'/>"
+                    ."<input class='col form-control' type='text' name='role' value='".$row['role']."'/>"
+                    ."<input class='col form-control' type='hidden' name='id' value='".$row['id']."'/>"
                     ."<input type='hidden' name='grupa' value='".$this->group."'/>"        
-                    ."<input class='col player' type='submit' name='remove' value='Usuń'/>" 
+                    ."<input class='col form-control' type='submit' name='remove' value='Usuń'/>" 
+                    ."<input class='col form-control' type='submit' name='edit' value='Edytuj'/>" 
                     . "</div>"
                     ."</form></br>";
         }
@@ -106,12 +106,12 @@ class Kadra {
                     $form=
                     $form.'<form class="form-group" style="width:100vw" action="" method="GET">'
                     ."<div class='row'>"        
-                    ."<div class='col player form-control'>".$row['name']."</div>"
-                    ."<div class='col player form-control' style='display:none' name='role'>".$row['role']."</div>"
-                    ."<input type='hidden' name='name' value='".$row['name']."'/>"
-                    ."<input type='hidden' name='role' value='".$row['role']."'/>"
+                    ."<input class='col form-control' type='text' name='name' value='".$row['name']."'/>"
+                    ."<input class='col form-control' type='hidden' name='id' value='".$row['id']."'/>"
+                    ."<input type='text' name='role' value='".$row['role']."'/>"
                     ."<input type='hidden' name='grupa' value='".$this->group."'/>"        
-                    ."<input class='col player' type='submit' name='remove' value='Usuń'/>" 
+                    ."<input class='col form-control' type='submit' name='remove' value='Usuń'/>" 
+                    ."<input class='col form-control' type='submit' name='edit' value='Edytuj'/>" 
                     . "</div>"
                     ."</form></br>";
         }
@@ -122,6 +122,20 @@ class Kadra {
         try {
             $query = $this->pdo->prepare("DELETE FROM " . $this->group."Kadra ". "WHERE name=:name AND role=:role");
             $query->bindParam(":name", $name, PDO::PARAM_STR);
+            $query->bindParam(":role", $role, PDO::PARAM_STR);
+            $query->execute();
+                        
+        }
+        catch (PDOException $exc) {
+            echo $exc->getMessage();
+        }
+    }
+    public function editPlayer($id,$name,$role)
+    {
+        try {
+            $query = $this->pdo->prepare("UPDATE " . $this->group."Kadra ". "SET name=:name , role=:role WHERE id=:id");
+            $query->bindParam(":name", $name, PDO::PARAM_STR);
+            $query->bindParam(":id", $id, PDO::PARAM_INT);
             $query->bindParam(":role", $role, PDO::PARAM_STR);
             $query->execute();
                         

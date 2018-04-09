@@ -33,6 +33,7 @@ class Login {
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)) return false;
         return true;    
     }
+
     public function getUser($email)
     {
         $query = $this->pdo->prepare("SELECT * FROM Admin WHERE email= :email ");
@@ -43,6 +44,22 @@ class Login {
         }
         else
             return false;
+    }
+    public function addUser($email,$password)
+    {
+
+        
+        if($this->getUser($email)===false)
+        {
+            $pass=password_hash($password,PASSWORD_DEFAULT);            
+            $query = $this->pdo->prepare("INSERT INTO Admin VALUES(NULL, :email, '".$pass."' )");
+            $query->bindParam(":email",$email);            
+            $query->execute();
+            return true;
+        }
+
+        return false;
+        
     }
     public function comparePassword($password,$hash)
     {

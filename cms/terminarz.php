@@ -69,6 +69,11 @@ if(isset($_GET['grupa']))
         $kadra->RemoveMatch($_GET['club'], $_GET['opponent'],$_GET['resultOfGame'],$_GET['date'] );
         header("Location: terminarz.php?grupa=".$_GET['grupa']);
     }
+    if(isset($_GET['edit']) && isset($_GET['id']) && isset($_GET['date']) && isset($_GET['club']) && isset($_GET['resultOfGame']) && isset($_GET['opponent'])  && $_SESSION['login']===TRUE)    
+    {
+        $kadra->editMatch($_GET['id'],$_GET['club'], $_GET['opponent'],$_GET['resultOfGame'],$_GET['date'] );
+        header("Location: terminarz.php?grupa=".$_GET['grupa']);
+    }
 ?>
 <!--
 To change this license header, choose License Headers in Project Properties.

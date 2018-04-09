@@ -90,16 +90,14 @@ class Terminarz {
                     $form=
                     $form.'<form class="form-group" style="width:100vw" action="" method="GET">'
                     ."<div class='row'>"        
-                    ."<div class='col player form-control'>".$row['date']."</div>"
-                    ."<div class='col player team form-control'>".$row['club']."</div>"
-                    ."<div class='col player form-control'>".$row['resultOfGame']."</div>"
-                    ."<div class='col player team form-control'>".$row['opponent']."</div>"
-                    ."<input type='hidden' name='date' value='".$row['date']."'/>"
-                    ."<input type='hidden' name='club' value='".$row['club']."'/>"    
-                    ."<input type='hidden' name='resultOfGame' value='".$row['resultOfGame']."'/>"
-                    ."<input type='hidden' name='opponent' value='".$row['opponent']."'/>"
+                    ."<input class='col form-control' type='text' name='date' value='".$row['date']."' />"
+                    ."<input class='col form-control' type='text' name='club' value='".$row['club']."'/>"    
+                    ."<input class='col form-control' type='text' name='resultOfGame' value='".$row['resultOfGame']."'/>"
+                    ."<input class='col form-control' type='text' name='opponent' value='".$row['opponent']."'/>"
                     ."<input type='hidden' name='grupa' value='".$this->group."'/>"
+                    ."<input type='hidden' name='id' value='".$row['id']."'/>"
                     ."<input class='col player' type='submit' name='remove' value='Usuń'/>" 
+                    ."<input class='col player' type='submit' name='edit' value='Edytuj'/>" 
                     . "</div>"
                     ."</form></br>";
         }
@@ -130,6 +128,25 @@ class Terminarz {
         return $form;
     }
 
+
+    public function editMatch($id,$club,$opponent,$resultOfGame,$date)
+    {
+        try {
+            //echo "UPDATE ".$this->group."Terminarz"."SET club=$club, opponent=$opponent, resultOfGame=$resultOfGame ,date=$date WHERE id=:id";
+         //   exit;
+            $query = $this->pdo->prepare("UPDATE ".$this->group."Terminarz"." SET club=:club, opponent=:opponent ,resultOfGame=:resultOfGame ,date=:date WHERE id=:id");
+            $query->bindParam(":club", $club, PDO::PARAM_STR);
+            $query->bindParam(":id", $id, PDO::PARAM_INT);
+            $query->bindParam(":opponent", $opponent, PDO::PARAM_STR);
+            $query->bindParam(":resultOfGame", $resultOfGame, PDO::PARAM_STR);
+            $query->bindParam(":date", $date ,PDO::PARAM_STR,16);
+            $query->execute();
+                        
+        }
+        catch (PDOException $exc) {
+           echo "Chwilowy brak dostępu do bazy danych";
+        }
+    }
 
     public function RemoveMatch($club,$opponent,$resultOfGame,$date)
     {

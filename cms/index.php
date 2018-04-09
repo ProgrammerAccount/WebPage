@@ -17,11 +17,14 @@ and open the template in the editor.
         <form id="login" action="login.php" method="POST">
             <input type="text" name="email" placeholder="E-mail" /> </br>
             <input type="password" name="pass" placeholder="hasło"/> </br>
+            <a href="register.php"/>Dodaj Konto</a> </br>
             <input type="submit" value="login"/>
             <?php 
                 if(isset($_SESSION["error"]))
-                echo $_SESSION["error"];
-             
+                {
+                    echo $_SESSION["error"];
+                    unset($_SESSION["error"]);
+                }
             ?>
         </form>
     </body>
