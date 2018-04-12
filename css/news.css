@@ -1,23 +1,26 @@
-.article
-{
+.article {
     margin-bottom: 25px;
     margin-left: auto;
     margin-right: auto;
 }
-.img
-{height: auto;}
-.body
-{
+
+.img {
+    height: auto;
+}
+
+.body {
     display: inline;
 }
-a.title{
+
+a.title {
     color: black;
 }
-a.title:visited{
+
+a.title:visited {
     color: black;
 }
-.fileUploader
-{
+
+.fileUploader {
     background-size: auto 100%;
     height: 150px;
 }

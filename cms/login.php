@@ -1,5 +1,4 @@
-
-        <?php
+<?php
 session_start();
 require '../phpClass/Login.php';
 $email = $_POST['email'];
@@ -26,4 +25,3 @@ if ($login->validation_email($email)) {
 }
 
 ?>
-

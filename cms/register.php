@@ -1,4 +1,3 @@
-
 <?php session_start();
 
 if (isset($_POST['AdminEmail']) && isset($_POST['AdminPass']) && isset($_POST['email']) && isset($_POST['pass']) && isset($_POST['passv2'])) {
@@ -52,26 +51,30 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-    <head>
 
-        <meta charset="UTF-8">
-        <title>Liskowiak</title>
-        <link href="../css/cmsLogin.css" rel="stylesheet"/>
-    </head>
-    <body>
-        <form id="login" action="" method="POST">
-            <input type="text" name="AdminEmail" placeholder="E-mail Admnistratora" /> </br>
-            <input type="password" name="AdminPass" placeholder="Hasło Administratora"/> </br>
-            <input type="text" name="email" placeholder="E-mail"/> </br>
-            <input type="password" name="pass" placeholder="Hasło"/> </br>
-            <input type="password" name="passv2" placeholder="Hasło"/> </br>
-            <input type="submit" value="Dodaj Konto"/></br>
-            <?php
+<head>
+
+    <meta charset="UTF-8">
+    <title>Liskowiak</title>
+    <link href="../css/cmsLogin.css" rel="stylesheet" />
+</head>
+
+<body>
+    <form id="login" action="" method="POST">
+        <input type="text" name="AdminEmail" placeholder="E-mail Admnistratora" /> </br>
+        <input type="password" name="AdminPass" placeholder="Hasło Administratora" /> </br>
+        <input type="text" name="email" placeholder="E-mail" /> </br>
+        <input type="password" name="pass" placeholder="Hasło" /> </br>
+        <input type="password" name="passv2" placeholder="Hasło" /> </br>
+        <input type="submit" value="Dodaj Konto" />
+        </br>
+        <?php
 if (isset($_SESSION["error"])) {
     echo $_SESSION["error"];
     unset($_SESSION["error"]);
 }
 ?>
-        </form>
-    </body>
+    </form>
+</body>
+
 </html>

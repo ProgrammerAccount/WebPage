@@ -1,15 +1,17 @@
-a{
- color: white;
- }
- a:visited{
-     color:white;
- }
- a.dropdown-link:visited,a.dropdown-link:hover
-{
-    color:black;
+a {
+    color: white;
 }
 
-.logo{
- width: 70px;
- height: 70px;
+a:visited {
+    color: white;
+}
+
+a.dropdown-link:visited,
+a.dropdown-link:hover {
+    color: black;
+}
+
+.logo {
+    width: 70px;
+    height: 70px;
 }

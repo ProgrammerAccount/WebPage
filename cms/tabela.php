@@ -68,13 +68,14 @@ if (isset($_GET['grupa'])) {
             header("Location: tabela.php?grupa=" . $_GET['grupa']);
         }
         ?>
-<!DOCTYPE html>
-<!--
+    <!DOCTYPE html>
+    <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+    <html>
+
     <head>
         <title>Liskowiak Tabela</title>
         <meta charset="utf-8">
@@ -90,37 +91,39 @@ and open the template in the editor.
 
 
     </head>
+
     <body>
         <nav class="navbar navbar-expand-lg bg-dark">
-            <a class="navbar-brand" href="panel.php" ><img class="logo" src="../img/POL_gmina_Lisków_COA.svg"/> </a>
+            <a class="navbar-brand" href="panel.php">
+                <img class="logo" src="../img/POL_gmina_Lisków_COA.svg" /> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <ul class="navbar-nav" >
+                <ul class="navbar-nav">
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">O Klubie</a>
-                            <div class="dropdown-menu" >
+                        <div class="dropdown-menu">
                             <a class="dropdown-item dropdown-link" href="klub.php?grupa=Komisja">Komisja Rewizyjna</a>
                             <a class="dropdown-item dropdown-link" href="klub.php?grupa=Wladze">Władze klubu</a>
                             <a class="dropdown-item dropdown-link" href="klub.php?grupa=Zarzad">Zarząd</a>
                         </div>
                     </li>
 
-                     <li class="nav-item dropdown">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Żaki</a>
-                        <div class="dropdown-menu" >
+                        <div class="dropdown-menu">
                             <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Zaki">Kadra</a>
                             <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Zaki">Terminarz</a>
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Zaki">Tabela</a>
                         </div>
                     </li>
 
-                     <li class="nav-item dropdown">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Orliki</a>
-                        <div class="dropdown-menu" >
+                        <div class="dropdown-menu">
                             <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Orliki">Kadra</a>
                             <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Orliki">Terminarz</a>
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Orliki">Tabela</a>
@@ -129,7 +132,7 @@ and open the template in the editor.
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Młodziki</a>
-                        <div class="dropdown-menu" >
+                        <div class="dropdown-menu">
                             <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Mlodziki">Kadra</a>
                             <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Mlodziki">Terminarz</a>
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Mlodziki">Tabela</a>
@@ -147,7 +150,7 @@ and open the template in the editor.
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Seniorzy</a>
-                        <div class="dropdown-menu" >
+                        <div class="dropdown-menu">
                             <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Seniorzy">Kadra</a>
                             <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Seniorzy">Terminarz</a>
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Seniorzy">Tabela</a>
@@ -155,14 +158,14 @@ and open the template in the editor.
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Pétanque</a>
-                        <div class="dropdown-menu" >
+                        <div class="dropdown-menu">
                             <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Petanque">Kadra</a>
                             <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Petanque">Terminarz</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Siatkówka</a>
-                        <div class="dropdown-menu" >
+                        <div class="dropdown-menu">
                             <a class="dropdown-item dropdown-link" href="kadra.php?grupa=Siatkowka">Kadra</a>
                             <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Siatkowka">Terminarz</a>
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Siatkowka">Tabela</a>
@@ -170,28 +173,25 @@ and open the template in the editor.
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="kontakt.php" >Kontakt</a>
+                        <a class="nav-link" href="kontakt.php">Kontakt</a>
                     </li>
 
                 </ul>
             </div>
         </nav>
         <main class="container">
-        <form  class="form-group " style="width:100%" action="" method="GET">
-                    <div class="row">
-                        <input class="form-control col" placeholder="Nazwa" type="text" name="club" />
-                        <input class="form-control col" placeholder="Punkty" type="text" name="points" />
-                        <input class="form-control col" placeholder="Wygrane" type="text" name="wins" />
-                        <input class="form-control col" placeholder="Remisy" type="text" name="draws" />
-                        <input class="form-control col" placeholder="Przegrane" type="text" name="losses" />
-                        <input class="form-control col" type="hidden" name="grupa" value=<?php
-if (isset($_GET['grupa'])) {
-            echo $_GET['grupa'];
-        }
-        ?> />
-                        <input class="col" value="Dodaj" name='add' type="submit" />
-                    </div>
-                </form>
+            <form class="form-group " style="width:100%" action="" method="GET">
+                <div class="row">
+                    <input class="form-control col" placeholder="Nazwa" type="text" name="club" />
+                    <input class="form-control col" placeholder="Punkty" type="text" name="points" />
+                    <input class="form-control col" placeholder="Wygrane" type="text" name="wins" />
+                    <input class="form-control col" placeholder="Remisy" type="text" name="draws" />
+                    <input class="form-control col" placeholder="Przegrane" type="text" name="losses" />
+                    <input class="form-control col" type="hidden" name="grupa" value=<?php if (isset($_GET[ 'grupa'])) { echo $_GET[ 'grupa'];
+                        } ?> />
+                    <input class="col" value="Dodaj" name='add' type="submit" />
+                </div>
+            </form>
 
             <div class="row">
                 <div class="col-md-12">
@@ -209,4 +209,4 @@ if (isset($_GET['grupa'])) {
         </main>
     </body>
 
-</html>
+    </html>
