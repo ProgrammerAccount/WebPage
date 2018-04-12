@@ -17,17 +17,18 @@ class Kadra
 
     private $pdo;
     private $group;
-
+    private $dbTableName="Kadra";
     public function __construct($group)
     {
         require_once 'connect_data.php';
-        $this->group = $group;
+        $this->group = $group; // for example "Orliki","Trampkarze"
+        $this->dbTableName = $this->group.$this->dbTableName;
         $dsn = "mysql:host=$SERVER;dbname=$DB_NAME";
 
         try {
             $this->pdo = new PDO($dsn, $USER_NAME, $PASSWORD);
         } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
+            //print "Error!: " . $e->getMessage() . "<br/>";
             die();
         }
 
@@ -35,129 +36,135 @@ class Kadra
 
     public function getSquadAsTable()
     {
-
-        $result = $this->pdo->query("SELECT * FROM " . $this->group . "Kadra" . " ORDER BY role");
         $table = "<table id='squad'>"
             . "<tr class='row'>"
             . "<th class='col-8'>Imie i Nazwisko</th>"
             . "<th class='col-4'>Rola</th>"
             . "</tr>";
-        if ($result !== false) {
-            while ($row = $result->fetch()) {
-                $table =
-                    $table . "<tr class='row'>"
-                    . "<td class='NamePlayer col-8'>" . $row['name'] . "</td>"
-                    . "<td class='PositionPlayer col-4'>" . $row['role'] . "</td>"
-                    . "</tr>";
+
+        try {
+            $result = $this->pdo->query("SELECT * FROM " . $this->dbTableName . " ORDER BY role");
+
+            if ($result !== false) {
+                while ($row = $result->fetch()) {
+                    $table =
+                        $table . "<tr class='row'>"
+                        . "<td class='NamePlayer col-8'>" . $row['name'] . "</td>"
+                        . "<td class='PositionPlayer col-4'>" . $row['role'] . "</td>"
+                        . "</tr>";
+                }
             }
-        }
+        } catch (Exception $e) {}
 
         $table = $table . "</table>";
         return $table;
     }
     public function getSquadOfPentaqueAsTable()
     {
-
-        $result = $this->pdo->query("SELECT * FROM " . $this->group . "Kadra" . " ORDER BY role");
         $table = "<table id='squad'>"
             . "<tr class='row'>"
             . "<th class='col-12'>Imie i Nazwisko</th>"
             . "</tr>";
-        if ($result !== false) {
-            while ($row = $result->fetch()) {
-                $table =
-                    $table . "<tr class='row'>"
-                    . "<td class='NamePlayer col-12'>" . $row['name'] . "</td>"
-                    . "</tr>";
-            }
-        }
+        try {
+            $result = $this->pdo->query("SELECT * FROM " . $this->dbTableName . " ORDER BY role");
 
+            if ($result !== false) {
+                while ($row = $result->fetch()) {
+                    $table =
+                        $table . "<tr class='row'>"
+                        . "<td class='NamePlayer col-12'>" . $row['name'] . "</td>"
+                        . "</tr>";
+                }
+            }
+        } catch (Exception $e) {}
         $table = $table . "</table>";
         return $table;
     }
     public function getSquadCMS()
     {
-
-        $result = $this->pdo->query("SELECT * FROM " . $this->group . "Kadra" . " ORDER BY role");
         $form = "";
-        //if($result!==FALSE)
-        while ($row = $result->fetch()) {
-            $form =
-            $form . '<form class="form-group" style="width:100vw" action="" method="GET">'
-            . "<div class='row'>"
-            . "<input class='col form-control' type='text' name='name' value='" . $row['name'] . "'/>"
-            . "<input class='col form-control' type='text' name='role' value='" . $row['role'] . "'/>"
-            . "<input class='col form-control' type='hidden' name='id' value='" . $row['id'] . "'/>"
-            . "<input type='hidden' name='grupa' value='" . $this->group . "'/>"
-                . "<input class='col form-control' type='submit' name='remove' value='Usuń'/>"
-                . "<input class='col form-control' type='submit' name='edit' value='Edytuj'/>"
-                . "</div>"
-                . "</form></br>";
-        }
+        try {
+            $result = $this->pdo->query("SELECT * FROM " . $this->dbTableName . " ORDER BY role");
+
+            if ($result !== false) {
+                while ($row = $result->fetch()) {
+                    $form =
+                    $form . '<form class="form-group" style="width:100vw" action="" method="GET">'
+                    . "<div class='row'>"
+                    . "<input class='col form-control' type='text' name='name' value='" . $row['name'] . "'/>"
+                    . "<input class='col form-control' type='text' name='role' value='" . $row['role'] . "'/>"
+                    . "<input class='col form-control' type='hidden' name='id' value='" . $row['id'] . "'/>"
+                    . "<input type='hidden' name='grupa' value='" . $this->group . "'/>"
+                        . "<input class='col form-control' type='submit' name='remove' value='Usuń'/>"
+                        . "<input class='col form-control' type='submit' name='edit' value='Edytuj'/>"
+                        . "</div>"
+                        . "</form></br>";
+                }
+            }
+
+        } catch (Exception $e) {}
         return $form;
     }
 
     public function getSquadOfPetanqueCMS()
     {
-
-        $result = $this->pdo->query("SELECT * FROM " . $this->group . "Kadra" . " ORDER BY role");
         $form = "";
-        //if($result!==FALSE)
-        while ($row = $result->fetch()) {
-            $form =
-            $form . '<form class="form-group" style="width:100vw" action="" method="GET">'
-            . "<div class='row'>"
-            . "<input class='col form-control' type='text' name='name' value='" . $row['name'] . "'/>"
-            . "<input class='col form-control' type='hidden' name='id' value='" . $row['id'] . "'/>"
-            . "<input type='text' name='role' value='" . $row['role'] . "'/>"
-            . "<input type='hidden' name='grupa' value='" . $this->group . "'/>"
-                . "<input class='col form-control' type='submit' name='remove' value='Usuń'/>"
-                . "<input class='col form-control' type='submit' name='edit' value='Edytuj'/>"
-                . "</div>"
-                . "</form></br>";
-        }
+        try {
+            $result = $this->pdo->query("SELECT * FROM " . $this->dbTableName . " ORDER BY role");
+            if ($result !== false) {
+                while ($row = $result->fetch()) {
+                    $form =
+                    $form . '<form class="form-group" style="width:100vw" action="" method="GET">'
+                    . "<div class='row'>"
+                    . "<input class='col form-control' type='text' name='name' value='" . $row['name'] . "'/>"
+                    . "<input class='col form-control' type='hidden' name='id' value='" . $row['id'] . "'/>"
+                    . "<input type='text' name='role' value='" . $row['role'] . "'/>"
+                    . "<input type='hidden' name='grupa' value='" . $this->group . "'/>"
+                        . "<input class='col form-control' type='submit' name='remove' value='Usuń'/>"
+                        . "<input class='col form-control' type='submit' name='edit' value='Edytuj'/>"
+                        . "</div>"
+                        . "</form></br>";
+                }
+            }
+        } catch (Exception $e) {}
+
         return $form;
+
     }
-    public function RemovePlayer($name, $role)
+    public function removePlayer($name, $role)
     {
         try {
-            $query = $this->pdo->prepare("DELETE FROM " . $this->group . "Kadra " . "WHERE name=:name AND role=:role");
-            $query->bindParam(":name", $name, PDO::PARAM_STR);
-            $query->bindParam(":role", $role, PDO::PARAM_STR);
-            $query->execute();
+            $statement = $this->pdo->prepare("DELETE FROM " . $this->dbTableName . "WHERE name=:name AND role=:role");
+            $statement->bindParam(":name", $name, PDO::PARAM_STR);
+            $statement->bindParam(":role", $role, PDO::PARAM_STR);
+            $statement->execute();
 
-        } catch (PDOException $exc) {
-            echo $exc->getMessage();
-        }
+        } catch (PDOException $exc) {}
     }
     public function editPlayer($id, $name, $role)
     {
         try {
-            $query = $this->pdo->prepare("UPDATE " . $this->group . "Kadra " . "SET name=:name , role=:role WHERE id=:id");
-            $query->bindParam(":name", $name, PDO::PARAM_STR);
-            $query->bindParam(":id", $id, PDO::PARAM_INT);
-            $query->bindParam(":role", $role, PDO::PARAM_STR);
-            $query->execute();
+            $statement = $this->pdo->prepare("UPDATE " . $this->dbTableName . "SET name=:name , role=:role WHERE id=:id");
+            $statement->bindParam(":name", $name, PDO::PARAM_STR);
+            $statement->bindParam(":id", $id, PDO::PARAM_INT);
+            $statement->bindParam(":role", $role, PDO::PARAM_STR);
+            $statement->execute();
 
-        } catch (PDOException $exc) {
-            echo $exc->getMessage();
-        }
+        } catch (PDOException $exc) {}
     }
     public function addPlayer($name, $role)
     {
         try {
-            $query = $this->pdo->prepare("INSERT INTO " . $this->group . "Kadra " . " VALUES (NULL, :role, :name)");
-            $query->bindParam(":name", $name, PDO::PARAM_STR);
-            $query->bindParam(":role", $role, PDO::PARAM_STR);
-            $query->execute();
+            $statement = $this->pdo->prepare("INSERT INTO " . $this->dbTableName . " VALUES (NULL, :role, :name)");
+            $statement->bindParam(":name", $name, PDO::PARAM_STR);
+            $statement->bindParam(":role", $role, PDO::PARAM_STR);
+            $statement->execute();
 
-        } catch (PDOException $exc) {
-            echo $exc->getMessage();
-        }
+        } catch (PDOException $exc) {}
     }
 
     public function __destruct()
     {
-
+        $this->pdo = null;
     }
 }
