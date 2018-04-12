@@ -25,10 +25,10 @@ and open the template in the editor.
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ul class="navbar-nav" >
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">O Klubie</a>
                             <div class="dropdown-menu" >
@@ -37,7 +37,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="klub.php?grupa=Zarzad">Zarząd</a>
                         </div>
                     </li>
-                    
+
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Żaki</a>
                         <div class="dropdown-menu" >
@@ -46,7 +46,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Zaki">Tabela</a>
                         </div>
                     </li>
-                    
+
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Orliki</a>
                         <div class="dropdown-menu" >
@@ -55,7 +55,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Orliki">Tabela</a>
                         </div>
                     </li>
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Młodziki</a>
                         <div class="dropdown-menu" >
@@ -73,7 +73,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Trampkarze">Tabela</a>
                         </div>
                     </li>
-                                        
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Seniorzy</a>
                         <div class="dropdown-menu" >
@@ -82,7 +82,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Seniorzy">Tabela</a>
                         </div>
                     </li>
-                                                            
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Pétanque</a>
                         <div class="dropdown-menu" >
@@ -97,8 +97,8 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Siatkowka">Terminarz</a>
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Siatkowka">Tabela</a>
                         </div>
-                    </li>                    
-                    
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="kontakt.php" >Kontakt</a>
                     </li>
@@ -106,17 +106,17 @@ and open the template in the editor.
                 </ul>
             </div>
         </nav>
-    
+
         <div class="content">
         <div class="row">
 
         </div>
             <?php
-                include "phpClass/News.php";
-                $news = new News();
-                echo $news->getListOfNews();
+include "phpClass/News.php";
+$news = new News();
+echo $news->getListOfNews();
 
-            ?>
+?>
        </div>
         <footer>
         <small>&copy; Copyright 2018 Strone wykonał <a class ="emailLink" href="mailto:td.janiak@gmail.com">Tymoteusz Janiak</a></small>

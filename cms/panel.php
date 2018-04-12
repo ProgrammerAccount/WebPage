@@ -1,38 +1,34 @@
 <?php
 session_start();
-if(!isset($_SESSION['login']) && !isset($_SESSION['username']))
-{
+if (!isset($_SESSION['login']) && !isset($_SESSION['username'])) {
     header("Location: ../index.php");
     exit();
 }
 require "../phpClass/News.php";
 $news = new News();
-if(isset($_POST['add']) && isset($_POST['title'])&& isset($_POST['description'])&& isset($_POST['article'])&& isset($_FILES['img']))
-{
-    $imgName=$news->addImg($_FILES['img']);
-    if($imgName!==false)
-    $news->addNews($_POST['title'],$_POST['description'],$_POST['article'],$imgName);
+if (isset($_POST['add']) && isset($_POST['title']) && isset($_POST['description']) && isset($_POST['article']) && isset($_FILES['img'])) {
+    $imgName = $news->addImg($_FILES['img']);
+    if ($imgName !== false) {
+        $news->addNews($_POST['title'], $_POST['description'], $_POST['article'], $imgName);
+    }
+
 }
 
-if(isset($_POST['id']) && isset($_POST['remove']) && isset($_POST['imgName']))
-{
-    $imgName=$news->removeNews($_POST['id'],$_POST['imgName']);
+if (isset($_POST['id']) && isset($_POST['remove']) && isset($_POST['imgName'])) {
+    $imgName = $news->removeNews($_POST['id'], $_POST['imgName']);
     header("Location: panel.php");
 }
-if(isset($_POST['edit']) && isset($_POST['id']) && isset($_POST['title']) && isset($_POST['description']) && isset($_POST['article']) && isset($_POST['imgName']))
-{
-    $imgPath=$_POST['imgName'];
-    if(isset($_FILES['img']))
-    {
+if (isset($_POST['edit']) && isset($_POST['id']) && isset($_POST['title']) && isset($_POST['description']) && isset($_POST['article']) && isset($_POST['imgName'])) {
+    $imgPath = $_POST['imgName'];
+    if (isset($_FILES['img'])) {
         $news->removeImg($imgPath);
         $imgName = $news->addImg($_FILES['img']);
-        if($imgName!==false)
-        {
+        if ($imgName !== false) {
             $news->removeImg($imgPath);
-            $imgPath= $imgName;
+            $imgPath = $imgName;
         }
     }
-    $imgName=$news->editNews($_POST['id'],$_POST['title'],$_POST['description'],$_POST['article'],$imgPath);
+    $imgName = $news->editNews($_POST['id'], $_POST['title'], $_POST['description'], $_POST['article'], $imgPath);
     header("Location: panel.php");
 }
 ?>
@@ -62,10 +58,10 @@ and open the template in the editor.
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ul class="navbar-nav" >
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">O Klubie</a>
                             <div class="dropdown-menu" >
@@ -74,7 +70,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="klub.php?grupa=Zarzad">Zarząd</a>
                         </div>
                     </li>
-                    
+
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Żaki</a>
                         <div class="dropdown-menu" >
@@ -83,7 +79,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Zaki">Tabela</a>
                         </div>
                     </li>
-                    
+
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Orliki</a>
                         <div class="dropdown-menu" >
@@ -92,7 +88,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Orliki">Tabela</a>
                         </div>
                     </li>
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Młodziki</a>
                         <div class="dropdown-menu" >
@@ -110,7 +106,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Trampkarze">Tabela</a>
                         </div>
                     </li>
-                                        
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Seniorzy</a>
                         <div class="dropdown-menu" >
@@ -119,7 +115,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Seniorzy">Tabela</a>
                         </div>
                     </li>
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Pétanque</a>
                         <div class="dropdown-menu" >
@@ -134,7 +130,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Siatkowka">Terminarz</a>
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Siatkowka">Tabela</a>
                         </div>
-                    </li>                    
+                    </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="kontakt.php" >Kontakt</a>
@@ -144,7 +140,7 @@ and open the template in the editor.
             </div>
         </nav>
         <main class="container">
-        
+
             <form class='form-group' enctype="multipart/form-data" id='addArticle' action="" method="POST">
             <div class='row'>
                 <input class='form-control col' type='file' accept=".jpg, .jpeg, .png" name='img'/>
@@ -157,13 +153,11 @@ and open the template in the editor.
             <div class="row">
                 <div class="col-md-12">
                     <?php
-                    
-                            $table = $news->getListOfNewsCMS();
-                            echo $table;
-                        
-                    
-                    
-                    ?>
+
+$table = $news->getListOfNewsCMS();
+echo $table;
+
+?>
                 </div>
 
             </div>

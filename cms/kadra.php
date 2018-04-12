@@ -1,80 +1,74 @@
 <?php
 session_start();
-if(!isset($_SESSION['login']) && !isset($_SESSION['username']))
-{
+if (!isset($_SESSION['login']) && !isset($_SESSION['username'])) {
     header("Location: ../index.php");
     exit();
 }
-    if(isset($_GET['grupa']))
-    {
-        
-         $group="";
-        switch ($_GET['grupa'])
-        {
-            case "Seniorzy":
+if (isset($_GET['grupa'])) {
+
+    $group = "";
+    switch ($_GET['grupa']) {
+        case "Seniorzy":
             {
-                $group="Seniorzy";
+                $group = "Seniorzy";
                 break;
             }
-            
-            case "Trampkarze":
+
+        case "Trampkarze":
             {
-                $group="Trampkarze";
+                $group = "Trampkarze";
                 break;
             }
-            
-            case "Mlodziki":
+
+        case "Mlodziki":
             {
-                $group="Mlodziki";
+                $group = "Mlodziki";
                 break;
             }
-            
-            case "Orliki":
+
+        case "Orliki":
             {
-                $group="Orliki";
+                $group = "Orliki";
                 break;
             }
-            
-            case "Zaki":
+
+        case "Zaki":
             {
-                $group="Zaki";
+                $group = "Zaki";
                 break;
             }
-            case "Petanque":
+        case "Petanque":
             {
-                $group="Petanque";
+                $group = "Petanque";
                 break;
             }
-            
-            case "Siatkowka":
+
+        case "Siatkowka":
             {
-                $group="Siatkowka";
+                $group = "Siatkowka";
                 break;
             }
-        
+
+    }
+
+    if ($group !== "") {
+        require_once '../phpClass/Kadra.php';
+        $kadra = new Kadra($group);
+        if (isset($_GET['name']) && isset($_GET['add']) && isset($_GET['role']) && $_SESSION['login'] === true) {
+            $kadra->addPlayer($_GET['name'], $_GET['role']);
+            header("Location:kadra.php?grupa=$group");
+            //exit;
         }
-        
-        if($group!==""){
-            require_once '../phpClass/Kadra.php';
-            $kadra = new Kadra($group);
-            if(isset($_GET['name']) && isset($_GET['add']) && isset($_GET['role']) && $_SESSION['login']===TRUE) 
-            {              
-                $kadra->addPlayer($_GET['name'], $_GET['role']);
-                header("Location:kadra.php?grupa=$group");
-                //exit;
-            }
-            if(isset($_GET['name']) && isset($_GET['remove']) && isset($_GET['role']) && $_SESSION['login']===TRUE) 
-            {
-                $kadra->RemovePlayer($_GET['name'], $_GET['role']);
-                header("Location:kadra.php?grupa=$group");
-            }
-            if(isset($_GET['id']) && isset($_GET['name']) && isset($_GET['edit']) && isset($_GET['role']) && $_SESSION['login']===TRUE) 
-            {
-                $kadra->editPlayer($_GET['id'],$_GET['name'], $_GET['role']);
-                header("Location:kadra.php?grupa=$group");
-            }
-            
-?>
+        if (isset($_GET['name']) && isset($_GET['remove']) && isset($_GET['role']) && $_SESSION['login'] === true) {
+            $kadra->RemovePlayer($_GET['name'], $_GET['role']);
+            header("Location:kadra.php?grupa=$group");
+        }
+        if (isset($_GET['id']) && isset($_GET['name']) && isset($_GET['edit']) && isset($_GET['role']) && $_SESSION['login'] === true) {
+            $kadra->editPlayer($_GET['id'], $_GET['name'], $_GET['role']);
+            header("Location:kadra.php?grupa=$group");
+        }
+
+        ?>
 <!--
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
@@ -94,7 +88,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/main.css">
         <link rel="stylesheet" href="../css/terminarz.css" type="text/css"/>
 
-      
+
     </head>
     <body>
     <nav class="navbar navbar-expand-lg bg-dark">
@@ -102,10 +96,10 @@ and open the template in the editor.
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ul class="navbar-nav" >
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">O Klubie</a>
                             <div class="dropdown-menu" >
@@ -114,7 +108,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="klub.php?grupa=Zarzad">Zarząd</a>
                         </div>
                     </li>
-                    
+
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Żaki</a>
                         <div class="dropdown-menu" >
@@ -123,7 +117,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Zaki">Tabela</a>
                         </div>
                     </li>
-                    
+
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Orliki</a>
                         <div class="dropdown-menu" >
@@ -132,7 +126,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Orliki">Tabela</a>
                         </div>
                     </li>
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Młodziki</a>
                         <div class="dropdown-menu" >
@@ -150,7 +144,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Trampkarze">Tabela</a>
                         </div>
                     </li>
-                                        
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Seniorzy</a>
                         <div class="dropdown-menu" >
@@ -174,8 +168,8 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Siatkowka">Terminarz</a>
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Siatkowka">Tabela</a>
                         </div>
-                    </li>                    
-                    
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="kontakt.php" >Kontakt</a>
                     </li>
@@ -186,36 +180,40 @@ and open the template in the editor.
        <main class="container">
             <div class="row">
 
- 
+
                 <form  class="form-group" style="width:100%" action="" method="GET">
                     <div class="row">
                         <input class="form-control col" placeholder="Imie i Nazwisko" type="text" name="name" />
-                        <?php 
-                            if(isset($_GET['grupa']) && $_GET['grupa']!=="Petanque")
-                                echo '<input class="form-control col" placeholder="Pozycja" type="text" name="role" />';  
-                            else 
-                                echo '<input style="display:none" class="form-control col" placeholder="Pozycja" type="text" name="role" />';  
+                        <?php
+if (isset($_GET['grupa']) && $_GET['grupa'] !== "Petanque") {
+            echo '<input class="form-control col" placeholder="Pozycja" type="text" name="role" />';
+        } else {
+            echo '<input style="display:none" class="form-control col" placeholder="Pozycja" type="text" name="role" />';
+        }
 
-                            
-                        ?> 
+        ?>
                         <input class="form-control col" type="hidden" name="grupa" value=<?php
-                        if(isset($_GET['grupa']))
-                                echo $_GET['grupa'];?> /> 
-                        <input class="col" value="Dodaj" name="add" type="submit" />   
+if (isset($_GET['grupa'])) {
+            echo $_GET['grupa'];
+        }
+        ?> />
+                        <input class="col" value="Dodaj" name="add" type="submit" />
                     </div>
                 </form>
-                
+
 <?php
-               
- if($group==="Petanque")
-    $table = $kadra->getSquadOfPetanqueCMS();
- else
-    $table = $kadra->getSquadCMS();
- echo $table;
+
+        if ($group === "Petanque") {
+            $table = $kadra->getSquadOfPetanqueCMS();
+        } else {
+            $table = $kadra->getSquadCMS();
+        }
+
+        echo $table;
     }
-                    
+
 }
-                    ?>
+?>
 
 
 
@@ -223,7 +221,7 @@ and open the template in the editor.
             </div>
         </main>
     </body>
-    
+
 </html>
 
 

@@ -1,26 +1,22 @@
 <?php
 session_start();
-if(!isset($_SESSION['login']) && !isset($_SESSION['username']))
-{
+if (!isset($_SESSION['login']) && !isset($_SESSION['username'])) {
     header("Location: ../index.php");
     exit();
 }
 
 include '../phpClass/Kontakt.php';
 $contact = new Contact();
-if(isset($_GET['add']) &&isset($_GET['name']) && isset($_GET['phoneNumber']) && isset($_GET['email']) && $_SESSION['login']===TRUE)
-{
-    $contact->addContact($_GET['name'],$_GET['phoneNumber'],$_GET['email']);
+if (isset($_GET['add']) && isset($_GET['name']) && isset($_GET['phoneNumber']) && isset($_GET['email']) && $_SESSION['login'] === true) {
+    $contact->addContact($_GET['name'], $_GET['phoneNumber'], $_GET['email']);
     header("Location:kontakt.php");
 }
-if(isset($_GET['id']) && isset($_GET['name']) && isset($_GET['phoneNumber']) && isset($_GET['email']) && isset($_GET['remove']) && $_SESSION['login']===TRUE)
-{
-    $contact->removeContact($_GET['id'],$_GET['name'],$_GET['phoneNumber'],$_GET['email']);
+if (isset($_GET['id']) && isset($_GET['name']) && isset($_GET['phoneNumber']) && isset($_GET['email']) && isset($_GET['remove']) && $_SESSION['login'] === true) {
+    $contact->removeContact($_GET['id'], $_GET['name'], $_GET['phoneNumber'], $_GET['email']);
     header("Location:kontakt.php");
 }
-if(isset($_GET['id']) && isset($_GET['name']) && isset($_GET['phoneNumber']) && isset($_GET['email']) && isset($_GET['edit']) && $_SESSION['login']===TRUE)
-{
-    $contact->editContact($_GET['id'],$_GET['name'],$_GET['phoneNumber'],$_GET['email']);
+if (isset($_GET['id']) && isset($_GET['name']) && isset($_GET['phoneNumber']) && isset($_GET['email']) && isset($_GET['edit']) && $_SESSION['login'] === true) {
+    $contact->editContact($_GET['id'], $_GET['name'], $_GET['phoneNumber'], $_GET['email']);
     header("Location:kontakt.php");
 }
 ?>
@@ -43,7 +39,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="../css/main.css">
         <link rel="stylesheet" href="../css/terminarz.css" type="text/css"/>
 
-      
+
     </head>
     <body>
       <nav class="navbar navbar-expand-lg bg-dark">
@@ -51,10 +47,10 @@ and open the template in the editor.
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ul class="navbar-nav" >
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">O Klubie</a>
                             <div class="dropdown-menu" >
@@ -63,7 +59,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="klub.php?grupa=Zarzad">Zarząd</a>
                         </div>
                     </li>
-                    
+
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Żaki</a>
                         <div class="dropdown-menu" >
@@ -72,7 +68,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Zaki">Tabela</a>
                         </div>
                     </li>
-                    
+
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Orliki</a>
                         <div class="dropdown-menu" >
@@ -81,7 +77,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Orliki">Tabela</a>
                         </div>
                     </li>
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Młodziki</a>
                         <div class="dropdown-menu" >
@@ -99,7 +95,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Trampkarze">Tabela</a>
                         </div>
                     </li>
-                                        
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Seniorzy</a>
                         <div class="dropdown-menu" >
@@ -123,8 +119,8 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Siatkowka">Terminarz</a>
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Siatkowka">Tabela</a>
                         </div>
-                    </li>                    
-                    
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="kontakt.php" >Kontakt</a>
                     </li>
@@ -135,30 +131,29 @@ and open the template in the editor.
        <main class="container">
             <div class="row">
 
- 
+
                 <form  class="form-group" style="width:100%" action="" method="GET">
                     <div class="row">
                         <input class="form-control col" placeholder="Imie i Nazwisko lub Rola" type="text" name="name" />
                         <input class="form-control col" placeholder="Numer Telefonu" type="text" name="phoneNumber" />
                         <input class="form-control col" placeholder="Email" type="text" name="email" />
-                        <input class="col" value="Dodaj" name="add" type="submit" />   
+                        <input class="col" value="Dodaj" name="add" type="submit" />
                     </div>
                 </form>
-            </div>   
-      
+            </div>
+
                 <?php
-                              
 
-                            echo $contact->getContactsCMS();                                                           
-                    ?>
-
-          
+echo $contact->getContactsCMS();
+?>
 
 
-           
+
+
+
         </main>
     </body>
-    
+
 </html>
 
 

@@ -7,6 +7,8 @@
             <file>file:/var/www/html/liskowiak/kadra.php</file>
             <file>file:/var/www/html/liskowiak/css/cmsLogin.css</file>
             <file>file:/var/www/html/liskowiak/index.php</file>
+            <file>file:/var/www/html/liskowiak/cms/login.php</file>
+            <file>file:/var/www/html/liskowiak/phpClass/ClassLogin.php</file>
         </group>
     </open-files>
 </project-private>

@@ -18,19 +18,19 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/terminarz.css" type="text/css"/>
 
-      
+
     </head>
     <body>
-    <main>    
+    <main>
     <nav class="navbar navbar-expand-lg bg-dark">
             <a class="navbar-brand" href="index.php" ><img class="logo" src="img/POL_gmina_Lisków_COA.svg"/> </a>
             <button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
                 <span class=" navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <ul class="navbar-nav" >
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">O Klubie</a>
                             <div class="dropdown-menu" >
@@ -39,7 +39,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="klub.php?grupa=Zarzad">Zarząd</a>
                         </div>
                     </li>
-                    
+
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Żaki</a>
                         <div class="dropdown-menu" >
@@ -48,7 +48,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Zaki">Tabela</a>
                         </div>
                     </li>
-                    
+
                      <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Orliki</a>
                         <div class="dropdown-menu" >
@@ -57,7 +57,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Orliki">Tabela</a>
                         </div>
                     </li>
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Młodziki</a>
                         <div class="dropdown-menu" >
@@ -75,7 +75,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Trampkarze">Tabela</a>
                         </div>
                     </li>
-                                        
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Seniorzy</a>
                         <div class="dropdown-menu" >
@@ -84,7 +84,7 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Seniorzy">Tabela</a>
                         </div>
                     </li>
-                                                            
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Pétanque</a>
                         <div class="dropdown-menu" >
@@ -99,8 +99,8 @@ and open the template in the editor.
                             <a class="dropdown-item dropdown-link" href="terminarz.php?grupa=Siatkowka">Terminarz</a>
                             <a class="dropdown-item dropdown-link" href="tabela.php?grupa=Siatkowka">Tabela</a>
                         </div>
-                    </li>                    
-                    
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="kontakt.php" >Kontakt</a>
                     </li>
@@ -108,71 +108,71 @@ and open the template in the editor.
                 </ul>
             </div>
         </nav>
-        
+
             <div class="content">
             <div class="row">
                 <div class="col-md-12">
                     <?php
-                    if(isset($_GET['grupa']))
-                    {
-                        
-                        $group="";                        
-                        switch ($_GET['grupa'])
-                        {
-                            case "Seniorzy":
-                            {
-                                $group="Seniorzy";
-                                break;
-                            }
-                            
-                            case "Trampkarze":
-                            {
-                                $group="Trampkarze";
-                                break;
-                            }
-                            
-                            case "Mlodziki":
-                            {
-                                $group="Mlodziki";
-                                break;
-                            }
-                            
-                            case "Orliki":
-                            {
-                                $group="Orliki";
-                                break;
-                            }
-                            
-                            case "Zaki":
-                            {
-                                $group="Zaki";
-                                break;
-                            }
-                            case "Petanque":
-                            {
-                                $group="Petanque";
-                                break;
-                            }
-                            
-                            case "Siatkowka":
-                            {
-                                $group="Siatkowka";
-                                break;
-                            }
-                        }
-                        if($group!==""){
-                            include 'phpClass/Terminarz.php';
-                            $kadra = new Terminarz($group);
-                            if($group==="Petanque")
-                                $table = $kadra->getTimetableOfPetanque();
-                            else
-                                $table = $kadra->getTimetable();
-                            echo $table;
-                        }
-                    
-                    }
-                    ?>
-      
+if (isset($_GET['grupa'])) {
+
+    $group = "";
+    switch ($_GET['grupa']) {
+        case "Seniorzy":
+            {
+                $group = "Seniorzy";
+                break;
+            }
+
+        case "Trampkarze":
+            {
+                $group = "Trampkarze";
+                break;
+            }
+
+        case "Mlodziki":
+            {
+                $group = "Mlodziki";
+                break;
+            }
+
+        case "Orliki":
+            {
+                $group = "Orliki";
+                break;
+            }
+
+        case "Zaki":
+            {
+                $group = "Zaki";
+                break;
+            }
+        case "Petanque":
+            {
+                $group = "Petanque";
+                break;
+            }
+
+        case "Siatkowka":
+            {
+                $group = "Siatkowka";
+                break;
+            }
+    }
+    if ($group !== "") {
+        include 'phpClass/Terminarz.php';
+        $kadra = new Terminarz($group);
+        if ($group === "Petanque") {
+            $table = $kadra->getTimetableOfPetanque();
+        } else {
+            $table = $kadra->getTimetable();
+        }
+
+        echo $table;
+    }
+
+}
+?>
+
                 </div>
             </div>
             </div>
@@ -181,7 +181,7 @@ and open the template in the editor.
         </footer>
     </main>
 
-    
+
     </body>
-    
+
 </html>
