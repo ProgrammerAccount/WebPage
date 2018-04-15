@@ -122,8 +122,7 @@ and open the template in the editor.
 ?>
         </div>
         <footer>
-            <small>&copy; Copyright 2018 Strone wykonał
-                <a class="emailLink" href="mailto:td.janiak@gmail.com">Tymoteusz Janiak</a>
+            <small>&copy; Copyright 2018 
             </small>
         </footer>
     </main>
