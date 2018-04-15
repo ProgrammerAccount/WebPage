@@ -17,11 +17,13 @@ class Terminarz
 
     private $pdo;
     private $group;
+    public $dbTableName="Terminarz";
     public function __construct($group)
     {
         $this->group = $group;
         require_once 'connect_data.php';
         $dsn = "mysql:host=$SERVER;dbname=$DB_NAME";
+        $this->dbTableName = $this->group.$this->dbTableName;
 
         try {
             $this->pdo = new PDO($dsn, $USER_NAME, $PASSWORD);
@@ -34,7 +36,7 @@ class Terminarz
     public function getTimetable()
     {
 
-        $result = $this->pdo->query("SELECT * FROM " . $this->group . "Terminarz" . " ORDER BY date DESC");
+        $result = $this->pdo->query("SELECT * FROM " .$this->dbTableName . " ORDER BY date DESC");
         $list = "<ul class='terminarz'>";
         if ($result !== false) {
             while ($row = $result->fetch()) {
@@ -61,7 +63,7 @@ class Terminarz
     public function getTimetableOfPetanque()
     {
 
-        $result = $this->pdo->query("SELECT * FROM " . $this->group . "Terminarz" . " ORDER BY date DESC");
+        $result = $this->pdo->query("SELECT * FROM " . $this->dbTableName . " ORDER BY date DESC");
         $list = "<ul class='terminarz'>";
         if ($result !== false) {
             while ($row = $result->fetch()) {
@@ -86,7 +88,7 @@ class Terminarz
     public function getTimetableCMS()
     {
 
-        $result = $this->pdo->query("SELECT * FROM " . $this->group . "Terminarz" . " ORDER BY date DESC");
+        $result = $this->pdo->query("SELECT * FROM " . $this->dbTableName . " ORDER BY date DESC");
         $form = "";
         while ($row = $result->fetch()) {
             $form =
@@ -109,7 +111,7 @@ class Terminarz
     public function getTimetableOfPetanqueCMS()
     {
 
-        $result = $this->pdo->query("SELECT * FROM " . $this->group . "Terminarz" . " ORDER BY date DESC");
+        $result = $this->pdo->query("SELECT * FROM " . $this->dbTableName . " ORDER BY date DESC");
         $form = "";
         while ($row = $result->fetch()) {
             $form =
@@ -134,13 +136,13 @@ class Terminarz
         try {
             //echo "UPDATE ".$this->group."Terminarz"."SET club=$club, opponent=$opponent, resultOfGame=$resultOfGame ,date=$date WHERE id=:id";
             //   exit;
-            $query = $this->pdo->prepare("UPDATE " . $this->group . "Terminarz" . " SET club=:club, opponent=:opponent ,resultOfGame=:resultOfGame ,date=:date WHERE id=:id");
-            $query->bindParam(":club", $club, PDO::PARAM_STR);
-            $query->bindParam(":id", $id, PDO::PARAM_INT);
-            $query->bindParam(":opponent", $opponent, PDO::PARAM_STR);
-            $query->bindParam(":resultOfGame", $resultOfGame, PDO::PARAM_STR);
-            $query->bindParam(":date", $date, PDO::PARAM_STR, 16);
-            $query->execute();
+            $statement = $this->pdo->prepare("UPDATE " . $this->dbTableName . " SET club=:club, opponent=:opponent ,resultOfGame=:resultOfGame ,date=:date WHERE id=:id");
+            $statement->bindParam(":club", $club, PDO::PARAM_STR);
+            $statement->bindParam(":id", $id, PDO::PARAM_INT);
+            $statement->bindParam(":opponent", $opponent, PDO::PARAM_STR);
+            $statement->bindParam(":resultOfGame", $resultOfGame, PDO::PARAM_STR);
+            $statement->bindParam(":date", $date, PDO::PARAM_STR, 16);
+            $statement->execute();
 
         } catch (PDOException $exc) {
             echo "Chwilowy brak dostępu do bazy danych";
@@ -150,12 +152,12 @@ class Terminarz
     public function RemoveMatch($club, $opponent, $resultOfGame, $date)
     {
         try {
-            $query = $this->pdo->prepare("DELETE FROM " . $this->group . "Terminarz" . " WHERE club=:club AND opponent=:opponent AND resultOfGame=:resultOfGame AND date=:date");
-            $query->bindParam(":club", $club, PDO::PARAM_STR);
-            $query->bindParam(":opponent", $opponent, PDO::PARAM_STR);
-            $query->bindParam(":resultOfGame", $resultOfGame, PDO::PARAM_STR);
-            $query->bindParam(":date", $date, PDO::PARAM_STR, 16);
-            $query->execute();
+            $statement = $this->pdo->prepare("DELETE FROM " . $this->dbTableName . " WHERE club=:club AND opponent=:opponent AND resultOfGame=:resultOfGame AND date=:date");
+            $statement->bindParam(":club", $club, PDO::PARAM_STR);
+            $statement->bindParam(":opponent", $opponent, PDO::PARAM_STR);
+            $statement->bindParam(":resultOfGame", $resultOfGame, PDO::PARAM_STR);
+            $statement->bindParam(":date", $date, PDO::PARAM_STR, 16);
+            $statement->execute();
 
         } catch (PDOException $exc) {
             echo "Chwilowy brak dostępu do bazy danych";
@@ -165,13 +167,13 @@ class Terminarz
     {
         try {
 
-            $query = $this->pdo->prepare("INSERT INTO " . $this->group . "Terminarz" . "  VALUES (NULL, :club, :opponent, :resultOfGame, :date)");
-            $query->bindParam(":club", $club, PDO::PARAM_STR);
-            $query->bindParam(":opponent", $opponent, PDO::PARAM_STR);
-            $query->bindParam(":resultOfGame", $resultOfGame, PDO::PARAM_STR);
-            $query->bindParam(":date", $date, PDO::PARAM_STR, 16);
+            $statement = $this->pdo->prepare("INSERT INTO " . $this->dbTableName . "  VALUES (NULL, :club, :opponent, :resultOfGame, :date)");
+            $statement->bindParam(":club", $club, PDO::PARAM_STR);
+            $statement->bindParam(":opponent", $opponent, PDO::PARAM_STR);
+            $statement->bindParam(":resultOfGame", $resultOfGame, PDO::PARAM_STR);
+            $statement->bindParam(":date", $date, PDO::PARAM_STR, 16);
 
-            $query->execute();
+            $statement->execute();
 
         } catch (PDOException $exc) {
             echo "Chwilowy brak dostępu do bazy danych";
@@ -180,6 +182,6 @@ class Terminarz
 
     public function __destruct()
     {
-
+        $this->pdo = null;
     }
 }

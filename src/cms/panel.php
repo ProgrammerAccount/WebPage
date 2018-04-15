@@ -1,5 +1,6 @@
 <?php
 session_start();
+$SOURCE_FOLDER_IMG = "../img/";
 if (!isset($_SESSION['login']) && !isset($_SESSION['username'])) {
     header("Location: ../index.php");
     exit();
@@ -7,7 +8,7 @@ if (!isset($_SESSION['login']) && !isset($_SESSION['username'])) {
 require "../phpClass/News.php";
 $news = new News();
 if (isset($_POST['add']) && isset($_POST['title']) && isset($_POST['description']) && isset($_POST['article']) && isset($_FILES['img'])) {
-    $imgName = $news->addImg($_FILES['img']);
+    $imgName = $news->addImg($_FILES['img'],$SOURCE_FOLDER_IMG);
     if ($imgName !== false) {
         $news->addNews($_POST['title'], $_POST['description'], $_POST['article'], $imgName);
     }
@@ -21,10 +22,10 @@ if (isset($_POST['id']) && isset($_POST['remove']) && isset($_POST['imgName'])) 
 if (isset($_POST['edit']) && isset($_POST['id']) && isset($_POST['title']) && isset($_POST['description']) && isset($_POST['article']) && isset($_POST['imgName'])) {
     $imgPath = $_POST['imgName'];
     if (isset($_FILES['img'])) {
-        $news->removeImg($imgPath);
-        $imgName = $news->addImg($_FILES['img']);
+        $news->removeImg($imgPath,$SOURCE_FOLDER_IMG);
+        $imgName = $news->addImg($_FILES['img'],$SOURCE_FOLDER_IMG);
         if ($imgName !== false) {
-            $news->removeImg($imgPath);
+            $news->removeImg($imgPath,$SOURCE_FOLDER_IMG);
             $imgPath = $imgName;
         }
     }
@@ -155,12 +156,7 @@ and open the template in the editor.
             </form>
             <div class="row">
                 <div class="col-md-12">
-                    <?php
-
-$table = $news->getListOfNewsCMS();
-echo $table;
-
-?>
+                    <?php echo  $news->getListOfNewsCMS(); ?>  
                 </div>
 
             </div>

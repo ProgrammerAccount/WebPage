@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
 
 <head>
-    <title>Liskowiak</title>
+    <title>Liskowiak Kontakt</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,7 +17,9 @@ and open the template in the editor.
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/navStyle.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/news.css">
+    <link rel="stylesheet" href="css/kontakt.css">
+
+
 </head>
 
 <body>
@@ -111,22 +113,20 @@ and open the template in the editor.
         </nav>
 
         <div class="content">
-            <div class="row">
-
-            </div>
-            <?php
-include "phpClass/News.php";
-$news = new News();
-echo $news->getListOfNews();
-
+            <div style="margin:auto" class="col-lg-8">
+                <?php
+require 'phpClass/Kontakt.php';
+$contact = new Contact();
+echo $contact->getContacts();
 ?>
+            </div>
         </div>
         <footer>
-            <small>&copy; Copyright 2018 Strone wykonał
-                <a class="emailLink" href="mailto:td.janiak@gmail.com">Tymoteusz Janiak</a>
+            <small>&copy; Copyright 2018
             </small>
         </footer>
     </main>
+
 </body>
 
 </html>

@@ -2,6 +2,7 @@
 class Contact
 {
     private $pdo;
+    public $dbTableName="Contact";
     public function __construct()
     {
         require 'connect_data.php';
@@ -20,8 +21,8 @@ class Contact
             . "<div class='header col'>Telefon</div>"
             . "<div class='header col'>Email</div>"
             . "</div>";
-        $query = $this->pdo->query("SELECT * FROM Contact");
-        while ($row = $query->fetch()) {
+        $statement = $this->pdo->query("SELECT * FROM $this->dbTableName");
+        while ($row = $statement->fetch()) {
             $table = $table . "<div class='row'>"
                 . "<div class='col'>" . $row['name'] . "</div>"
                 . "<div class='col'>" . $row['phoneNumber'] . "</div>"
@@ -33,11 +34,11 @@ class Contact
     public function getContactsCMS()
     {
         $table = "";
-        $query = $this->pdo->query("SELECT * FROM Contact");
-        while ($row = $query->fetch()) {
+        $statement = $this->pdo->query("SELECT * FROM $this->dbTableName");
+        while ($row = $statement->fetch()) {
             $table = $table . "<form action='' method='GET'><div class='row'>"
                 . "<input type='hidden' value='" . $row['id'] . "' name='id'/>"
-                . "<input type='text' value='" . $row['name'] . "' name='name' readonly />"
+                . "<input type='text' value='" . $row['name'] . "' name='name' />"
                 . "<input type='text' value='" . $row['phoneNumber'] . "' name='phoneNumber'/>"
                 . "<input type='text' value='" . $row['email'] . "' name='email'/>"
                 . "<input class='col' type='submit' value='Usuń' name='remove'/>"
@@ -48,28 +49,32 @@ class Contact
     }
     public function addContact($name, $phoneNumber, $email)
     {
-        $query = $this->pdo->prepare("INSERT INTO Contact VALUES (NULL,:name,:phoneNumber,:email)");
-        $query->bindParam(":name", $name, PDO::PARAM_STR);
-        $query->bindParam(":phoneNumber", $phoneNumber, PDO::PARAM_INT);
-        $query->bindParam(":email", $email, PDO::PARAM_STR);
-        $query->execute();
+        $statement = $this->pdo->prepare("INSERT INTO $this->dbTableName VALUES (NULL,:name,:phoneNumber,:email)");
+        $statement->bindParam(":name", $name, PDO::PARAM_STR);
+        $statement->bindParam(":phoneNumber", $phoneNumber, PDO::PARAM_INT);
+        $statement->bindParam(":email", $email, PDO::PARAM_STR);
+        $statement->execute();
     }
     public function removeContact($id, $name, $phoneNumber, $email)
     {
-        $query = $this->pdo->prepare("DELETE FROM Contact WHERE id=:id AND name=:name AND phoneNumber=:phoneNumber AND email=:email");
-        $query->bindParam(":name", $name, PDO::PARAM_STR);
-        $query->bindParam(":email", $email, PDO::PARAM_STR);
-        $query->bindParam(":id", $id, PDO::PARAM_INT);
-        $query->bindParam(":phoneNumber", $phoneNumber, PDO::PARAM_INT);
-        $query->execute();
+        $statement = $this->pdo->prepare("DELETE FROM $this->dbTableName WHERE id=:id AND name=:name AND phoneNumber=:phoneNumber AND email=:email");
+        $statement->bindParam(":name", $name, PDO::PARAM_STR);
+        $statement->bindParam(":email", $email, PDO::PARAM_STR);
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->bindParam(":phoneNumber", $phoneNumber, PDO::PARAM_INT);
+        $statement->execute();
     }
     public function editContact($id, $name, $phoneNumber, $email)
     {
-        $query = $this->pdo->prepare("UPDATE Contact SET phoneNumber=:phoneNumber,email=:email WHERE Contact.name = :name AND Contact.id=:id");
-        $query->bindParam(":name", $name, PDO::PARAM_STR);
-        $query->bindParam(":email", $email, PDO::PARAM_STR);
-        $query->bindParam(":id", $id, PDO::PARAM_INT);
-        $query->bindParam(":phoneNumber", $phoneNumber, PDO::PARAM_INT);
-        $query->execute();
+        $statement = $this->pdo->prepare(" UPDATE $this->dbTableName SET name = :name  phoneNumber=:phoneNumber,email=:email WHERE  $this->dbTableName.id=:id");
+        $statement->bindParam(":name", $name, PDO::PARAM_STR);
+        $statement->bindParam(":email", $email, PDO::PARAM_STR);
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->bindParam(":phoneNumber", $phoneNumber, PDO::PARAM_INT);
+        $statement->execute();
+    }
+    public function __destruct()
+    {
+        $this->pdo = null;
     }
 }

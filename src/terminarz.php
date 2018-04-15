@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
 
 <head>
-    <title>Liskowiak Klub</title>
+    <title>Liskowiak Terminarz</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,7 +17,7 @@ and open the template in the editor.
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/navStyle.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/sklad.css" type="text/css" />
+    <link rel="stylesheet" href="css/terminarz.css" type="text/css" />
 
 
 </head>
@@ -111,56 +111,81 @@ and open the template in the editor.
                 </ul>
             </div>
         </nav>
+
         <div class="content">
             <div class="row">
-                <div class="col-md-2">
-                </div>
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <?php
 if (isset($_GET['grupa'])) {
+
     $group = "";
     switch ($_GET['grupa']) {
-        case "Komisja":
+        case "Seniorzy":
             {
-                $group = "Komisja";
+                $group = "Seniorzy";
                 break;
             }
 
-        case "Wladze":
+        case "Trampkarze":
             {
-                $group = "Wladze";
+                $group = "Trampkarze";
                 break;
             }
 
-        case "Zarzad":
+        case "Mlodziki":
             {
-                $group = "Zarzad";
+                $group = "Mlodziki";
                 break;
             }
 
+        case "Orliki":
+            {
+                $group = "Orliki";
+                break;
+            }
+
+        case "Zaki":
+            {
+                $group = "Zaki";
+                break;
+            }
+        case "Petanque":
+            {
+                $group = "Petanque";
+                break;
+            }
+
+        case "Siatkowka":
+            {
+                $group = "Siatkowka";
+                break;
+            }
     }
-
     if ($group !== "") {
+        include 'phpClass/Terminarz.php';
+        $kadra = new Terminarz($group);
+        if ($group === "Petanque") {
+            $table = $kadra->getTimetableOfPetanque();
+        } else {
+            $table = $kadra->getTimetable();
+        }
 
-        include 'phpClass/Kadra.php';
-        $kadra = new Kadra($group);
-        $table = $kadra->getSquadAsTable();
         echo $table;
     }
 
 }
 ?>
-                </div>
-                <div class="col-md-2">
+
                 </div>
             </div>
+        </div>
+        <footer>
+            <small>&copy; Copyright 2018 
+                           </small>
+        </footer>
     </main>
-    <footer>
-        <small>&copy; Copyright 2018 Strone wykonał
-            <a class="emailLink" href="mailto:td.janiak@gmail.com">Tymoteusz Janiak</a>
-        </small>
-    </footer>
-    </main>
+
+
 </body>
 
 </html>

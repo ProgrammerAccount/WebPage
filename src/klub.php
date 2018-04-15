@@ -7,7 +7,7 @@ and open the template in the editor.
 <html>
 
 <head>
-    <title>Liskowiak Tabela</title>
+    <title>Liskowiak Klub</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,7 +17,7 @@ and open the template in the editor.
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="css/navStyle.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/table.css" type="text/css" />
+    <link rel="stylesheet" href="css/sklad.css" type="text/css" />
 
 
 </head>
@@ -118,56 +118,33 @@ and open the template in the editor.
                 <div class="col-md-8">
                     <?php
 if (isset($_GET['grupa'])) {
-
     $group = "";
     switch ($_GET['grupa']) {
-        case "Seniorzy":
+        case "Komisja":
             {
-                $group = "Seniorzy";
+                $group = "Komisja";
                 break;
             }
 
-        case "Trampkarze":
+        case "Wladze":
             {
-                $group = "Trampkarze";
+                $group = "Wladze";
                 break;
             }
 
-        case "Mlodziki":
+        case "Zarzad":
             {
-                $group = "Mlodziki";
-                break;
-            }
-
-        case "Orliki":
-            {
-                $group = "Orliki";
-                break;
-            }
-
-        case "Zaki":
-            {
-                $group = "Zaki";
-                break;
-            }
-        case "Petanque":
-            {
-                $group = "Petanque";
-                break;
-            }
-
-        case "Siatkowka":
-            {
-                $group = "Siatkowka";
+                $group = "Zarzad";
                 break;
             }
 
     }
 
     if ($group !== "") {
-        include 'phpClass/Tabela.php';
-        $tabela = new Tabela($group);
-        $table = $tabela->getTable();
+
+        include 'phpClass/Kadra.php';
+        $kadra = new Kadra($group);
+        $table = $kadra->getSquadAsTable();
         echo $table;
     }
 
@@ -177,12 +154,11 @@ if (isset($_GET['grupa'])) {
                 <div class="col-md-2">
                 </div>
             </div>
-        </div>
-        <footer>
-            <small>&copy; Copyright 2018 Strone wykonał
-                <a class="emailLink" href="mailto:td.janiak@gmail.com">Tymoteusz Janiak</a>
-            </small>
-        </footer>
+    </main>
+    <footer>
+        <small>&copy; Copyright 2018
+        </small>
+    </footer>
     </main>
 </body>
 

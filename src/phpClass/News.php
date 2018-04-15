@@ -2,6 +2,7 @@
 class News
 {
     private $pdo;
+    public $dbTableName="News";
 
     public function __construct()
     {
@@ -19,7 +20,7 @@ class News
     public function getListOfNews()
     {
         $table = "";
-        $results = $this->pdo->query("SELECT * FROM News ORDER BY id DESC");
+        $results = $this->pdo->query("SELECT * FROM $this->dbTableName ORDER BY id DESC");
 
         if ($results != false) {
             while ($row = $results->fetch()) {
@@ -40,7 +41,7 @@ class News
     public function getListOfNewsCMS()
     {
         $table = "";
-        $results = $this->pdo->query("SELECT * FROM News");
+        $results = $this->pdo->query("SELECT * FROM $this->dbTableName");
 
         $table = "<table class='table'>"
             . "<tr>"
@@ -74,7 +75,7 @@ class News
     public function getNews($id)
     {
         $table = "<div class='article'>";
-        $results = $this->pdo->prepare("SELECT * FROM News WHERE id=:id");
+        $results = $this->pdo->prepare("SELECT * FROM $this->dbTableName WHERE id=:id");
         $results->bindParam(':id', $id, PDO::PARAM_INT);
         $results->execute();
 
@@ -90,7 +91,7 @@ class News
         return $table . "</div>";
 
     }
-    public function addImg($file)
+    public function addImg($file,$sourceFolderPath)
     {
         $positiveValidation = true;
         $fileType = strtolower(pathinfo(basename($file['name']), PATHINFO_EXTENSION));
@@ -108,11 +109,11 @@ class News
 
         if ($positiveValidation) {
             $fileName = str_replace(' ', '', basename($file['name']));
-            while (file_exists("../img/" . $fileName)) {
+            while (file_exists($sourceFolderPath . $fileName)) {
                 $fileName = "a" . $fileName;
             }
 
-            if (move_uploaded_file($file['tmp_name'], "../img/" . $fileName)) {
+            if (move_uploaded_file($file['tmp_name'], $sourceFolderPath . $fileName)) {
 
                 return $fileName;
             }
@@ -120,11 +121,11 @@ class News
         }
         return false;
     }
-    public function removeImg($imgName)
+    public function removeImg($imgName,$sourceFolderPath)
     {
         try {
-            if (file_exists("../img/" . $imgName)) {
-                unlink("../img/" . $imgName);
+            if (file_exists($sourceFolderPath . $imgName)) {
+                unlink($sourceFolderPath . $imgName);
             }
 
         } catch (Exeption $e) {}
@@ -133,41 +134,40 @@ class News
     public function addNews($title, $description, $article, $imgPath)
     {
         try {
-            $query = $this->pdo->prepare("INSERT INTO News VALUES(NULL,:title,:description,:article,:imgPath)");
-            $query->bindParam(":title", $title, PDO::PARAM_STR);
-            $query->bindParam(":description", $description, PDO::PARAM_STR);
-            $query->bindParam(":article", $article, PDO::PARAM_STR);
-            $query->bindParam(":imgPath", $imgPath, PDO::PARAM_STR);
-            $query->execute();
-        } catch (Exeption $e) {
-
-        }
+            $statement = $this->pdo->prepare("INSERT INTO $this->dbTableName VALUES(NULL,:title,:description,:article,:imgPath)");
+            $statement->bindParam(":title", $title, PDO::PARAM_STR);
+            $statement->bindParam(":description", $description, PDO::PARAM_STR);
+            $statement->bindParam(":article", $article, PDO::PARAM_STR);
+            $statement->bindParam(":imgPath", $imgPath, PDO::PARAM_STR);
+            $statement->execute();
+        } catch (Exeption $e) {}
     }
 
     public function editNews($id, $title, $description, $article, $imgPath)
     {
         try {
 
-            $query = $this->pdo->prepare("UPDATE News SET title=:title ,description = :description, article=:article,imgPath=:imgPath WHERE id=:id");
-            $query->bindParam(":title", $title, PDO::PARAM_STR);
-            $query->bindParam(":description", $description, PDO::PARAM_STR);
-            $query->bindParam(":article", $article, PDO::PARAM_STR);
-            $query->bindParam(":id", $id, PDO::PARAM_INT);
-            $query->bindParam(":imgPath", $imgPath, PDO::PARAM_STR);
-            $query->execute();
-        } catch (Exeption $e) {
-
-        }
+            $statement = $this->pdo->prepare("UPDATE $this->dbTableName SET title=:title ,description = :description, article=:article,imgPath=:imgPath WHERE id=:id");
+            $statement->bindParam(":title", $title, PDO::PARAM_STR);
+            $statement->bindParam(":description", $description, PDO::PARAM_STR);
+            $statement->bindParam(":article", $article, PDO::PARAM_STR);
+            $statement->bindParam(":id", $id, PDO::PARAM_INT);
+            $statement->bindParam(":imgPath", $imgPath, PDO::PARAM_STR);
+            $statement->execute();
+        } catch (Exeption $e) {}
     }
     public function removeNews($id, $imgName)
     {
         try {
             $this->removeImg($imgName);
-            $query = $this->pdo->prepare("DELETE FROM News WHERE id=:id");
-            $query->bindParam(":id", $id, PDO::PARAM_INT);
-            $query->execute();
-        } catch (Exeption $e) {
+            $statement = $this->pdo->prepare("DELETE FROM $this->dbTableName WHERE id=:id");
+            $statement->bindParam(":id", $id, PDO::PARAM_INT);
+            $statement->execute();
+        } catch (Exeption $e) {}
 
-        }
+    }
+    public function __destruct()
+    {
+        $this->pdo = null;
     }
 }

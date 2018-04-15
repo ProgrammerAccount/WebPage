@@ -13,6 +13,7 @@
  */
 class Login
 {
+    public $dbTableName="Admin";
     public function __construct()
     {
         require_once 'connect_data.php';
@@ -41,11 +42,15 @@ class Login
 
     public function getUser($email)
     {
-        $query = $this->pdo->prepare("SELECT * FROM Admin WHERE email= :email ");
-        $query->bindParam(":email", $email);
-        $query->execute();
-        if ($query->rowCount() > 0) {
-            return $query->fetch();
+        $statement=false;
+        try{
+        $statement = $this->pdo->prepare("SELECT * FROM $this->dbTableName WHERE email= :email ");
+        $statement->bindParam(":email", $email);
+        $statement->execute();
+        }
+        catch(Exception $e) {}
+        if ($statement!==false && $statement->rowCount() > 0) {
+            return $statement->fetch();
         } else {
             return false;
         }
@@ -56,10 +61,14 @@ class Login
 
         if ($this->getUser($email) === false) {
             $pass = password_hash($password, PASSWORD_DEFAULT);
-            $query = $this->pdo->prepare("INSERT INTO Admin VALUES(NULL, :email, '" . $pass . "' )");
-            $query->bindParam(":email", $email);
-            $query->execute();
-            return true;
+            try {
+                $statement = $this->pdo->prepare("INSERT INTO $this->dbTableName VALUES(NULL, :email, '" . $pass . "' )");
+                $statement->bindParam(":email", $email);
+                $statement->execute();
+                return true;
+            } catch (Exception $e) {
+                return false;
+            }
         }
 
         return false;
@@ -72,6 +81,10 @@ class Login
         }
 
         return false;
+    }
+    public function __destruct()
+    {
+        $this->pdo = null;
     }
 
 }
