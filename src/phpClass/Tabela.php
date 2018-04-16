@@ -13,6 +13,7 @@ class Tabela
             $dsn = "mysql:host=$SERVER;dbname=$DB_NAME";
             $this->pdo = new PDO($dsn, $USER_NAME, $PASSWORD);
         } catch (PDOException $e) {
+            print "Chwilowy brak dostępu do bazy danych<br/>";
             die();
         }
 

@@ -10,7 +10,7 @@ class Contact
         try {
             $this->pdo = new PDO($dsn, $USER_NAME, $PASSWORD);
         } catch (PDOException $e) {
-            print "Error!: " . $e->getMessage() . "<br/>";
+            print "Chwilowy brak dostępu do bazy danych<br/>";
             die();
         }
     }
@@ -66,11 +66,7 @@ class Contact
     }
     public function editContact($id, $name, $phoneNumber, $email)
     {
-<<<<<<< HEAD:src/phpClass/Kontakt.php
         $statement = $this->pdo->prepare(" UPDATE $this->dbTableName SET name = :name  phoneNumber=:phoneNumber,email=:email WHERE  $this->dbTableName.id=:id");
-=======
-        $statement = $this->pdo->prepare("UPDATE $this->dbTableName SET phoneNumber=:phoneNumber,email=:email WHERE $this->dbTableName.name = :name AND $this->dbTableName.id=:id");
->>>>>>> de15f2c618a0e0d82da8791e4a272985b882ab0b:phpClass/Kontakt.php
         $statement->bindParam(":name", $name, PDO::PARAM_STR);
         $statement->bindParam(":email", $email, PDO::PARAM_STR);
         $statement->bindParam(":id", $id, PDO::PARAM_INT);

@@ -22,7 +22,7 @@ class Login
         {
             $this->pdo = new PDO($dsn, $USER_NAME, $PASSWORD);
         } catch (PDOException $exc) {
-            echo $exc->getMessage();
+            print "Chwilowy brak dostępu do bazy danych<br/>";
             die();
         }
     }

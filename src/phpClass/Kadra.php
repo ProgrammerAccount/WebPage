@@ -28,7 +28,7 @@ class Kadra
         try {
             $this->pdo = new PDO($dsn, $USER_NAME, $PASSWORD);
         } catch (PDOException $e) {
-            //print "Error!: " . $e->getMessage() . "<br/>";
+            print "Chwilowy brak dostępu do bazy danych<br/>";
             die();
         }
 
