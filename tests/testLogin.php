@@ -1,19 +1,19 @@
 <?php
+declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 
-class TestLogin extends TestCase{
-
-public function testvalidation_email()
+final class RecoveryTest extends TestCase
 {
-  $this->assertEquals(Recovery::sendEmail("td.janiak@gmail.com"),true);
-}
-public function testInvalidvalidation_email()
-{
-  $this->assertEquals(Login::validation_email("InvalidEmail"),false);
-}
+    public function testCanBeCreatedFromValidEmailAddress(): void
+    {
+      $this->assertEquals(Recovery::sendEmail("td.janiak@gmail.com"),true);
+    }
 
-
+   
 }
 
-?>
+
+
+
+

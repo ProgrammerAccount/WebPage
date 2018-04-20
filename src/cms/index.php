@@ -20,7 +20,8 @@ and open the template in the editor.
         <input type="text" name="email" placeholder="E-mail" /> </br>
         <input type="password" name="pass" placeholder="hasło" /> </br>
         <div class="g-recaptcha captcha" style="margin:auto;" data-sitekey="6LdvXlMUAAAAAKA2OoZktQwQeGSFT7Y5j_XYx_hW"></div></br>
-        <a href="register.php" />Dodaj Konto</a>
+        <a href="register.php" />Dodaj Konto</a></br>
+        <a href="recovery.php" />Zapomniałeś Hasła?</a>
         </br>
         <input type="submit" value="login" />
         </br>

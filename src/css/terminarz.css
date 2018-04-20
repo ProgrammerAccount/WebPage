@@ -1,73 +1,71 @@
-.terminarz {
+.terminarz{
     list-style-type: none;
+    
 }
-
-.article {
+.article{
     padding-top: 30px;
     border-bottom: solid 1px #ccc;
 }
-
-.club {
+.club{
     font-size: 30px;
     width: 40%;
-    display: inline-block;
+    display:inline-block;
     text-align: center;
 }
-
-.hour {
+.hour{
     font-size: 25px;
-}
 
-.petanque {
+}
+.petanque{
     font-size: 30px;
     width: 100%;
-    display: inline-block;
+    display:inline-block;
     text-align: center;
 }
-
-.result {
-    display: inline-block;
+.result{
+    display:inline-block;
     width: 80%;
 }
-
-.dateTime {
+.dateTime{
+    
     border-right: dotted 2px #ccc;
     width: 20%;
-    display: inline-block;
-}
-
-.resultOfGame {
-    font-size: 35px;
-    width: 15%;
-    display: inline-block;
-    text-align: center;
-}
-
-@media only screen and (max-width: 600px) {
-    .dateTime {
-        border-right: none;
-        max-width: 100%;
-        width: 100%;
+    display:inline-block;
+   }
+.resultOfGame{
+        font-size: 35px;
+        width: 15%;
+        display: inline-block;
         text-align: center;
+}
+
+ @media only screen and (max-width: 600px) {
+ .dateTime{
+    
+    border-right: none;
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
     }
-    .result {
+    .result{
         display: block;
         text-align: center;
     }
-    .terminarz {
+    .terminarz{
         margin-left: 0;
         padding-left: 0;
     }
-    .resultOfGame {
+    .resultOfGame{
         font-size: 25px;
     }
-    .club {
-        font-size: 20px;
+    .club{
+    font-size: 20px;
     }
-    .hour {
-        font-size: 15px;
-    }
-    .result {
-        width: 100%;
-    }
+    .hour{
+    font-size: 15px;
+
+}
+.result{
+    width:100%;
+}
 }
