@@ -16,15 +16,21 @@ class Login
     public $dbTableName="Admin";
     public function __construct()
     {
-        require_once 'connect_data.php';
-        $dsn = "mysql:host=$SERVER;dbname=$DB_NAME";
+       
+        
         try
         {
+            require 'connect_data.php';
+            $dsn ="mysql:host=$SERVER;dbname=$DB_NAME";
             $this->pdo = new PDO($dsn, $USER_NAME, $PASSWORD);
         } catch (PDOException $exc) {
             print "Chwilowy brak dostępu do bazy danych<br/>";
             die();
         }
+    }
+    public function setDB($DB)
+    {
+        $this->pdo=$DB;
     }
 
     public function validation_email($email)
@@ -47,31 +53,29 @@ class Login
         $statement = $this->pdo->prepare("SELECT * FROM $this->dbTableName WHERE email= :email ");
         $statement->bindParam(":email", $email);
         $statement->execute();
+        if ($statement!==false && $statement->rowCount() > 0) 
+            return $statement->fetch();
+         else
+            return false;
+        
         }
         catch(Exception $e) {}
-        if ($statement!==false && $statement->rowCount() > 0) {
-            return $statement->fetch();
-        } else {
-            return false;
-        }
+
 
     }
     public function addUser($email, $password)
     {
 
-        if ($this->getUser($email) === false) {
+       // if ($this->getUser($email) === false) {
             $pass = password_hash($password, PASSWORD_DEFAULT);
-            try {
-                $statement = $this->pdo->prepare("INSERT INTO $this->dbTableName VALUES(NULL, :email, '" . $pass . "' )");
+                $statement = $this->pdo->prepare("INSERT INTO $this->dbTableName VALUES(NULL, :email, '" . $pass . "',NULL )");
                 $statement->bindParam(":email", $email);
-                $statement->execute();
-                return true;
-            } catch (Exception $e) {
-                return false;
-            }
-        }
+                return $statement->execute();
+                 
+                
 
-        return false;
+        //
+        //else return false;
 
     }
     public function comparePassword($password, $hash)

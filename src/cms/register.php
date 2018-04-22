@@ -2,12 +2,12 @@
 
 if (isset($_POST['AdminEmail']) && isset($_POST['AdminPass']) && isset($_POST['email']) && isset($_POST['pass']) && isset($_POST['passv2'])) {
     
-    if(isset($_POST['g-recaptcha-response']))
+    //if(isset($_POST['g-recaptcha-response']))
     {   
     $secretKey="6LdvXlMUAAAAAMzv21EeVmcN26QWgRPn_CHwksv0";
     $captchaResponse = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$_POST['g-recaptcha-response'].""); 
     $captchaResponse =  json_decode($captchaResponse);
-    if($captchaResponse->success===true)
+   // if($captchaResponse->success===true)
     {
     require '../phpClass/Login.php';
     $email = $_POST['AdminEmail'];
@@ -49,7 +49,7 @@ if (isset($_POST['AdminEmail']) && isset($_POST['AdminPass']) && isset($_POST['e
         exit;
     }
 
-}else 
+    }/*else 
 {
     $_SESSION['error'] = "Pokaż że nie jesteś robotem";
     header("Location: index.php");
@@ -58,8 +58,8 @@ if (isset($_POST['AdminEmail']) && isset($_POST['AdminPass']) && isset($_POST['e
 { 
 $_SESSION['error'] = "Pokaż że nie jesteś robotem";
 header("Location: index.php");
-}
-}
+}*/
+}}
 ?>
 
 <!DOCTYPE html>

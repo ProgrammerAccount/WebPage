@@ -6,7 +6,7 @@ class Tabela
     public $dbTableName = "Tabela";
     public function __construct($group)
     {
-        require_once 'connect_data.php';
+        require 'connect_data.php';
         $this->group = $group;
         $this->dbTableName = $this->group . $this->dbTableName;
         try {
@@ -102,6 +102,11 @@ class Tabela
     public function addTeam($club, $points, $wins, $draws, $losses)
     {
         try {
+            $club=htmlspecialchars($club);
+            $points=htmlspecialchars($points);
+            $draws=htmlspecialchars($draws);
+            $losses=htmlspecialchars($losses);
+            $wins=htmlspecialchars($wins);
             $statement = $this->pdo->prepare("INSERT INTO " . $this->dbTableName . " VALUES (NULL, :club, :points, :wins, :draws, :losses)");
             $statement->bindParam(":club", $club, PDO::PARAM_STR);
             $statement->bindParam(":points", $points, PDO::PARAM_INT);
@@ -118,6 +123,13 @@ class Tabela
     public function removeTeam($id, $club, $points, $wins, $draws, $losses)
     {
         try {
+            $club=htmlspecialchars($club);
+            $points=htmlspecialchars($points);
+            $draws=htmlspecialchars($draws);
+            $losses=htmlspecialchars($losses);
+            $wins=htmlspecialchars($wins);
+            $id=htmlspecialchars($id);
+
             $statement = $this->pdo->prepare("DELETE FROM " . $this->dbTableName . " WHERE clubName=:club AND points=:points AND wins=:wins AND draws=:draws AND losses=:losses AND id = :id ");
             $statement->bindParam(":club", $club, PDO::PARAM_STR);
             $statement->bindParam(":points", $points, PDO::PARAM_INT);
@@ -135,6 +147,13 @@ class Tabela
     {
         try {
             $statement = $this->pdo->prepare("UPDATE " . $this->dbTableName . " SET points = :points, wins = :wins, draws = :draws, losses = :losses WHERE clubName = :club AND id = :id ");
+            $club=htmlspecialchars($club);
+            $id=htmlspecialchars($id);
+            $points=htmlspecialchars($points);
+            $draws=htmlspecialchars($draws);
+            $losses=htmlspecialchars($losses);
+            $wins=htmlspecialchars($wins);
+
             $statement->bindParam(":club", $club, PDO::PARAM_STR);
             $statement->bindParam(":points", $points, PDO::PARAM_INT);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);

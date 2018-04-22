@@ -50,6 +50,9 @@ class Contact
     public function addContact($name, $phoneNumber, $email)
     {
         $statement = $this->pdo->prepare("INSERT INTO $this->dbTableName VALUES (NULL,:name,:phoneNumber,:email)");
+        $name = htmlspecialchars($name);
+        $email= htmlspecialchars($email);
+        $phoneNumber = htmlspecialchars($phoneNumber);
         $statement->bindParam(":name", $name, PDO::PARAM_STR);
         $statement->bindParam(":phoneNumber", $phoneNumber, PDO::PARAM_INT);
         $statement->bindParam(":email", $email, PDO::PARAM_STR);
@@ -57,6 +60,10 @@ class Contact
     }
     public function removeContact($id, $name, $phoneNumber, $email)
     {
+        $name = htmlspecialchars($name);
+        $email= htmlspecialchars($email);
+        $phoneNumber = htmlspecialchars($phoneNumber);
+        $id=htmlspecialchars($id);
         $statement = $this->pdo->prepare("DELETE FROM $this->dbTableName WHERE id=:id AND name=:name AND phoneNumber=:phoneNumber AND email=:email");
         $statement->bindParam(":name", $name, PDO::PARAM_STR);
         $statement->bindParam(":email", $email, PDO::PARAM_STR);
@@ -66,12 +73,17 @@ class Contact
     }
     public function editContact($id, $name, $phoneNumber, $email)
     {
-        $statement = $this->pdo->prepare(" UPDATE $this->dbTableName SET name = :name  phoneNumber=:phoneNumber,email=:email WHERE  $this->dbTableName.id=:id");
+        $name = htmlspecialchars($name);
+        $email= htmlspecialchars($email);
+        $phoneNumber = htmlspecialchars($phoneNumber);
+        $id=htmlspecialchars($id);
+        $statement = $this->pdo->prepare("UPDATE $this->dbTableName SET name = :name,  phoneNumber=:phoneNumber,email=:email WHERE  $this->dbTableName.id=:id");
+        //echo "UPDATE $this->dbTableName SET name = $name  phoneNumber=$phoneNumber,email=$email WHERE  $this->dbTableName.id=$id";exit;
         $statement->bindParam(":name", $name, PDO::PARAM_STR);
         $statement->bindParam(":email", $email, PDO::PARAM_STR);
         $statement->bindParam(":id", $id, PDO::PARAM_INT);
         $statement->bindParam(":phoneNumber", $phoneNumber, PDO::PARAM_INT);
-        $statement->execute();
+        $statement->execute(); 
     }
     public function __destruct()
     {

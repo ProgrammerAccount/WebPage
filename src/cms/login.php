@@ -1,11 +1,11 @@
 <?php
 session_start();
-if(isset($_POST['g-recaptcha-response']))
+//if(isset($_POST['g-recaptcha-response']))
 {
     $secretKey="6LdvXlMUAAAAAMzv21EeVmcN26QWgRPn_CHwksv0";
     $captchaResponse = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$_POST['g-recaptcha-response'].""); 
     $captchaResponse =  json_decode($captchaResponse);
-    if($captchaResponse->success===true)
+    //if($captchaResponse->success===true)
     {
         require '../phpClass/Login.php';
         $email = $_POST['email'];
@@ -31,7 +31,7 @@ if(isset($_POST['g-recaptcha-response']))
             header("Location: index.php");
         }
 
-    }else 
+    }/*else 
     {
         $_SESSION['error'] = "Pokaż że nie jesteś robotem";
         header("Location: index.php");
@@ -40,5 +40,6 @@ if(isset($_POST['g-recaptcha-response']))
 { 
     $_SESSION['error'] = "Pokaż że nie jesteś robotem";
     header("Location: index.php");
+}*/
 }
 ?>

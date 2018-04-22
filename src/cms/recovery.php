@@ -1,25 +1,22 @@
 <?php session_start();
 
 if (isset($_POST['email'])) {
-    
-    if(isset($_POST['g-recaptcha-response']))
-    {   
-    $secretKey="6LdvXlMUAAAAAMzv21EeVmcN26QWgRPn_CHwksv0";
-    $captchaResponse = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$_POST['g-recaptcha-response'].""); 
-    $captchaResponse =  json_decode($captchaResponse);
-        if($captchaResponse->success===true)
-        {
+
+    if (isset($_POST['g-recaptcha-response'])) {
+        $secretKey = "6LdvXlMUAAAAAMzv21EeVmcN26QWgRPn_CHwksv0";
+        $captchaResponse = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secretKey . "&response=" . $_POST['g-recaptcha-response'] . "");
+        $captchaResponse = json_decode($captchaResponse);
+        if ($captchaResponse->success === true) {
             require '../phpClass/Recovery.php';
             $recovery = new Recovery();
-            if(isset($_POST['email']))
-            {
+            if (isset($_POST['email'])) {
                 $recovery->generateToken();
                 $recovery->AddTokenToDB($_POST['email']);
                 $recovery->sendEmail($_POST['email']);
-                header("Location: newPassword.php")   ;
-                exit();             
+                header("Location: newPassword.php");
+                exit();
             }
-            
+
         }
     }
 }

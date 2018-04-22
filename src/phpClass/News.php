@@ -6,7 +6,7 @@ class News
 
     public function __construct()
     {
-        require_once 'connect_data.php';
+        require 'connect_data.php';
         $dsn = "mysql:host=$SERVER;dbname=$DB_NAME";
 
         try {
@@ -93,6 +93,8 @@ class News
     }
     public function addImg($file,$sourceFolderPath)
     {
+        if(is_file($file['tmp_name']))
+        {
         $positiveValidation = true;
         $fileType = strtolower(pathinfo(basename($file['name']), PATHINFO_EXTENSION));
         if (getimagesize($file['tmp_name']) === false) {
@@ -117,9 +119,10 @@ class News
 
                 return $fileName;
             }
-            return false;
+            return "";
         }
-        return false;
+        return "";
+    }return "";
     }
     public function removeImg($imgName,$sourceFolderPath)
     {
@@ -135,6 +138,10 @@ class News
     {
         try {
             $statement = $this->pdo->prepare("INSERT INTO $this->dbTableName VALUES(NULL,:title,:description,:article,:imgPath)");
+            $title = htmlspecialchars($title);
+            $description=htmlspecialchars($description);
+            $article=htmlspecialchars($article);
+            
             $statement->bindParam(":title", $title, PDO::PARAM_STR);
             $statement->bindParam(":description", $description, PDO::PARAM_STR);
             $statement->bindParam(":article", $article, PDO::PARAM_STR);
@@ -146,9 +153,12 @@ class News
     public function editNews($id, $title, $description, $article, $imgPath)
     {
         try {
-
+            $id=htmlspecialchars($id);
+            $article=htmlspecialchars($article);
+            $description=htmlspecialchars($description);
+            $title=htmlspecialchars($$title);
             $statement = $this->pdo->prepare("UPDATE $this->dbTableName SET title=:title ,description = :description, article=:article,imgPath=:imgPath WHERE id=:id");
-            $statement->bindParam(":title", $title, PDO::PARAM_STR);
+            $statement->bindParam(":title",  $$title, PDO::PARAM_STR);
             $statement->bindParam(":description", $description, PDO::PARAM_STR);
             $statement->bindParam(":article", $article, PDO::PARAM_STR);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
@@ -156,11 +166,13 @@ class News
             $statement->execute();
         } catch (Exeption $e) {}
     }
-    public function removeNews($id, $imgName)
+    public function removeNews($id, $imgName,$SOURCE_FOLDER_IMG)
     {
         try {
-            $this->removeImg($imgName);
+            $this->removeImg($imgName,$SOURCE_FOLDER_IMG);
             $statement = $this->pdo->prepare("DELETE FROM $this->dbTableName WHERE id=:id");
+            $id=htmlspecialchars($id);
+
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
             $statement->execute();
         } catch (Exeption $e) {}

@@ -20,7 +20,7 @@ class Kadra
     private $dbTableName="Kadra";
     public function __construct($group)
     {
-        require_once 'connect_data.php';
+        require 'connect_data.php';
         $this->group = $group; // for example "Orliki","Trampkarze"
         $this->dbTableName = $this->group.$this->dbTableName;
         $dsn = "mysql:host=$SERVER;dbname=$DB_NAME";
@@ -135,6 +135,8 @@ class Kadra
     {
         try {
             $statement = $this->pdo->prepare("DELETE FROM " . $this->dbTableName . " WHERE name=:name AND role=:role");
+            $name = htmlspecialchars($name);
+            $role = htmlspecialchars($role);
             $statement->bindParam(":name", $name, PDO::PARAM_STR);
             $statement->bindParam(":role", $role, PDO::PARAM_STR);
             $statement->execute();
@@ -144,6 +146,9 @@ class Kadra
     public function editPlayer($id, $name, $role)
     {
         try {
+            $name = htmlspecialchars($name);
+            $role = htmlspecialchars($role);
+            $id=htmlspecialchars($id);
             $statement = $this->pdo->prepare("UPDATE " . $this->dbTableName . " SET name=:name , role=:role WHERE id=:id");
             $statement->bindParam(":name", $name, PDO::PARAM_STR);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
@@ -156,6 +161,8 @@ class Kadra
     public function addPlayer($name, $role)
     {
         try {
+            $name = htmlspecialchars($name);
+            $role = htmlspecialchars($role);
             $statement = $this->pdo->prepare("INSERT INTO " . $this->dbTableName . " VALUES (NULL, :role, :name)");
             $statement->bindParam(":name", $name, PDO::PARAM_STR);
             $statement->bindParam(":role", $role, PDO::PARAM_STR);

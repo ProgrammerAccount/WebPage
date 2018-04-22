@@ -8,7 +8,7 @@ if (!isset($_SESSION['login']) && !isset($_SESSION['username'])) {
 require "../phpClass/News.php";
 $news = new News();
 if (isset($_POST['add']) && isset($_POST['title']) && isset($_POST['description']) && isset($_POST['article']) && isset($_FILES['img'])) {
-    $imgName = $news->addImg($_FILES['img'],$SOURCE_FOLDER_IMG);
+    $imgName = $news->addImg($_FILES['img'], $SOURCE_FOLDER_IMG);
     if ($imgName !== false) {
         $news->addNews($_POST['title'], $_POST['description'], $_POST['article'], $imgName);
     }
@@ -16,16 +16,16 @@ if (isset($_POST['add']) && isset($_POST['title']) && isset($_POST['description'
 }
 
 if (isset($_POST['id']) && isset($_POST['remove']) && isset($_POST['imgName'])) {
-    $imgName = $news->removeNews($_POST['id'], $_POST['imgName']);
+    $imgName = $news->removeNews($_POST['id'], $_POST['imgName'],$SOURCE_FOLDER_IMG);
     header("Location: panel.php");
 }
 if (isset($_POST['edit']) && isset($_POST['id']) && isset($_POST['title']) && isset($_POST['description']) && isset($_POST['article']) && isset($_POST['imgName'])) {
     $imgPath = $_POST['imgName'];
     if (isset($_FILES['img'])) {
-        $news->removeImg($imgPath,$SOURCE_FOLDER_IMG);
-        $imgName = $news->addImg($_FILES['img'],$SOURCE_FOLDER_IMG);
+        $news->removeImg($imgPath, $SOURCE_FOLDER_IMG);
+        $imgName = $news->addImg($_FILES['img'], $SOURCE_FOLDER_IMG);
         if ($imgName !== false) {
-            $news->removeImg($imgPath,$SOURCE_FOLDER_IMG);
+            $news->removeImg($imgPath, $SOURCE_FOLDER_IMG);
             $imgPath = $imgName;
         }
     }
@@ -156,7 +156,7 @@ and open the template in the editor.
             </form>
             <div class="row">
                 <div class="col-md-12">
-                    <?php echo  $news->getListOfNewsCMS(); ?>  
+                    <?php echo $news->getListOfNewsCMS(); ?>
                 </div>
 
             </div>
