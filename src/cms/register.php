@@ -10,9 +10,11 @@ if (isset($_POST['AdminEmail']) && isset($_POST['AdminPass']) && isset($_POST['e
    // if($captchaResponse->success===true)
     {
     require '../phpClass/Login.php';
+    require '../phpClass/connect_data.php';
+
     $email = $_POST['AdminEmail'];
     $password = $_POST['AdminPass'];
-    $login = new Login();
+    $login = new Login($pdo);
     if ($_POST['pass'] === $_POST['passv2']) {
         if ($login->validation_email($email)) {
             $user = $login->getUser($email);

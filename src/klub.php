@@ -143,7 +143,8 @@ if (isset($_GET['grupa'])) {
     if ($group !== "") {
 
         include 'phpClass/Kadra.php';
-        $kadra = new Kadra($group);
+        require 'phpClass/connect_data.php';
+        $kadra = new Kadra($group,$pdo);
         $table = $kadra->getSquadAsTable();
         echo $table;
     }

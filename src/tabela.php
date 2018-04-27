@@ -166,7 +166,9 @@ if (isset($_GET['grupa'])) {
 
     if ($group !== "") {
         include 'phpClass/Tabela.php';
-        $tabela = new Tabela($group);
+        require 'phpClass/connect_data.php';
+
+        $tabela = new Tabela($group, $pdo);
         $table = $tabela->getTable();
         echo $table;
     }

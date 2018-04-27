@@ -5,8 +5,10 @@ if (!isset($_SESSION['login']) && !isset($_SESSION['username'])) {
     exit();
 }
 
-include '../phpClass/Kontakt.php';
-$contact = new Contact();
+require '../phpClass/Kontakt.php';
+require '../phpClass/connect_data.php';
+
+$contact = new Contact($pdo);
 if (isset($_GET['add']) && isset($_GET['name']) && isset($_GET['phoneNumber']) && isset($_GET['email']) && $_SESSION['login'] === true) {
     $contact->addContact($_GET['name'], $_GET['phoneNumber'], $_GET['email']);
     header("Location:kontakt.php");

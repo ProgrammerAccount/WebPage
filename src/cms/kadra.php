@@ -53,7 +53,9 @@ if (isset($_GET['grupa'])) {
 
     if ($group !== "") {
         require_once '../phpClass/Kadra.php';
-        $kadra = new Kadra($group);
+        require '../phpClass/connect_data.php';
+
+        $kadra = new Kadra($group,$pdo);
         if (isset($_GET['name']) && isset($_GET['add']) && isset($_GET['role']) && $_SESSION['login'] === true) {
             $kadra->addPlayer($_GET['name'], $_GET['role']);
             header("Location:kadra.php?grupa=$group");

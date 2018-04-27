@@ -53,7 +53,9 @@ if (isset($_GET['grupa'])) {
 
     if ($group !== "") {
         include '../phpClass/Tabela.php';
-        $tabela = new Tabela($group);
+        require '../phpClass/connect_data.php';
+
+        $tabela = new Tabela($group, $pdo);
 
         if (isset($_GET['add']) && isset($_GET['club']) && isset($_GET['points']) && isset($_GET['wins']) && isset($_GET['draws']) && isset($_GET['losses']) && $_SESSION['login'] === true) {
             $tabela->addTeam($_GET['club'], $_GET['points'], $_GET['wins'], $_GET['draws'], $_GET['losses']);
@@ -187,8 +189,8 @@ and open the template in the editor.
                     <input class="form-control col" placeholder="Wygrane" type="text" name="wins" />
                     <input class="form-control col" placeholder="Remisy" type="text" name="draws" />
                     <input class="form-control col" placeholder="Przegrane" type="text" name="losses" />
-                    <input class="form-control col" type="hidden" name="grupa" value=<?php if (isset($_GET[ 'grupa'])) { echo $_GET[ 'grupa'];
-                        } ?> />
+                    <input class="form-control col" type="hidden" name="grupa" value=<?php if (isset($_GET['grupa'])) {echo $_GET['grupa'];
+        }?> />
                     <input class="col" value="Dodaj" name='add' type="submit" />
                 </div>
             </form>

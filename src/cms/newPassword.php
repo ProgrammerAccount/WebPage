@@ -8,8 +8,10 @@ if (isset($_POST['email'])) {
         $captchaResponse = json_decode($captchaResponse);
         if ($captchaResponse->success === true) {
             require '../phpClass/Recovery.php';
+            require '../phpClass/connect_data.php';
 
-            $recovery = new Recovery();
+
+            $recovery = new Recovery($pdo);
             if (isset($_POST['token'])) {
                 if ($recovery->validationToken($_POST['email'], $_POST['token'])) {
                     if ($_POST['pass'] === $_POST['passv2']) {

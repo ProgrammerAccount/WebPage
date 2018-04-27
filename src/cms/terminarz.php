@@ -53,8 +53,9 @@ if (isset($_GET['grupa'])) {
 
     if ($group !== "") {
         include '../phpClass/Terminarz.php';
+        require '../phpClass/connect_data.php';
 
-        $kadra = new Terminarz($group);
+        $kadra = new Terminarz($group, $pdo);
         if (isset($_GET['add']) && isset($_GET['date']) && isset($_GET['club']) && isset($_GET['resultOfGame']) && isset($_GET['opponent']) && $_SESSION['login'] === true) {
             $kadra->addMatch($_GET['club'], $_GET['opponent'], $_GET['resultOfGame'], $_GET['date']);
             header("Location: terminarz.php?grupa=" . $_GET['grupa']);
@@ -210,8 +211,8 @@ if ($_GET['grupa'] !== "Petanque") {
         }
 
         ?>
-                            <input class="form-control col" type="hidden" name="grupa" value=<?php if (isset($_GET[ 'grupa'])) { echo $_GET[ 'grupa'];
-                                } ?> />
+                            <input class="form-control col" type="hidden" name="grupa" value=<?php if (isset($_GET['grupa'])) {echo $_GET['grupa'];
+        }?> />
                             <input class="col" name='add' value="Dodaj" type="submit" />
                     </div>
                 </form>

@@ -2,17 +2,10 @@
 class Contact
 {
     private $pdo;
-    public $dbTableName="Contact";
-    public function __construct()
+    public $dbTableName = "Contact";
+    public function __construct($pdo)
     {
-        require 'connect_data.php';
-        $dsn = "mysql:host = $SERVER; dbname=$DB_NAME";
-        try {
-            $this->pdo = new PDO($dsn, $USER_NAME, $PASSWORD);
-        } catch (PDOException $e) {
-            print "Chwilowy brak dostępu do bazy danych<br/>";
-            die();
-        }
+        $this->pdo = $pdo;
     }
     public function getContacts()
     {
@@ -36,7 +29,7 @@ class Contact
         $table = "";
         $statement = $this->pdo->query("SELECT * FROM $this->dbTableName");
         while ($row = $statement->fetch()) {
-            $table = $table . "<form action='' method='GET'><div class='row'>"
+            $table = $table . "<form method='GET'><div class='row'>"
                 . "<input type='hidden' value='" . $row['id'] . "' name='id'/>"
                 . "<input type='text' value='" . $row['name'] . "' name='name' />"
                 . "<input type='text' value='" . $row['phoneNumber'] . "' name='phoneNumber'/>"
@@ -51,39 +44,39 @@ class Contact
     {
         $statement = $this->pdo->prepare("INSERT INTO $this->dbTableName VALUES (NULL,:name,:phoneNumber,:email)");
         $name = htmlspecialchars($name);
-        $email= htmlspecialchars($email);
+        $email = htmlspecialchars($email);
         $phoneNumber = htmlspecialchars($phoneNumber);
         $statement->bindParam(":name", $name, PDO::PARAM_STR);
         $statement->bindParam(":phoneNumber", $phoneNumber, PDO::PARAM_INT);
         $statement->bindParam(":email", $email, PDO::PARAM_STR);
-        $statement->execute();
+        return $statement->execute();
     }
     public function removeContact($id, $name, $phoneNumber, $email)
     {
         $name = htmlspecialchars($name);
-        $email= htmlspecialchars($email);
+        $email = htmlspecialchars($email);
         $phoneNumber = htmlspecialchars($phoneNumber);
-        $id=htmlspecialchars($id);
+        $id = htmlspecialchars($id);
         $statement = $this->pdo->prepare("DELETE FROM $this->dbTableName WHERE id=:id AND name=:name AND phoneNumber=:phoneNumber AND email=:email");
         $statement->bindParam(":name", $name, PDO::PARAM_STR);
         $statement->bindParam(":email", $email, PDO::PARAM_STR);
         $statement->bindParam(":id", $id, PDO::PARAM_INT);
         $statement->bindParam(":phoneNumber", $phoneNumber, PDO::PARAM_INT);
-        $statement->execute();
+        return $statement->execute();
     }
     public function editContact($id, $name, $phoneNumber, $email)
     {
         $name = htmlspecialchars($name);
-        $email= htmlspecialchars($email);
+        $email = htmlspecialchars($email);
         $phoneNumber = htmlspecialchars($phoneNumber);
-        $id=htmlspecialchars($id);
+        $id = htmlspecialchars($id);
         $statement = $this->pdo->prepare("UPDATE $this->dbTableName SET name = :name,  phoneNumber=:phoneNumber,email=:email WHERE  $this->dbTableName.id=:id");
         //echo "UPDATE $this->dbTableName SET name = $name  phoneNumber=$phoneNumber,email=$email WHERE  $this->dbTableName.id=$id";exit;
         $statement->bindParam(":name", $name, PDO::PARAM_STR);
         $statement->bindParam(":email", $email, PDO::PARAM_STR);
         $statement->bindParam(":id", $id, PDO::PARAM_INT);
         $statement->bindParam(":phoneNumber", $phoneNumber, PDO::PARAM_INT);
-        $statement->execute(); 
+        return $statement->execute();
     }
     public function __destruct()
     {

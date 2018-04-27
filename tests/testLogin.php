@@ -30,7 +30,6 @@ public function testGetUsers()
 {
   $pdoSTMT = $this->createMock('PDOStatement');
   $pdoSTMT->expects($this->any())->method('fetch')->willReturn(true);
-  $pdoSTMT->expects($this->any())->method('rowCount')->willReturn(1);
   $pdo=$this->createMock('PDO');
   $pdo->expects($this->any())->method('prepare')->willReturn($pdoSTMT);
   $login =  new Login();

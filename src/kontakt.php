@@ -116,7 +116,9 @@ and open the template in the editor.
             <div style="margin:auto" class="col-lg-8">
                 <?php
 require 'phpClass/Kontakt.php';
-$contact = new Contact();
+require 'phpClass/connect_data.php';
+
+$contact = new Contact($pdo);
 echo $contact->getContacts();
 ?>
             </div>

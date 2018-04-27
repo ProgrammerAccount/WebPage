@@ -18,22 +18,18 @@ class Kadra
     private $pdo;
     private $group;
     private $dbTableName="Kadra";
-    public function __construct($group)
+    public function __construct($group,$pdo)
     {
-        require 'connect_data.php';
         $this->group = $group; // for example "Orliki","Trampkarze"
         $this->dbTableName = $this->group.$this->dbTableName;
-        $dsn = "mysql:host=$SERVER;dbname=$DB_NAME";
+        $this->pdo = $pdo;
 
-        try {
-            $this->pdo = new PDO($dsn, $USER_NAME, $PASSWORD);
-        } catch (PDOException $e) {
-            print "Chwilowy brak dostępu do bazy danych<br/>";
-            die();
-        }
 
     }
-
+    public function setDB($DB)
+    {
+        $this->pdo=$DB;
+    }
     public function getSquadAsTable()
     {
         $table = "<table id='squad'>"
@@ -89,7 +85,7 @@ class Kadra
             if ($result !== false) {
                 while ($row = $result->fetch()) {
                     $form =
-                    $form . '<form class="form-group" style="width:100vw" action="" method="GET">'
+                    $form . '<form class="form-group" style="width:100vw"  method="GET">'
                     . "<div class='row'>"
                     . "<input class='col form-control' type='text' name='name' value='" . $row['name'] . "'/>"
                     . "<input class='col form-control' type='text' name='role' value='" . $row['role'] . "'/>"
@@ -98,7 +94,7 @@ class Kadra
                         . "<input class='col form-control' type='submit' name='remove' value='Usuń'/>"
                         . "<input class='col form-control' type='submit' name='edit' value='Edytuj'/>"
                         . "</div>"
-                        . "</form></br>";
+                        . "</form><br>";
                 }
             }
 
@@ -114,7 +110,7 @@ class Kadra
             if ($result !== false) {
                 while ($row = $result->fetch()) {
                     $form =
-                    $form . '<form class="form-group" style="width:100vw" action="" method="GET">'
+                    $form . '<form class="form-group" style="width:100vw" method="GET">'
                     . "<div class='row'>"
                     . "<input class='col form-control' type='text' name='name' value='" . $row['name'] . "'/>"
                     . "<input class='col form-control' type='hidden' name='id' value='" . $row['id'] . "'/>"
@@ -123,7 +119,7 @@ class Kadra
                         . "<input class='col form-control' type='submit' name='remove' value='Usuń'/>"
                         . "<input class='col form-control' type='submit' name='edit' value='Edytuj'/>"
                         . "</div>"
-                        . "</form></br>";
+                        . "</form><br>";
                 }
             }
         } catch (Exception $e) {}
@@ -139,7 +135,7 @@ class Kadra
             $role = htmlspecialchars($role);
             $statement->bindParam(":name", $name, PDO::PARAM_STR);
             $statement->bindParam(":role", $role, PDO::PARAM_STR);
-            $statement->execute();
+            return $statement->execute();
 
         } catch (PDOException $exc) {}
     }
@@ -154,7 +150,7 @@ class Kadra
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
             $statement->bindParam(":role", $role, PDO::PARAM_STR);
 
-            $statement->execute();
+            return $statement->execute();
 
         } catch (PDOException $exc) {}
     }
@@ -166,7 +162,7 @@ class Kadra
             $statement = $this->pdo->prepare("INSERT INTO " . $this->dbTableName . " VALUES (NULL, :role, :name)");
             $statement->bindParam(":name", $name, PDO::PARAM_STR);
             $statement->bindParam(":role", $role, PDO::PARAM_STR);
-            $statement->execute();
+            return $statement->execute();
 
         } catch (PDOException $exc) {}
     }

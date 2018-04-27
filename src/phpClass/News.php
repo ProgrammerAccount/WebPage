@@ -2,20 +2,11 @@
 class News
 {
     private $pdo;
-    public $dbTableName="News";
+    public $dbTableName = "News";
 
-    public function __construct()
+    public function __construct($pdo)
     {
-        require 'connect_data.php';
-        $dsn = "mysql:host=$SERVER;dbname=$DB_NAME";
-
-        try {
-            $this->pdo = new PDO($dsn, $USER_NAME, $PASSWORD);
-        } catch (PDOException $e) {
-            print "Chwilowy brak dostępu do bazy danych<br/>";
-            die();
-        }
-
+        $this->pdo = $pdo;
     }
     public function getListOfNews()
     {
@@ -43,31 +34,31 @@ class News
         $table = "";
         $results = $this->pdo->query("SELECT * FROM $this->dbTableName");
 
-        $table = "<table class='table'>"
-            . "<tr>"
-            . "<th>Zdjecie</th>"
-            . "<th>Tytuł</th>"
-            . "<th>Opis</th>"
-            . "<th>Artykuł</th>"
-
-            . "</tr>";
+        $table = "<div class='table'>"
+            . "<div class='theader'>"
+            . "<div class='tr'>"
+            . "<div class='th'>Zdjecie</div>"
+            . "<div class='th'>Tytuł</div>"
+            . "<div class='th'>Opis</div>"
+            . "<div class='th'>Artykuł</div>"
+            . "</div>"
+            . "</div> <div class='tbody'>";
         if ($results != false) {
             while ($row = $results->fetch()) {
-                $table = $table . "<tr>   <div class='row'>"
-                    . "<form class='form-group' enctype='multipart/form-data'  id='" . $row['id'] . "'  action='' method='POST'>"
-                    . "<td style='background:url(../img/" . $row['imgPath'] . ")no-repeat center center' class='fileUploader'><input class='form-control col' type='file' name='img' /></td>"
-                    . "<td><input class='form-control col' type='text' name='title' value='" . $row['title'] . "'/></td>"
-                    . "<td><textarea class='form-control col' form='" . $row['id'] . "' name='description'>" . $row['description'] . "</textarea></td>"
-                    . "<td><textarea class='form-control col' form='" . $row['id'] . "' name='article'>" . $row['article'] . "</textarea></td>"
-                    . "<td><input type='hidden' name='id' value='" . $row['id'] . "'/></td>"
-                    . "<td><input type='hidden' name='imgName' value='" . $row['imgPath'] . "'/></td>"
-                    . "<td><input class='form-control col' type='submit' name='edit' value='Edytuj'/></td>"
-                    . "<td><input class='form-control col' type='submit' name='remove' value='Usun'> </form></td>"
-                    . "</div></tr>";
+                $table = $table . "<form class='tr' enctype='multipart/form-data'  id='" . $row['id'] . "'  method='POST'>"
+                    . "<div class='td fileUploader' style='background:url(../img/" . $row['imgPath'] . ")no-repeat center center'><input  type='file' name='img' /></div>"
+                    . "<div class='td'><input  type='text' name='title' value='" . $row['title'] . "'/></div>"
+                    . "<div class='td'><textarea  form='" . $row['id'] . "' name='description'>" . $row['description'] . "</textarea></div>"
+                    . "<div class='td'><textarea  form='" . $row['id'] . "' name='article'>" . $row['article'] . "</textarea></div>"
+                    . "<div class='td'><input type='hidden' name='id' value='" . $row['id'] . "'/></div>"
+                    . "<div class='td'><input type='hidden' name='imgName' value='" . $row['imgPath'] . "'/></div>"
+                    . "<div class='td'><input type='submit' name='edit' value='Edytuj'></div>"
+                    . "<div class='td'><input type='submit' name='remove' value='Usun'></div>"
+                    . " </form>";
             }
         }
 
-        $table = $table . "</table>";
+        $table = $table . "</div></div>";
         return $table;
 
     }
@@ -91,47 +82,50 @@ class News
         return $table . "</div>";
 
     }
-    public function addImg($file,$sourceFolderPath)
+    public function addImg($file, $sourceFolderPath)
     {
-        if(is_file($file['tmp_name']))
-        {
-        $positiveValidation = true;
-        $fileType = strtolower(pathinfo(basename($file['name']), PATHINFO_EXTENSION));
-        if (getimagesize($file['tmp_name']) === false) {
+        if (is_file($file['tmp_name'])) {
             $positiveValidation = true;
-        }
-
-        if ($fileType != "jpg" && $fileType != "png" && $fileType != "jpeg") {
-            $positiveValidation = false;
-        }
-
-        if (filesize($file['tmp_name']) > 3000000) {
-            $positiveValidation = false;
-        }
-
-        if ($positiveValidation) {
-            $fileName = str_replace(' ', '', basename($file['name']));
-            while (file_exists($sourceFolderPath . $fileName)) {
-                $fileName = "a" . $fileName;
+            $fileType = strtolower(pathinfo(basename($file['name']), PATHINFO_EXTENSION));
+            if (getimagesize($file['tmp_name']) === false) {
+                $positiveValidation = true;
             }
 
-            if (move_uploaded_file($file['tmp_name'], $sourceFolderPath . $fileName)) {
-
-                return $fileName;
+            if ($fileType != "jpg" && $fileType != "png" && $fileType != "jpeg") {
+                $positiveValidation = false;
             }
-            return "";
-        }
-        return "";
-    }return "";
+
+            if (filesize($file['tmp_name']) > 3000000) {
+                $positiveValidation = false;
+            }
+            //return $positiveValidation;
+            if ($positiveValidation) {
+                $fileName = str_replace(' ', '', (basename($file['name'])));
+                $fileName = preg_replace('/[^A-Za-z0-9 _ .-]/', '', $fileName);
+                while (file_exists($sourceFolderPath . $fileName)) {
+                    $fileName = "a" . $fileName;
+                }
+
+                if (move_uploaded_file($file['tmp_name'], $sourceFolderPath . $fileName)) {
+
+                    return $fileName;
+                }
+                return false;
+            }
+            return false;
+        }return false;
     }
-    public function removeImg($imgName,$sourceFolderPath)
+    public function removeImg($imgName, $sourceFolderPath)
     {
         try {
-            if (file_exists($sourceFolderPath . $imgName)) {
-                unlink($sourceFolderPath . $imgName);
-            }
+            //echo file_exists($sourceFolderPath . $imgName)."<br>".$sourceFolderPath . $imgName;
 
-        } catch (Exeption $e) {}
+            if (file_exists($sourceFolderPath . $imgName)) {
+                return unlink($sourceFolderPath . $imgName);
+            }
+            return false;
+
+        } catch (Exeption $e) {return false;}
 
     }
     public function addNews($title, $description, $article, $imgPath)
@@ -139,39 +133,41 @@ class News
         try {
             $statement = $this->pdo->prepare("INSERT INTO $this->dbTableName VALUES(NULL,:title,:description,:article,:imgPath)");
             $title = htmlspecialchars($title);
-            $description=htmlspecialchars($description);
-            $article=htmlspecialchars($article);
-            
+            $description = htmlspecialchars($description);
+            $article = htmlspecialchars($article);
+
             $statement->bindParam(":title", $title, PDO::PARAM_STR);
             $statement->bindParam(":description", $description, PDO::PARAM_STR);
             $statement->bindParam(":article", $article, PDO::PARAM_STR);
             $statement->bindParam(":imgPath", $imgPath, PDO::PARAM_STR);
-            $statement->execute();
+            return $statement->execute();
         } catch (Exeption $e) {}
     }
 
     public function editNews($id, $title, $description, $article, $imgPath)
     {
-        try {
-            $id=htmlspecialchars($id);
-            $article=htmlspecialchars($article);
-            $description=htmlspecialchars($description);
-            $title=htmlspecialchars($$title);
-            $statement = $this->pdo->prepare("UPDATE $this->dbTableName SET title=:title ,description = :description, article=:article,imgPath=:imgPath WHERE id=:id");
-            $statement->bindParam(":title",  $$title, PDO::PARAM_STR);
-            $statement->bindParam(":description", $description, PDO::PARAM_STR);
-            $statement->bindParam(":article", $article, PDO::PARAM_STR);
-            $statement->bindParam(":id", $id, PDO::PARAM_INT);
-            $statement->bindParam(":imgPath", $imgPath, PDO::PARAM_STR);
-            $statement->execute();
-        } catch (Exeption $e) {}
+
+        $statement = $this->pdo->prepare("UPDATE $this->dbTableName SET title=:title , description = :description , article=:article , imgPath=:imgName WHERE id=:id");
+        $title = htmlspecialchars($title);
+        $id = htmlspecialchars($id);
+        $description = htmlspecialchars($description);
+        $article = htmlspecialchars($article);
+        $imgPath = htmlspecialchars($imgPath);
+
+        $statement->bindParam(":title", $title, PDO::PARAM_STR);
+        $statement->bindParam(":id", $id, PDO::PARAM_INT);
+        $statement->bindParam(":description", $description, PDO::PARAM_STR);
+        $statement->bindParam(":article", $article, PDO::PARAM_STR);
+        $statement->bindParam(":imgName", $imgPath, PDO::PARAM_STR);
+        return $statement->execute();
+
     }
-    public function removeNews($id, $imgName,$SOURCE_FOLDER_IMG)
+    public function removeNews($id, $imgName, $SOURCE_FOLDER_IMG)
     {
         try {
-            $this->removeImg($imgName,$SOURCE_FOLDER_IMG);
+            $this->removeImg($imgName, $SOURCE_FOLDER_IMG);
             $statement = $this->pdo->prepare("DELETE FROM $this->dbTableName WHERE id=:id");
-            $id=htmlspecialchars($id);
+            $id = htmlspecialchars($id);
 
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
             $statement->execute();

@@ -13,24 +13,10 @@
  */
 class Login
 {
-    public $dbTableName="Admin";
-    public function __construct()
+    public $dbTableName = "Admin";
+    public function __construct($pdo)
     {
-       
-        
-        try
-        {
-            require 'connect_data.php';
-            $dsn ="mysql:host=$SERVER;dbname=$DB_NAME";
-            $this->pdo = new PDO($dsn, $USER_NAME, $PASSWORD);
-        } catch (PDOException $exc) {
-            print "Chwilowy brak dostępu do bazy danych<br/>";
-            die();
-        }
-    }
-    public function setDB($DB)
-    {
-        $this->pdo=$DB;
+        $this->pdo = $pdo;
     }
 
     public function validation_email($email)
@@ -48,31 +34,28 @@ class Login
 
     public function getUser($email)
     {
-        $statement=false;
-        try{
-        $statement = $this->pdo->prepare("SELECT * FROM $this->dbTableName WHERE email= :email ");
-        $statement->bindParam(":email", $email);
-        $statement->execute();
-        if ($statement!==false && $statement->rowCount() > 0) 
-            return $statement->fetch();
-         else
-            return false;
-        
-        }
-        catch(Exception $e) {}
+        $statement = false;
+        try {
+            $statement = $this->pdo->prepare("SELECT * FROM $this->dbTableName WHERE email= :email ");
+            $statement->bindParam(":email", $email);
+            $statement->execute();
+            if ($statement !== false && $statement->rowCount() > 0) {
+                return $statement->fetch();
+            } else {
+                return false;
+            }
 
+        } catch (Exception $e) {}
 
     }
     public function addUser($email, $password)
     {
 
-       // if ($this->getUser($email) === false) {
-            $pass = password_hash($password, PASSWORD_DEFAULT);
-                $statement = $this->pdo->prepare("INSERT INTO $this->dbTableName VALUES(NULL, :email, '" . $pass . "',NULL )");
-                $statement->bindParam(":email", $email);
-                return $statement->execute();
-                 
-                
+        // if ($this->getUser($email) === false) {
+        $pass = password_hash($password, PASSWORD_DEFAULT);
+        $statement = $this->pdo->prepare("INSERT INTO $this->dbTableName VALUES(NULL, :email, '" . $pass . "',NULL )");
+        $statement->bindParam(":email", $email);
+        return $statement->execute();
 
         //
         //else return false;

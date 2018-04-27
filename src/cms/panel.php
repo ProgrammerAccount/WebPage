@@ -6,7 +6,9 @@ if (!isset($_SESSION['login']) && !isset($_SESSION['username'])) {
     exit();
 }
 require "../phpClass/News.php";
-$news = new News();
+require '../phpClass/connect_data.php';
+
+$news = new News($pdo);
 if (isset($_POST['add']) && isset($_POST['title']) && isset($_POST['description']) && isset($_POST['article']) && isset($_FILES['img'])) {
     $imgName = $news->addImg($_FILES['img'], $SOURCE_FOLDER_IMG);
     if ($imgName !== false) {
@@ -21,7 +23,7 @@ if (isset($_POST['id']) && isset($_POST['remove']) && isset($_POST['imgName'])) 
 }
 if (isset($_POST['edit']) && isset($_POST['id']) && isset($_POST['title']) && isset($_POST['description']) && isset($_POST['article']) && isset($_POST['imgName'])) {
     $imgPath = $_POST['imgName'];
-    if (isset($_FILES['img'])) {
+    if (isset($_FILES['img']['size'])) {
         $news->removeImg($imgPath, $SOURCE_FOLDER_IMG);
         $imgName = $news->addImg($_FILES['img'], $SOURCE_FOLDER_IMG);
         if ($imgName !== false) {
@@ -29,7 +31,9 @@ if (isset($_POST['edit']) && isset($_POST['id']) && isset($_POST['title']) && is
             $imgPath = $imgName;
         }
     }
-    $imgName = $news->editNews($_POST['id'], $_POST['title'], $_POST['description'], $_POST['article'], $imgPath);
+     $news->editNews($_POST['id'], $_POST['title'], $_POST['description'], $_POST['article'], $imgPath);
+    //exit;
+    //echo $imgName;exit;
     header("Location: panel.php");
 }
 ?>

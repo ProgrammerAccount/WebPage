@@ -166,8 +166,9 @@ if (isset($_GET['grupa'])) {
     }
 
     if ($group !== "") {
-        include 'phpClass/Kadra.php';
-        $kadra = new Kadra($group);
+        require 'phpClass/Kadra.php';
+        require 'phpClass/connect_data.php';
+        $kadra = new Kadra($group,$pdo);
         if ($group === "Petanque") {
             $table = $kadra->getSquadOfPentaqueAsTable();
         } else {

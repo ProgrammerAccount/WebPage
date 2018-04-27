@@ -4,19 +4,11 @@ class Tabela
     private $group;
     private $pdo;
     public $dbTableName = "Tabela";
-    public function __construct($group)
+    public function __construct($group,$pdo)
     {
-        require 'connect_data.php';
         $this->group = $group;
         $this->dbTableName = $this->group . $this->dbTableName;
-        try {
-            $dsn = "mysql:host=$SERVER;dbname=$DB_NAME";
-            $this->pdo = new PDO($dsn, $USER_NAME, $PASSWORD);
-        } catch (PDOException $e) {
-            print "Chwilowy brak dostępu do bazy danych<br/>";
-            die();
-        }
-
+        $this->pdo = $pdo;
     }
     public function getTable()
     {
@@ -102,11 +94,11 @@ class Tabela
     public function addTeam($club, $points, $wins, $draws, $losses)
     {
         try {
-            $club=htmlspecialchars($club);
-            $points=htmlspecialchars($points);
-            $draws=htmlspecialchars($draws);
-            $losses=htmlspecialchars($losses);
-            $wins=htmlspecialchars($wins);
+            $club = htmlspecialchars($club);
+            $points = htmlspecialchars($points);
+            $draws = htmlspecialchars($draws);
+            $losses = htmlspecialchars($losses);
+            $wins = htmlspecialchars($wins);
             $statement = $this->pdo->prepare("INSERT INTO " . $this->dbTableName . " VALUES (NULL, :club, :points, :wins, :draws, :losses)");
             $statement->bindParam(":club", $club, PDO::PARAM_STR);
             $statement->bindParam(":points", $points, PDO::PARAM_INT);
@@ -123,12 +115,12 @@ class Tabela
     public function removeTeam($id, $club, $points, $wins, $draws, $losses)
     {
         try {
-            $club=htmlspecialchars($club);
-            $points=htmlspecialchars($points);
-            $draws=htmlspecialchars($draws);
-            $losses=htmlspecialchars($losses);
-            $wins=htmlspecialchars($wins);
-            $id=htmlspecialchars($id);
+            $club = htmlspecialchars($club);
+            $points = htmlspecialchars($points);
+            $draws = htmlspecialchars($draws);
+            $losses = htmlspecialchars($losses);
+            $wins = htmlspecialchars($wins);
+            $id = htmlspecialchars($id);
 
             $statement = $this->pdo->prepare("DELETE FROM " . $this->dbTableName . " WHERE clubName=:club AND points=:points AND wins=:wins AND draws=:draws AND losses=:losses AND id = :id ");
             $statement->bindParam(":club", $club, PDO::PARAM_STR);
@@ -147,12 +139,12 @@ class Tabela
     {
         try {
             $statement = $this->pdo->prepare("UPDATE " . $this->dbTableName . " SET points = :points, wins = :wins, draws = :draws, losses = :losses WHERE clubName = :club AND id = :id ");
-            $club=htmlspecialchars($club);
-            $id=htmlspecialchars($id);
-            $points=htmlspecialchars($points);
-            $draws=htmlspecialchars($draws);
-            $losses=htmlspecialchars($losses);
-            $wins=htmlspecialchars($wins);
+            $club = htmlspecialchars($club);
+            $id = htmlspecialchars($id);
+            $points = htmlspecialchars($points);
+            $draws = htmlspecialchars($draws);
+            $losses = htmlspecialchars($losses);
+            $wins = htmlspecialchars($wins);
 
             $statement->bindParam(":club", $club, PDO::PARAM_STR);
             $statement->bindParam(":points", $points, PDO::PARAM_INT);

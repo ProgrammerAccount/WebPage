@@ -116,7 +116,9 @@ and open the template in the editor.
             </div>
             <?php
 include "phpClass/News.php";
-$news = new News();
+require 'phpClass/connect_data.php';
+
+$news = new News($pdo);
 echo $news->getListOfNews();
 
 ?>

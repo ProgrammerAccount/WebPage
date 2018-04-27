@@ -17,26 +17,17 @@ class Terminarz
 
     private $pdo;
     private $group;
-    public $dbTableName="Terminarz";
-    public function __construct($group)
+    public $dbTableName = "Terminarz";
+    public function __construct($group,$pdo)
     {
         $this->group = $group;
-        require 'connect_data.php';
-        $dsn = "mysql:host=$SERVER;dbname=$DB_NAME";
-        $this->dbTableName = $this->group.$this->dbTableName;
-
-        try {
-            $this->pdo = new PDO($dsn, $USER_NAME, $PASSWORD);
-        } catch (PDOException $e) {
-            print "Chwilowy brak dostępu do bazy danych<br/>";
-            die();
-        }
-
+        $this->dbTableName = $this->group . $this->dbTableName;
+        $this->pdo = $pdo;
     }
     public function getTimetable()
     {
 
-        $result = $this->pdo->query("SELECT * FROM " .$this->dbTableName . " ORDER BY date DESC");
+        $result = $this->pdo->query("SELECT * FROM " . $this->dbTableName . " ORDER BY date DESC");
         $list = "<ul class='terminarz'>";
         if ($result !== false) {
             while ($row = $result->fetch()) {
@@ -136,11 +127,11 @@ class Terminarz
         try {
             //echo "UPDATE ".$this->group."Terminarz"."SET club=$club, opponent=$opponent, resultOfGame=$resultOfGame ,date=$date WHERE id=:id";
             //   exit;
-            $club =  htmlspecialchars($club);
-            $opponent =  htmlspecialchars($opponent);
-            $resultOfGame =  htmlspecialchars($resultOfGame);
-            $date =  htmlspecialchars($date);
-            $id =  htmlspecialchars($id);
+            $club = htmlspecialchars($club);
+            $opponent = htmlspecialchars($opponent);
+            $resultOfGame = htmlspecialchars($resultOfGame);
+            $date = htmlspecialchars($date);
+            $id = htmlspecialchars($id);
             $statement = $this->pdo->prepare("UPDATE " . $this->dbTableName . " SET club=:club, opponent=:opponent ,resultOfGame=:resultOfGame ,date=:date WHERE id=:id");
             $statement->bindParam(":club", $club, PDO::PARAM_STR);
             $statement->bindParam(":id", $id, PDO::PARAM_INT);
@@ -157,10 +148,10 @@ class Terminarz
     public function RemoveMatch($club, $opponent, $resultOfGame, $date)
     {
         try {
-            $club =  htmlspecialchars($club);
-            $opponent =  htmlspecialchars($opponent);
-            $resultOfGame =  htmlspecialchars($resultOfGame);
-            $date =  htmlspecialchars($date);
+            $club = htmlspecialchars($club);
+            $opponent = htmlspecialchars($opponent);
+            $resultOfGame = htmlspecialchars($resultOfGame);
+            $date = htmlspecialchars($date);
             $statement = $this->pdo->prepare("DELETE FROM " . $this->dbTableName . " WHERE club=:club AND opponent=:opponent AND resultOfGame=:resultOfGame AND date=:date");
             $statement->bindParam(":club", $club, PDO::PARAM_STR);
             $statement->bindParam(":opponent", $opponent, PDO::PARAM_STR);
@@ -175,10 +166,10 @@ class Terminarz
     public function addMatch($club, $opponent, $resultOfGame, $date)
     {
         try {
-            $club =  htmlspecialchars($club);
-            $opponent =  htmlspecialchars($opponent);
-            $resultOfGame =  htmlspecialchars($resultOfGame);
-            $date =  htmlspecialchars($date);
+            $club = htmlspecialchars($club);
+            $opponent = htmlspecialchars($opponent);
+            $resultOfGame = htmlspecialchars($resultOfGame);
+            $date = htmlspecialchars($date);
             $statement = $this->pdo->prepare("INSERT INTO " . $this->dbTableName . "  VALUES (NULL, :club, :opponent, :resultOfGame, :date)");
             $statement->bindParam(":club", $club, PDO::PARAM_STR);
             $statement->bindParam(":opponent", $opponent, PDO::PARAM_STR);

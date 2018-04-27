@@ -26,7 +26,9 @@ if (isset($_GET['grupa'])) {
 
     if ($group !== "") {
         include '../phpClass/Kadra.php';
-        $kadra = new Kadra($group);
+        require '../phpClass/connect_data.php';
+
+        $kadra = new Kadra($group,$pdo);
         if (isset($_GET['name']) && isset($_GET['add']) && isset($_GET['role']) && $_SESSION['login'] === true) {
             $kadra->addPlayer($_GET['name'], $_GET['role']);
             header("Location:klub.php?grupa=$group");

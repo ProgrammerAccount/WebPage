@@ -8,7 +8,9 @@ if (isset($_POST['email'])) {
         $captchaResponse = json_decode($captchaResponse);
         if ($captchaResponse->success === true) {
             require '../phpClass/Recovery.php';
-            $recovery = new Recovery();
+            require '../phpClass/connect_data.php';
+
+            $recovery = new Recovery($pdo);
             if (isset($_POST['email'])) {
                 $recovery->generateToken();
                 $recovery->AddTokenToDB($_POST['email']);

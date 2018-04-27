@@ -163,7 +163,9 @@ if (isset($_GET['grupa'])) {
     }
     if ($group !== "") {
         include 'phpClass/Terminarz.php';
-        $kadra = new Terminarz($group);
+        require 'phpClass/connect_data.php';
+
+        $kadra = new Terminarz($group, $pdo);
         if ($group === "Petanque") {
             $table = $kadra->getTimetableOfPetanque();
         } else {
@@ -180,7 +182,7 @@ if (isset($_GET['grupa'])) {
             </div>
         </div>
         <footer>
-            <small>&copy; Copyright 2018 
+            <small>&copy; Copyright 2018
                            </small>
         </footer>
     </main>

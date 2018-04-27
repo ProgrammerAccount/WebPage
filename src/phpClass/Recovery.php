@@ -15,19 +15,11 @@ class Recovery
 {
     private $pdo;
     private $token;
-    public function __construct()
+    public function __construct($pdo)
     {
-        try {
-            require_once 'connect_data.php';
-            $dsn = "mysql:host=$SERVER;dbname=$DB_NAME";
-            $this->pdo = new PDO($dsn, $USER_NAME, $PASSWORD);
-        } catch (Exeption $e) {
-            print "Chwilowy brak dostępu do bazy danych<br/>";
-            die();
-
-        }
-
+        $this->pdo = $pdo;
     }
+
     public function generateToken()
     {
         $this->token = MD5(date('l jS F Y h:i:s A'));
@@ -46,21 +38,21 @@ class Recovery
 
         $statment = $this->pdo->prepare("UPDATE Admin SET token='" . $this->token . "' WHERE email=:email");
         $statment->bindParam(":email", $emailAdress, PDO::PARAM_STR);
-        $statment->execute();
+        return $statment->execute();
     }
     public function changePassword($emailAdress, $password)
     {
 
         $statment = $this->pdo->prepare("UPDATE Admin SET password='" . password_hash($password, PASSWORD_DEFAULT) . "' WHERE email=:email");
         $statment->bindParam(":email", $emailAdress, PDO::PARAM_STR);
-        $statment->execute();
+        return $statment->execute();
     }
     public function updateToken($emailAdress)
     {
 
         $statment = $this->pdo->prepare("UPDATE Admin SET token='' WHERE email=:email");
         $statment->bindParam(":email", $emailAdress, PDO::PARAM_STR);
-        $statment->execute();
+        return $statment->execute();
     }
     public function validationToken($emailAdress, $token)
     {
