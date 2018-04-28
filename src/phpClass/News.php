@@ -98,10 +98,12 @@ class News
             if (filesize($file['tmp_name']) > 3000000) {
                 $positiveValidation = false;
             }
-            //return $positiveValidation;
+            if(!strstr(mime_content_type($file['tmp_name']),"image")){
+                $positiveValidation = false;
+            }
             if ($positiveValidation) {
                 $fileName = str_replace(' ', '', (basename($file['name'])));
-                $fileName = preg_replace('/[^A-Za-z0-9 _ .-]/', '', $fileName);
+                $fileName = preg_replace('/[^A-Za-z0-9 _ .]/', '', $fileName);
                 while (file_exists($sourceFolderPath . $fileName)) {
                     $fileName = "a" . $fileName;
                 }
@@ -135,6 +137,7 @@ class News
             $title = htmlspecialchars($title);
             $description = htmlspecialchars($description);
             $article = htmlspecialchars($article);
+            $imgPath = htmlspecialchars($imgPath);
 
             $statement->bindParam(":title", $title, PDO::PARAM_STR);
             $statement->bindParam(":description", $description, PDO::PARAM_STR);
