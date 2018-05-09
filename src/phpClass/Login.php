@@ -51,14 +51,14 @@ class Login
     public function addUser($email, $password)
     {
 
-        // if ($this->getUser($email) === false) {
+         if ($this->getUser($email) === false) {
         $pass = password_hash($password, PASSWORD_DEFAULT);
         $statement = $this->pdo->prepare("INSERT INTO $this->dbTableName VALUES(NULL, :email, '" . $pass . "',NULL )");
         $statement->bindParam(":email", $email);
         return $statement->execute();
 
-        //
-        //else return false;
+        
+        else return false;
 
     }
     public function comparePassword($password, $hash)
