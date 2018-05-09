@@ -56,7 +56,7 @@ class Login
         $statement = $this->pdo->prepare("INSERT INTO $this->dbTableName VALUES(NULL, :email, '" . $pass . "',NULL )");
         $statement->bindParam(":email", $email);
         return $statement->execute();
-
+}
         
         else return false;
 
